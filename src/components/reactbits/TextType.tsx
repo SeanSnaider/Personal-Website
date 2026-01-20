@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, createElement, useMemo, useCallback } from 'react';
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import type { ElementType } from 'react';
 import { gsap } from 'gsap';
 import './TextType.css';
@@ -166,30 +166,75 @@ const TextType = ({
     isVisible,
     reverseMode,
     variableSpeed,
-    onSentenceComplete
+    onSentenceComplete,
+    getRandomSpeed
   ]);
 
   const shouldHideCursor =
     hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
 
-  return createElement(
-    Component,
-    {
-      ref: containerRef,
-      className: `text-type ${className}`,
-      ...props
-    },
-    <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit' }}>
-      {displayedText}
-    </span>,
-    showCursor && (
-      <span
-        ref={cursorRef}
-        className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}
-      >
-        {cursorCharacter}
+  const content = (
+    <>
+      <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit' }}>
+        {displayedText}
       </span>
-    )
+      {showCursor && (
+        <span
+          ref={cursorRef}
+          className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}
+        >
+          {cursorCharacter}
+        </span>
+      )}
+    </>
+  );
+
+  // Use a wrapper div and apply the component type via CSS or handle specific cases
+  if (Component === 'div') {
+    return (
+      <div ref={containerRef as React.RefObject<HTMLDivElement>} className={`text-type ${className}`} {...props}>
+        {content}
+      </div>
+    );
+  }
+
+  if (Component === 'span') {
+    return (
+      <span ref={containerRef as React.RefObject<HTMLSpanElement>} className={`text-type ${className}`} {...props}>
+        {content}
+      </span>
+    );
+  }
+
+  if (Component === 'p') {
+    return (
+      <p ref={containerRef as React.RefObject<HTMLParagraphElement>} className={`text-type ${className}`} {...props}>
+        {content}
+      </p>
+    );
+  }
+
+  if (Component === 'h1') {
+    return (
+      <h1 ref={containerRef as React.RefObject<HTMLHeadingElement>} className={`text-type ${className}`} {...props}>
+        {content}
+      </h1>
+    );
+  }
+
+  if (Component === 'h2') {
+    return (
+      <h2 ref={containerRef as React.RefObject<HTMLHeadingElement>} className={`text-type ${className}`} {...props}>
+        {content}
+      </h2>
+    );
+  }
+
+  // Default fallback to div
+  return (
+    <div ref={containerRef as React.RefObject<HTMLDivElement>} className={`text-type ${className}`} {...props}>
+      {content}
+    </div>
   );
 };
 

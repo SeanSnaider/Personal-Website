@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import './GooeyNav.css';
 
 interface GooeyNavItem {
@@ -33,15 +33,15 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   const textRef = useRef<HTMLSpanElement>(null);
   const [activeIndex, setActiveIndex] = useState<number>(initialActiveIndex);
 
-  const noise = (n = 1) => n / 2 - Math.random() * n;
+  const noise = useCallback((n = 1) => n / 2 - Math.random() * n, []);
 
-  const getXY = (distance: number, pointIndex: number, totalPoints: number): [number, number] => {
+  const getXY = useCallback((distance: number, pointIndex: number, totalPoints: number): [number, number] => {
     const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
     return [distance * Math.cos(angle), distance * Math.sin(angle)];
-  };
+  }, [noise]);
 
-  const createParticle = (i: number, t: number, d: [number, number], r: number) => {
-    let rotate = noise(r / 10);
+  const createParticle = useCallback((i: number, t: number, d: [number, number], r: number) => {
+    const rotate = noise(r / 10);
     return {
       start: getXY(d[0], particleCount - i, particleCount),
       end: getXY(d[1] + noise(7), particleCount - i, particleCount),
@@ -50,9 +50,9 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
       color: colors[Math.floor(Math.random() * colors.length)],
       rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10
     };
-  };
+  }, [noise, getXY, particleCount, colors]);
 
-  const makeParticles = (element: HTMLElement) => {
+  const makeParticles = useCallback((element: HTMLElement) => {
     const d: [number, number] = particleDistances;
     const r = particleR;
     const bubbleTime = animationTime * 2 + timeVariance;
@@ -91,7 +91,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
         }, t);
       }, 30);
     }
-  };
+  }, [particleDistances, particleR, animationTime, timeVariance, particleCount, noise, createParticle]);
 
   const updateEffectPosition = (element: HTMLElement) => {
     if (!containerRef.current || !filterRef.current || !textRef.current) return;
