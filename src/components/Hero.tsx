@@ -9,7 +9,7 @@ export function Hero() {
     <section id="hero" className="w-full min-h-screen bg-black relative">
         <div className="w-full h-screen absolute top-0 left-0">
           <FloatingLines
-            linesGradient={['#e9e5f1', '#7c3aed', '#a78bfa']}
+            linesGradient={['#7c3aed', '#a78bfa', '#c4b5fd']}
             enabledWaves={['top', 'middle', 'bottom']}
             lineCount={[10, 7, 5]}
             lineDistance={[8, 6, 4]}
@@ -45,10 +45,10 @@ export function Hero() {
               />
             </div>
 
-            {/* Text on the right with a little box behind it for visibility*/}
-            <div className="bg-transparent p-6 rounded-lg shadow-2xl">
+            {/* Text on the right with a backdrop for visibility */}
+            <div className="bg-black/50 backdrop-blur-sm p-8 rounded-xl">
               <div className="flex flex-col text-white text-left">
-                <p className="text-5xl mb-4 font-bold shadow-text">
+                <p className="text-5xl mb-4 font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                   Hi, my name is Sean
                 </p>
                 <TextType
