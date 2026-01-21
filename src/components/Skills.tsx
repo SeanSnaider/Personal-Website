@@ -1,43 +1,15 @@
 const skillCategories = [
   {
     title: "Languages",
-    skills: [
-      { name: "Python", icon: "🐍" },
-      { name: "Java", icon: "☕" },
-      { name: "C", icon: "⚙️" },
-      { name: "Assembly", icon: "🔧" },
-      { name: "SQL", icon: "🗃️" },
-      { name: "JavaScript", icon: "🟨" },
-      { name: "TypeScript", icon: "🔷" },
-      { name: "Racket", icon: "🎾" },
-    ],
+    skills: ["Python", "Java", "C", "Assembly", "SQL", "JavaScript", "TypeScript", "Racket"],
   },
   {
     title: "Frameworks & Libraries",
-    skills: [
-      { name: "React", icon: "⚛️" },
-      { name: "Tailwind", icon: "🎨" },
-      { name: "Next.js", icon: "▲" },
-      { name: "Vite", icon: "⚡" },
-      { name: "Pandas", icon: "🐼" },
-      { name: "NumPy", icon: "🔢" },
-      { name: "Matplotlib", icon: "📊" },
-      { name: "Pygame", icon: "🎮" },
-      { name: "Java Swing", icon: "🪟" },
-    ],
+    skills: ["React", "Tailwind", "Next.js", "Vite", "Pandas", "NumPy", "Matplotlib", "Pygame", "Java Swing"],
   },
   {
     title: "Tools & Platforms",
-    skills: [
-      { name: "Git", icon: "📦" },
-      { name: "WSL", icon: "🐧" },
-      { name: "VS Code", icon: "💻" },
-      { name: "IntelliJ IDEA", icon: "🧠" },
-      { name: "GDB", icon: "🔍" },
-      { name: "Unittest", icon: "🧪" },
-      { name: "JUnit", icon: "✅" },
-      { name: "Neovim", icon: "📝" },
-    ],
+    skills: ["Git", "WSL", "VS Code", "IntelliJ IDEA", "GDB", "Unittest", "JUnit", "Neovim"],
   },
 ];
 
@@ -49,23 +21,20 @@ export function Skills() {
           Skills
         </h2>
 
-        <div className="space-y-12">
+        <div className="space-y-10">
           {skillCategories.map((category) => (
             <div key={category.title}>
-              <h3 className="font-mono text-xl font-semibold text-purple-400 mb-6">
+              <h3 className="font-mono text-xl font-semibold text-purple-400 mb-4">
                 {category.title}
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              <div className="flex flex-wrap gap-3">
                 {category.skills.map((skill) => (
-                  <div
-                    key={skill.name}
-                    className="flex flex-col items-center justify-center p-4 bg-gray-900 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-gray-800 transition-all duration-200"
+                  <span
+                    key={skill}
+                    className="px-4 py-2 bg-gray-900 text-gray-300 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-gray-800 transition-all duration-200 text-sm font-medium"
                   >
-                    <span className="text-3xl mb-2">{skill.icon}</span>
-                    <span className="text-gray-300 text-sm text-center font-medium">
-                      {skill.name}
-                    </span>
-                  </div>
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>
