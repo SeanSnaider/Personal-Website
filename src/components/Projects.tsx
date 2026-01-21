@@ -1,3 +1,5 @@
+import FloatingLines from "./reactbits/FloatingLines";
+
 const projects = [
   {
     title: "Rubik's Cube Solver and Teaching Tool",
@@ -36,7 +38,20 @@ const projects = [
 export function Projects() {
   return (
     <section id="projects" className="w-full min-h-screen bg-black relative py-20">
-      <div className="max-w-6xl mx-auto px-8">
+      {/* Floating Lines Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <FloatingLines
+          linesGradient={['#7c3aed', '#a78bfa', '#c4b5fd']}
+          enabledWaves={['top', 'middle']}
+          lineCount={[4, 5]}
+          lineDistance={[8, 6]}
+          bendRadius={4.5}
+          bendStrength={-0.5}
+          interactive={false}
+          parallax={true}
+        />
+      </div>
+      <div className="relative z-10 max-w-6xl mx-auto px-8">
         <h2 className="font-mono text-4xl font-bold text-white mb-16 text-center">
           Projects
         </h2>

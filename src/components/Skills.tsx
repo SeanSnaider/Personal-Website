@@ -1,3 +1,5 @@
+import FloatingLines from './reactbits/FloatingLines';
+
 const skillCategories = [
   {
     title: "Languages",
@@ -16,7 +18,20 @@ const skillCategories = [
 export function Skills() {
   return (
     <section id="skills" className="w-full min-h-screen bg-black relative py-20">
-      <div className="max-w-6xl mx-auto px-8">
+      {/* Floating Lines Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <FloatingLines
+          linesGradient={['#7c3aed', '#a78bfa', '#c4b5fd']}
+          enabledWaves={['middle', 'bottom']}
+          lineCount={[5, 6]}
+          lineDistance={[9, 7]}
+          bendRadius={3.5}
+          bendStrength={-0.3}
+          interactive={false}
+          parallax={true}
+        />
+      </div>
+      <div className="relative z-10 max-w-6xl mx-auto px-8">
         <h2 className="font-mono text-4xl font-bold text-white mb-16 text-center">
           Skills
         </h2>

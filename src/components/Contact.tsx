@@ -1,7 +1,22 @@
+import FloatingLines from './reactbits/FloatingLines';
+
 export function Contact() {
   return (
     <section id="contact" className="w-full min-h-screen bg-black relative py-20 flex items-center">
-      <div className="max-w-4xl mx-auto px-8 w-full">
+      {/* Floating Lines Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <FloatingLines
+          linesGradient={['#7c3aed', '#a78bfa', '#c4b5fd']}
+          enabledWaves={['top', 'middle', 'bottom']}
+          lineCount={[5, 4, 3]}
+          lineDistance={[10, 8, 6]}
+          bendRadius={5.0}
+          bendStrength={-0.4}
+          interactive={false}
+          parallax={true}
+        />
+      </div>
+      <div className="relative z-10 max-w-4xl mx-auto px-8 w-full">
         <h2 className="font-mono text-4xl font-bold text-white mb-8 text-center">
           Get In Touch
         </h2>
