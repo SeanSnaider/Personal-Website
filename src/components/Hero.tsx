@@ -6,16 +6,16 @@ import selfImage from './self.jpeg';
 
 /* items for GooeyNav */
 const items: { label: string; href: string }[] = [
-      { label: "Home", href: "#" },
-      { label: "Skills", href: "#" },
-      { label: "Projects", href: "#" },
-      { label: "Contact", href: "#" },
+      { label: "Home", href: "#hero" },
+      { label: "Skills", href: "#skills" },
+      { label: "Projects", href: "#projects" },
+      { label: "Contact", href: "#contact" },
     ];
 
 export function Hero() {
   return (
     /* Hero Section with Floating Lines and Typing Text Effect, text is centered */
-    <section className="w-full min-h-screen bg-black relative">
+    <section id="hero" className="w-full min-h-screen bg-black relative">
         <div className="w-full h-screen absolute top-0 left-0">
           <FloatingLines
             linesGradient={['#e9e5f1', '#082d9c', '#47D1FF']}
