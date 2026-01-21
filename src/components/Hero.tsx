@@ -1,16 +1,7 @@
 import TextType from './reactbits/TextType';
 import FloatingLines from './reactbits/FloatingLines';
 import TiltedCard from './reactbits/TiltedCard';
-import GooeyNav from './reactbits/GooeyNav';
 import selfImage from './self.jpeg';
-
-/* items for GooeyNav */
-const items: { label: string; href: string }[] = [
-      { label: "Home", href: "#hero" },
-      { label: "Skills", href: "#skills" },
-      { label: "Projects", href: "#projects" },
-      { label: "Contact", href: "#contact" },
-    ];
 
 export function Hero() {
   return (
@@ -18,7 +9,7 @@ export function Hero() {
     <section id="hero" className="w-full min-h-screen bg-black relative">
         <div className="w-full h-screen absolute top-0 left-0">
           <FloatingLines
-            linesGradient={['#e9e5f1', '#082d9c', '#47D1FF']}
+            linesGradient={['#e9e5f1', '#7c3aed', '#a78bfa']}
             enabledWaves={['top', 'middle', 'bottom']}
             lineCount={[10, 7, 5]}
             lineDistance={[8, 6, 4]}
@@ -71,20 +62,21 @@ export function Hero() {
                   showCursor={true}
                   cursorCharacter="|"
                 />
+                <a
+                  href="/resume.pdf"
+                  download
+                  className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors w-fit"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download Resume
+                </a>
                 </div>
               </div>
             </div>
         </div>
 
-      {/* seperate component which will have the seperate pages */}
-      <div className="absolute top-5 left-1/2 transform -translate-x-1/2 pb-8">
-        <GooeyNav
-          items={items}
-          particleCount={0}
-          timeVariance={400}
-          particleR={0}
-        />
-      </div>
     </section>
   );
 }

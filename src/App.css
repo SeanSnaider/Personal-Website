@@ -49,9 +49,11 @@
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --color-1: #e9e5f1;
-  --color-2: #082d9c;
-  --color-3: #47D1FF;
-  --color-4: #6b8cce;
+  --color-2: #7c3aed;
+  --color-3: #a78bfa;
+  --color-4: #c4b5fd;
+  --accent-purple: #8b5cf6;
+  --accent-violet: #a78bfa;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -123,5 +125,12 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
