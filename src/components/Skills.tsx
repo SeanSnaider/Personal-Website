@@ -38,7 +38,7 @@ export function Skills() {
 
         <div className="space-y-10">
           {skillCategories.map((category) => (
-            <div key={category.title}>
+            <div key={category.title} className="bg-black/50 backdrop-blur-sm p-6 rounded-xl">
               <h3 className="font-mono text-xl font-semibold text-purple-400 mb-4">
                 {category.title}
               </h3>

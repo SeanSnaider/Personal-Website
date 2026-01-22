@@ -21,7 +21,7 @@ export function Contact() {
           Get In Touch
         </h2>
 
-        <p className="text-gray-400 text-center mb-12 max-w-xl mx-auto">
+        <p className="text-white text-center mb-12 max-w-xl mx-auto bg-black/50 backdrop-blur-sm p-6 rounded-xl">
           I'm currently looking for software engineering opportunities. Whether you have a
           question or just want to say hi, feel free to reach out!
         </p>
