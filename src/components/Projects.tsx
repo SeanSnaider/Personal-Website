@@ -62,15 +62,13 @@ export function Projects() {
               key={project.title}
               className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden hover:border-purple-500 transition-all duration-300 group"
             >
-              {/* Project Image Placeholder */}
-              <div className="h-48 bg-gradient-to-br from-purple-900/50 to-gray-900 flex items-center justify-center">
-                <span className="text-gray-500 text-sm font-mono">
-                  <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                </span>
+              {/* Project Image */}
+              <div className="h-48 bg-gradient-to-br from-purple-900/50 to-gray-900 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Project Content */}
