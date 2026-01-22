@@ -11,7 +11,7 @@ const skillCategories = [
   },
   {
     title: "Tools & Platforms",
-    skills: ["Git", "WSL", "VS Code", "IntelliJ IDEA", "GDB", "Unittest", "JUnit", "Neovim"],
+    skills: ["Git", "WSL", "Docker", "VS Code", "IntelliJ IDEA", "GDB", "Unittest", "JUnit", "Neovim"],
   },
 ];
 
