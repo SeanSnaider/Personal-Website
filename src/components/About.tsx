@@ -30,7 +30,7 @@ export function About() {
           </p>
 
           <p>
-            Beyond coding, I have a deep love for music;I'm a progressive guitarist always
+            Beyond coding, I have a deep love for music, I'm a progressive guitarist always
             exploring new techniques and genres. I'm also an avid speedcuber and puzzle
             enthusiast, which has sharpened my problem-solving abilities and taught me to
             approach challenges from multiple angles.
