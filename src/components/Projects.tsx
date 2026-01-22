@@ -65,7 +65,11 @@ export function Projects() {
               {/* Project Image Placeholder */}
               <div className="h-48 bg-gradient-to-br from-purple-900/50 to-gray-900 flex items-center justify-center">
                 <span className="text-gray-500 text-sm font-mono">
-                  {project.image ? "Screenshot coming soon" : "No image"}
+                  <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
                 </span>
               </div>
 
