@@ -3,7 +3,6 @@ import FloatingLines from './reactbits/FloatingLines';
 import TiltedCard from './reactbits/TiltedCard';
 import GooeyNav from './reactbits/GooeyNav';
 import selfImage from './self.jpeg';
-import resume from ' ../public/Sean Snaider - Resume.pdf';
 
 /* items for GooeyNav */
 const items: { label: string; href: string }[] = [
@@ -11,7 +10,7 @@ const items: { label: string; href: string }[] = [
       { label: "Skills", href: "#skills" },
       { label: "Projects", href: "#projects" },
       { label: "Contact", href: "#contact" },
-      { label: "Resume", href: "#resume" },
+      { label: "Resume", href: "/Sean Snaider - Resume.pdf" },
     ];
 
 export function Hero() {
