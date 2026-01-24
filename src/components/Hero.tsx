@@ -63,7 +63,7 @@ export function Hero() {
                   cursorCharacter="|"
                 />
                 <a
-                  href="/Sean Snaider - Resume.pdf"
+                  href="/Sean_Snaider_Resume.pdf"
                   download
                   className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg transition-colors w-fit"
                 >
