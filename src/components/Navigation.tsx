@@ -6,7 +6,7 @@ const items: { label: string; href: string }[] = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
-  { label: "Resume", href: "/Sean Snaider - Resume.pdf" }
+  { label: "Resume", href: "/Sean_Snaider_Resume.pdf" }
 ];
 
 export function Navigation() {
