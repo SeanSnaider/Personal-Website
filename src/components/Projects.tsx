@@ -4,7 +4,7 @@ const projects = [
   {
     title: "Rubik's Cube Solver and Teaching Tool",
     description:
-      "An interactive 3D Rubik's Cube simulator with manual scrambling, real-time visualization of 18 face rotations, and the Kociemba two-phase algorithm generating near-optimal solutions (≤20 moves) in under 1 second. Includes a step-by-step tutorial mode for learning.",
+      "Building a full-stack Rubik's Cube web application with a React + TypeScript frontend and FastAPI backend, featuring a 3D cube rendered with CSS 3D transforms and a competition-style timer with WCA inspection. The backend uses Kociemba's two-phase algorithm to solve any scramble in 20 moves or less in under a second, with solve times and statistics (ao5, ao12, ao100) tracked in MongoDB. Designed a teaching mode that walks you through each solving stage (cross, corners, second layer, top face) and won't let you move on until you've completed each step correctly. Showed it to 20+ friends and classmates who preferred it over existing online tools because of the intuitive keyboard controls and clear progression. As someone who's been cubing for over a decade with sub-7 second solves, I wanted to build something that actually teaches the way I wish I'd learned.",
     techStack: ["Python", "Pygame"],
     date: "Oct 2025 - Jan 2026",
     image: "/project-cube.png",
@@ -12,7 +12,7 @@ const projects = [
   {
     title: "Guitar Learning Tool",
     description:
-      "An interactive fretboard visualization app allowing users to explore scales, view tablature, and track learning progress. Features a FastAPI backend with SQLAlchemy and Pydantic validation for CRUD operations and SQLite persistence.",
+      "An interactive fretboard application for learning scales and ear training with real-time audio feedback. I engineered audio synthesis with <10ms latency using Web Audio API and ADSR envelope shaping across a 144-position fretboard. The app includes 40+ scale patterns (modes, pentatonics, jazz) using CAGED and 3-notes-per-string systems, with progress persistence via Zustand and localStorage. Three practice modes, note identification, sequence drills, and interval training, offer adaptive difficulty from open position to full neck. Deployed on Vercel with automated CI/CD triggered by GitHub commits.",
     techStack: ["React", "TypeScript", "Tailwind", "Python", "FastAPI", "SQLite"],
     date: "Dec 2025 - Present",
     image: "/project-guitar.png",

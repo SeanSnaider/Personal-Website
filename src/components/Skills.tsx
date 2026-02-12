@@ -3,15 +3,19 @@ import FloatingLines from './reactbits/FloatingLines';
 const skillCategories = [
   {
     title: "Languages",
-    skills: ["Python", "Java", "C", "Assembly", "SQL", "JavaScript", "TypeScript", "Racket"],
+    skills: ["Python", "Java", "JavaScript", "TypeScript", "C", "SQL", "x86-64 Assembly"],
   },
   {
-    title: "Frameworks & Libraries",
-    skills: ["React", "Tailwind", "Next.js", "Vite", "Pandas", "NumPy", "Matplotlib", "Pygame", "Java Swing"],
+    title: "Frontend",
+    skills: [ "React", "Next.js", "Tailwind CSS", "Zustand", "Web Audio API"],
   },
   {
-    title: "Tools & Platforms",
-    skills: ["Git", "WSL", "Docker", "VS Code", "IntelliJ IDEA", "GDB", "Unittest", "JUnit", "Neovim"],
+    title: "Backend & Data",
+    skills: ["FastAPI", "Prisma", "PostgreSQL", "MongoDB", "Pandas", "NumPy", "JUnit", "Neovim"],
+  },
+  {
+    title: "Tools & Infrastructure",
+    skills: ["Git", "Docker", "Linux/WSL", "Vite", "Vercel", "GDB"],
   },
 ];
 
