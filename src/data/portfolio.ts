@@ -23,11 +23,12 @@ export type RepositoryUrl = string | null;
  * Public GitHub repository URLs, collected here so they can be filled in or
  * corrected without touching the project entries below.
  *
- * A `null` value means the repo is not public yet; the corresponding project
- * card simply omits its "Code" link rather than rendering a broken one.
+ * A `null` value means there is no public repo; the corresponding project card
+ * simply omits its "Code" link rather than rendering a broken one.
  *
- * TODO(sean): Add repository URLs for the systems programming coursework and
- * Sanguine if and when those repos are made public.
+ * Systems Programming and Sanguine are coursework and will stay `null` —
+ * publishing solutions to graded assignments is an academic integrity problem,
+ * so this is deliberate rather than pending.
  */
 const REPOSITORY_URLS = {
   guitarLearningTool: 'https://github.com/SeanSnaider/Guitar-Scale-Tool' as RepositoryUrl,
