@@ -2,21 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Sean Snaider | Software Engineer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-      // System theme preference detection
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark');
-      }
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        document.documentElement.classList.toggle('dark', e.matches);
-      });
-    </script>
+    <meta
+      name="description"
+      content="Sean Snaider is a Computer Science and Software Engineering student at Northeastern University, currently a G&amp;A Architecture and Strategy Co-op at Vertex Pharmaceuticals. Full-stack work in React, TypeScript, Python, and FastAPI."
+    />
+    <meta name="author" content="Sean Snaider" />
+    <meta name="theme-color" content="#05040a" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!--
+      TODO(sean): Once the site has a final public URL, add the two tags below
+      with that URL so link previews and search engines resolve correctly:
+        <link rel="canonical" href="https://YOUR-DOMAIN/" />
+        <meta property="og:url" content="https://YOUR-DOMAIN/" />
+      Also consider adding an absolute og:image (a 1200x630 preview card);
+      LinkedIn and X ignore relative image paths.
+    -->
+
+    <!-- Open Graph / LinkedIn link previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Sean Snaider | Software Engineer" />
+    <meta
+      property="og:description"
+      content="CS &amp; Software Engineering @ Northeastern. Co-op at Vertex Pharmaceuticals. Building full-stack tools with React, FastAPI, and the Anthropic API."
+    />
+
+    <!-- Twitter/X link previews -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sean Snaider | Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="CS &amp; Software Engineering @ Northeastern. Co-op at Vertex Pharmaceuticals."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="root"></div>

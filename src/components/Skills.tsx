@@ -1,65 +1,53 @@
-import FloatingLines from './reactbits/FloatingLines';
+/**
+ * Skills section.
+ *
+ * Renders `portfolio.skillCategories` as a responsive grid of grouped chip
+ * lists, mirroring the category structure of the résumé so the two read the
+ * same way side by side.
+ */
 
-const skillCategories = [
-  {
-    title: "Languages",
-    skills: ["Python", "Java", "JavaScript", "TypeScript", "C", "SQL", "x86-64 Assembly"],
-  },
-  {
-    title: "Frontend",
-    skills: [ "React", "Next.js", "Tailwind CSS", "Zustand", "Web Audio API"],
-  },
-  {
-    title: "Backend & Data",
-    skills: ["FastAPI", "Prisma", "PostgreSQL", "MongoDB", "Pandas", "NumPy", "JUnit", "Neovim"],
-  },
-  {
-    title: "Tools & Infrastructure",
-    skills: ["Git", "Docker", "Linux/WSL", "Vite", "Vercel", "GDB"],
-  },
-];
+import { Reveal, Section } from './Section';
+import { skillCategories } from '../data/portfolio';
 
+/**
+ * The Skills section: technologies grouped by category.
+ *
+ * Categories are rendered as cards in a masonry-ish grid that collapses to a
+ * single column on mobile. Each card reveals with a slight stagger.
+ *
+ * @returns The skills section element.
+ */
 export function Skills() {
   return (
-    <section id="skills" className="w-full min-h-screen bg-black relative py-20">
-      {/* Floating Lines Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <FloatingLines
-          linesGradient={['#7c3aed', '#a78bfa', '#c4b5fd']}
-          enabledWaves={['middle', 'bottom']}
-          lineCount={[5, 6]}
-          lineDistance={[9, 7]}
-          bendRadius={3.5}
-          bendStrength={-0.3}
-          interactive={false}
-          parallax={true}
-        />
-      </div>
-      <div className="relative z-10 max-w-6xl mx-auto px-8">
-        <h2 className="font-mono text-4xl font-bold text-white mb-16 text-center">
-          Skills
-        </h2>
-
-        <div className="space-y-10">
-          {skillCategories.map((category) => (
-            <div key={category.title} className="bg-black/50 backdrop-blur-sm p-6 rounded-xl">
-              <h3 className="font-mono text-xl font-semibold text-white mb-4">
+    <Section
+      id="skills"
+      eyebrow="04 / Skills"
+      title="Tools I Work With"
+      subtitle="Grouped the same way as my résumé, so the two are easy to cross-reference."
+      maxWidth="max-w-6xl"
+    >
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {skillCategories.map((category, index) => (
+          <Reveal key={category.title} delayMs={index * 70}>
+            <div className="surface-card h-full rounded-2xl p-6">
+              <h3 className="font-mono text-sm font-semibold uppercase tracking-[0.15em] text-violet-300">
                 {category.title}
               </h3>
-              <div className="flex flex-wrap gap-3">
+
+              <ul className="mt-5 flex flex-wrap gap-2">
                 {category.skills.map((skill) => (
-                  <span
+                  <li
                     key={skill}
-                    className="px-4 py-2 bg-gray-900 text-gray-300 rounded-lg border border-gray-800 hover:border-purple-500 hover:bg-gray-800 transition-all duration-200 text-sm font-medium"
+                    className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-neutral-300 transition-colors duration-200 hover:border-violet-400/50 hover:bg-violet-500/10 hover:text-white"
                   >
                     {skill}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-          ))}
-        </div>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }
