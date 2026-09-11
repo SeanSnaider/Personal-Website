@@ -128,8 +128,13 @@ export interface Experience {
 /**
  * Professional experience in reverse-chronological order.
  *
- * Sourced verbatim in substance from the résumé; wording is lightly adapted for
+ * Mostly sourced in substance from the résumé, with wording lightly adapted for
  * the web (shorter sentences, no line-break hyphenation).
+ *
+ * Two things here intentionally go beyond the current résumé PDF:
+ *   - The Vertex Electron/Azure bullet, which is in-flight work.
+ *   - The TheCubicle.com entry, which predates the résumé's coverage.
+ * Fold both into the PDF the next time it is revised so the two stay aligned.
  */
 export const experiences: readonly Experience[] = [
   {
@@ -142,8 +147,9 @@ export const experiences: readonly Experience[] = [
     highlights: [
       'Building a Python tool to automate data migrations previously run by hand across multiple platforms and a legacy Microsoft Access workflow; projected by management to eliminate roughly $100K in annual effort across business and IT teams.',
       'Designed the tool so non-technical staff can reconfigure migrations themselves without code changes, driving field mappings from declarative Excel configuration with per-field overrides rather than hardcoded transformation logic.',
+      'Building a native desktop application in Electron and TypeScript to front the migration tooling, planned for internal deployment on Azure.',
     ],
-    technologies: ['Python', 'Pandas', 'Excel Config', 'Microsoft Access'],
+    technologies: ['Python', 'Polars', 'Electron', 'TypeScript', 'Azure', 'Microsoft Access'],
   },
   {
     id: 'sga',
@@ -156,7 +162,7 @@ export const experiences: readonly Experience[] = [
       'Replaced spreadsheet-based attendance and voting workflows with a full-stack web application now used by 50+ SGA members across 20+ officer meetings per semester.',
       'Moved vote validation from the browser to the server using Next.js API routes, Prisma, and schema-based request validation, closing a class of data-integrity bugs; deployed in production for SGA executive officer elections.',
     ],
-    technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Vercel'],
+    technologies: ['Next.js', 'TypeScript', 'Prisma ORM', 'PostgreSQL', 'Vercel'],
   },
   {
     id: 'khoury-ta',
@@ -169,7 +175,7 @@ export const experiences: readonly Experience[] = [
       "Supported 850+ students across two of Khoury's largest intro CS courses through weekly debugging hours covering OOP, data structures, recursion, and control flow.",
       'Coached students on effective use of Claude Code and GitHub Copilot in lab sessions and one-on-one, covering how to scope tasks, supply relevant context, and iterate when generated output missed intent.',
     ],
-    technologies: ['Java', 'Racket', 'Claude Code', 'GitHub Copilot'],
+    technologies: ['Java', 'Python', 'Claude Code', 'GitHub Copilot'],
   },
   {
     id: 'disrupt',
@@ -183,6 +189,20 @@ export const experiences: readonly Experience[] = [
       'Taught 150+ students across 8+ recurring SQL and Python workshops, covering query optimization and joins.',
     ],
     technologies: ['React', 'TypeScript', 'SQL', 'Python'],
+  },
+  {
+    id: 'the-cubicle',
+    organization: 'TheCubicle.com',
+    role: 'Software Developer - Senior Experience',
+    location: 'Remote',
+    period: 'Spring 2024',
+    isCurrent: false,
+    highlights: [
+      "Developed a Rubik's Cube solving application with 3D visualization in Python and PyGame, sponsored by TheCubicle.com.",
+      'Worked directly with the company owner through iterative feedback cycles, gathering requirements and implementing feature requests across 100+ hours of development.',
+      'Built an interactive tool that taught users to solve the puzzle, receiving positive feedback from peers who found it more intuitive than existing learning methods.',
+    ],
+    technologies: ['Python', 'PyGame'],
   },
 ];
 

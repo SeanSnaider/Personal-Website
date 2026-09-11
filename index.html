@@ -16,10 +16,9 @@
     <link rel="canonical" href="https://seansnaider.com/" />
 
     <!--
-      TODO(sean): Add an absolute og:image (a 1200x630 preview card) to make
-      shared links render with a picture instead of text alone:
-        <meta property="og:image" content="https://seansnaider.com/og-card.png" />
-      LinkedIn and X ignore relative image paths, so the URL must be absolute.
+      TODO(sean): og-card.png is a placeholder generated from the site's type
+      and colors. Swap in a designed card when you have one; keep it 1200x630
+      and keep the URL absolute, since LinkedIn and X ignore relative paths.
     -->
 
     <!-- Open Graph / LinkedIn link previews -->
@@ -31,14 +30,19 @@
     />
     <meta property="og:url" content="https://seansnaider.com/" />
     <meta property="og:site_name" content="Sean Snaider" />
+    <meta property="og:image" content="https://seansnaider.com/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sean Snaider — Software Engineer, Boston, Massachusetts" />
 
     <!-- Twitter/X link previews -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Sean Snaider | Software Engineer" />
     <meta
       name="twitter:description"
       content="CS &amp; Software Engineering @ Northeastern. Co-op at Vertex Pharmaceuticals."
     />
+    <meta name="twitter:image" content="https://seansnaider.com/og-card.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
