@@ -13,14 +13,13 @@
     <meta name="theme-color" content="#05040a" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://seansnaider.com/" />
 
     <!--
-      TODO(sean): Once the site has a final public URL, add the two tags below
-      with that URL so link previews and search engines resolve correctly:
-        <link rel="canonical" href="https://YOUR-DOMAIN/" />
-        <meta property="og:url" content="https://YOUR-DOMAIN/" />
-      Also consider adding an absolute og:image (a 1200x630 preview card);
-      LinkedIn and X ignore relative image paths.
+      TODO(sean): Add an absolute og:image (a 1200x630 preview card) to make
+      shared links render with a picture instead of text alone:
+        <meta property="og:image" content="https://seansnaider.com/og-card.png" />
+      LinkedIn and X ignore relative image paths, so the URL must be absolute.
     -->
 
     <!-- Open Graph / LinkedIn link previews -->
@@ -30,6 +29,8 @@
       property="og:description"
       content="CS &amp; Software Engineering @ Northeastern. Co-op at Vertex Pharmaceuticals. Building full-stack tools with React, FastAPI, and the Anthropic API."
     />
+    <meta property="og:url" content="https://seansnaider.com/" />
+    <meta property="og:site_name" content="Sean Snaider" />
 
     <!-- Twitter/X link previews -->
     <meta name="twitter:card" content="summary" />
