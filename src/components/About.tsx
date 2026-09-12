@@ -81,7 +81,7 @@ export function About() {
       id="about"
       eyebrow="01 / About"
       title="About Me"
-      subtitle="What I build, and why I keep ending up in the same kinds of problems."
+      subtitle="What I build, and why I build."
     >
       <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-14">
         <div className="space-y-6">
