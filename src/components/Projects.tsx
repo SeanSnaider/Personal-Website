@@ -13,6 +13,7 @@ import { ArrowRight } from 'lucide-react';
 import { Reveal, Section } from './Section';
 import { BulletList, StackLine, TextLink } from './primitives';
 import { cn } from '../lib/utils';
+import { trackSpotlight } from '../lib/spotlight';
 import { otherProjects, projects, type Project } from '../data/portfolio';
 
 /** Props for {@link ProjectLinks}. */
@@ -130,7 +131,10 @@ function FeaturedProjectCard({ project }: ProjectCardProps) {
         aria-hidden="true"
         className="absolute -inset-x-6 -top-6 -z-10 h-2/3 rounded-[3rem] bg-accent/[0.07] blur-3xl"
       />
-      <article className="card-hover overflow-hidden rounded-xl border border-line bg-surface">
+      <article
+        onPointerMove={trackSpotlight}
+        className="card-hover spotlight relative overflow-hidden rounded-xl border border-line bg-surface"
+      >
         {/* 16/9.5 matches the BellyDSP screenshot, so it shows uncropped. */}
         <ProjectImage project={project} aspectClass="aspect-[16/9.5]" />
 
@@ -158,7 +162,10 @@ function StandardProjectCard({ project }: ProjectCardProps) {
   const { summary, highlights, technologies } = project;
 
   return (
-    <article className="card-hover flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface">
+    <article
+      onPointerMove={trackSpotlight}
+      className="card-hover spotlight relative flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface"
+    >
       <ProjectImage project={project} aspectClass="aspect-[16/9]" />
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">

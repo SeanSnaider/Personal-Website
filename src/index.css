@@ -167,6 +167,33 @@ body::after {
 }
 
 /* ---------------------------------------------------------------------------
+   Spotlight
+
+   A soft accent glow that follows the pointer across a card. Paired with
+   `trackSpotlight` in src/lib/spotlight.ts, which sets --spot-x / --spot-y.
+   The card must be `position: relative` with `overflow: hidden`.
+   --------------------------------------------------------------------------- */
+
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(
+    28rem circle at var(--spot-x, 50%) var(--spot-y, 0%),
+    rgb(61 220 151 / 0.07),
+    transparent 45%
+  );
+  transition: opacity 0.4s ease;
+}
+
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
    Scroll reveal
 
    Paired with the useScrollReveal hook: elements mount with `.reveal` and gain

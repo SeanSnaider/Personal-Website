@@ -17,6 +17,7 @@ import { SignalLine } from '../components/SignalLine';
 import { Reveal } from '../components/Section';
 import { BulletList, LinkButton } from '../components/primitives';
 import { bellyDsp } from '../data/bellydsp';
+import { trackSpotlight } from '../lib/spotlight';
 
 /** Props for {@link PageSection}. */
 interface PageSectionProps {
@@ -155,7 +156,11 @@ export function BellyDspPage() {
               </h2>
               <div className="mt-8 grid gap-4 md:grid-cols-2">
                 {bellyDsp.highlights.map((highlight) => (
-                  <article key={highlight.title} className="rounded-xl border border-line bg-gradient-to-b from-surface-raised to-surface p-6">
+                  <article
+                    key={highlight.title}
+                    onPointerMove={trackSpotlight}
+                    className="spotlight relative overflow-hidden rounded-xl border border-line bg-gradient-to-b from-surface-raised to-surface p-6"
+                  >
                     <p className="text-3xl font-semibold tracking-tight text-accent tabular-nums">
                       {highlight.figure}
                     </p>
