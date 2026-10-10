@@ -10,6 +10,7 @@
  */
 
 import { Reveal, Section } from './Section';
+import { TextLink } from './primitives';
 import { aboutParagraphs, education, profile } from '../data/portfolio';
 
 /**
@@ -20,49 +21,33 @@ import { aboutParagraphs, education, profile } from '../data/portfolio';
  * @returns The education card element.
  */
 function EducationCard() {
+  const rows: readonly { label: string; value: string }[] = [
+    { label: 'Graduation', value: education.graduation },
+    { label: 'GPA', value: education.gpa },
+    { label: 'Honors', value: education.honors.join(', ') },
+  ];
+
   return (
-    <aside className="surface-card rounded-2xl p-6">
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-violet-400">Education</p>
+    <aside className="rounded-xl border border-line bg-surface p-6 shadow-[inset_0_1px_0_0_rgb(255_255_255/0.04)]">
+      <p className="font-mono text-xs uppercase tracking-wider text-ink-faint">Education</p>
 
-      <h3 className="mt-4 font-mono text-lg font-semibold text-white">{education.school}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-neutral-300">{education.degree}</p>
+      <h3 className="mt-3 font-semibold text-ink">{education.school}</h3>
+      <p className="mt-1 text-sm leading-relaxed text-ink-muted">{education.degree}</p>
 
-      <dl className="mt-5 space-y-3 border-t border-white/10 pt-5 text-sm">
-        <div className="flex items-baseline justify-between gap-4">
-          <dt className="text-neutral-500">Graduation</dt>
-          <dd className="text-right font-mono text-neutral-200">{education.graduation}</dd>
-        </div>
-        <div className="flex items-baseline justify-between gap-4">
-          <dt className="text-neutral-500">GPA</dt>
-          <dd className="text-right font-mono text-violet-300">{education.gpa}</dd>
-        </div>
-        <div className="flex items-baseline justify-between gap-4">
-          <dt className="text-neutral-500">Honors</dt>
-          <dd className="text-right font-mono text-neutral-200">{education.honors.join(', ')}</dd>
-        </div>
-        <div className="flex items-baseline justify-between gap-4">
-          <dt className="text-neutral-500">Location</dt>
-          <dd className="text-right font-mono text-neutral-200">{education.location}</dd>
-        </div>
+      <dl className="mt-5 space-y-2 border-t border-line pt-5 text-sm">
+        {rows.map((row) => (
+          <div key={row.label} className="flex items-baseline justify-between gap-4">
+            <dt className="text-ink-faint">{row.label}</dt>
+            <dd className="text-right text-ink tabular-nums">{row.value}</dd>
+          </div>
+        ))}
       </dl>
 
-      <a
-        href={profile.resumePath}
-        download
-        className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-violet-300 transition-colors hover:text-violet-200"
-      >
-        View full résumé
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          aria-hidden="true"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
-      </a>
+      <div className="mt-5">
+        <TextLink href={profile.resumePath} isExternal>
+          View résumé
+        </TextLink>
+      </div>
     </aside>
   );
 }
@@ -70,29 +55,24 @@ function EducationCard() {
 /**
  * The About section: narrative copy plus an education card.
  *
- * Lays out as a two-column grid on large screens, stacking on mobile with the
- * narrative first.
+ * Lays out as two columns on extra-large screens, stacking on smaller ones
+ * with the narrative first.
  *
  * @returns The about section element.
  */
 export function About() {
   return (
-    <Section
-      id="about"
-      eyebrow="01 / About"
-      title="About Me"
-      subtitle="What I build, and why I build."
-    >
-      <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-14">
-        <div className="space-y-6">
-          {aboutParagraphs.map((paragraph, index) => (
-            <Reveal key={paragraph.slice(0, 40)} delayMs={index * 90}>
-              <p className="text-base leading-relaxed text-neutral-300 sm:text-lg">{paragraph}</p>
-            </Reveal>
+    <Section id="about" number="01" title="About">
+      <div className="grid gap-10 xl:grid-cols-[1fr_18.5rem]">
+        <Reveal className="space-y-5">
+          {aboutParagraphs.map((paragraph) => (
+            <p key={paragraph.slice(0, 40)} className="text-base leading-relaxed text-ink-muted sm:text-[17px]">
+              {paragraph}
+            </p>
           ))}
-        </div>
+        </Reveal>
 
-        <Reveal delayMs={120}>
+        <Reveal delayMs={100}>
           <EducationCard />
         </Reveal>
       </div>

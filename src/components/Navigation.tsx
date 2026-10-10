@@ -1,36 +1,41 @@
 /**
- * Fixed site navigation.
+ * Fixed site navigation, shared by the home page and project pages.
  *
- * Renders the GooeyNav pill centered at the top of the viewport. The bar gains
- * a translucent backdrop once the user scrolls away from the hero, so the
- * labels stay legible over the lighter content sections below.
+ * A full-width bar with the name on the left and section links on the right.
+ * It gains a hairline and a translucent backdrop once the page scrolls, so it
+ * separates from the content beneath it only when it needs to.
+ *
+ * Links are written as `/#section` rather than `#section` so the same bar works
+ * on project pages: on the home page the browser treats them as same-document
+ * fragment jumps, and elsewhere they navigate home first.
  *
  * Side effects: attaches a passive window scroll listener for the duration of
  * the component's lifetime.
  */
 
 import { useEffect, useState } from 'react';
-import GooeyNav from './reactbits/GooeyNav';
+import { cn } from '../lib/utils';
 import { profile } from '../data/portfolio';
 
-/** In-page anchors plus the résumé download, in page order. */
-const navigationItems: readonly { label: string; href: string }[] = [
-  { label: 'Home', href: '#hero' },
-  { label: 'About', href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contact', href: '#contact' },
-  { label: 'Résumé', href: profile.resumePath },
+/** In-page section anchors, in page order. */
+const sectionLinks: readonly { label: string; href: string }[] = [
+  { label: 'About', href: '/#about' },
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Skills', href: '/#skills' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
-/** Scroll distance, in pixels, after which the nav gains its backdrop. */
-const SCROLL_THRESHOLD_PX = 80;
+/** Scroll distance, in pixels, after which the bar gains its backdrop. */
+const SCROLL_THRESHOLD_PX = 16;
 
 /**
  * The fixed top navigation bar.
  *
- * @returns The navigation element.
+ * Below the `md` breakpoint only the name and the Résumé link are shown; the
+ * page is short enough to scroll through on a phone.
+ *
+ * @returns The header element containing the primary navigation.
  */
 export function Navigation() {
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -47,16 +52,48 @@ export function Navigation() {
   }, []);
 
   return (
-    <nav
-      aria-label="Primary"
-      className={[
-        'fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-full px-2 transition-all duration-300',
-        hasScrolled
-          ? 'border border-white/10 bg-[#05040a]/70 shadow-lg shadow-black/40 backdrop-blur-md'
-          : 'border border-transparent bg-transparent',
-      ].join(' ')}
+    <header
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300',
+        hasScrolled ? 'border-line bg-bg/80 backdrop-blur-md' : 'border-transparent',
+      )}
     >
-      <GooeyNav items={[...navigationItems]} particleCount={0} timeVariance={400} particleR={0} />
-    </nav>
+      {/* Padding outside, max-width inside: the same structure as Section,
+          so the bar's edges line up with the content's. */}
+      <div className="px-4 sm:px-6">
+        <nav
+          aria-label="Primary"
+          className="mx-auto flex h-16 max-w-5xl items-center justify-between"
+        >
+          <a href="/" className="text-sm font-semibold tracking-tight text-ink">
+            {profile.name}
+          </a>
+
+          <div className="flex items-center gap-6">
+            <ul className="hidden items-center gap-6 md:flex">
+              {sectionLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-ink-muted transition-colors hover:text-ink"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={profile.resumePath}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-8 items-center rounded-md border border-line-strong px-3 text-sm font-medium text-ink transition-colors hover:bg-surface-raised"
+            >
+              Résumé
+          </a>
+        </div>
+      </nav>
+      </div>
+    </header>
   );
 }

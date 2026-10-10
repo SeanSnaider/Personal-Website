@@ -1,74 +1,46 @@
 /**
  * Hero section.
  *
- * The landing viewport: animated FloatingLines backdrop, portrait, name,
- * rotating tagline, primary calls to action, and a strip of headline metrics.
- *
- * This is the only section that mounts a WebGL canvas. Every section below it
- * renders against the shared static `.site-backdrop`, which keeps the page to a
- * single animated surface instead of one per section.
+ * The landing viewport: an announcement pill, name, title, a short
+ * introduction, contact links, the portrait, and a strip of headline metrics
+ * under an animated waveform divider.
  *
  * Copy and metrics come from `src/data/portfolio.ts`.
  */
 
-import TextType from './reactbits/TextType';
-import FloatingLines from './reactbits/FloatingLines';
-import TiltedCard from './reactbits/TiltedCard';
+import { ArrowRight, FileText, Github, Linkedin, Mail } from 'lucide-react';
+import { LinkButton } from './primitives';
+import { SignalLine } from './SignalLine';
 import selfImage from './self.jpeg';
-import { heroTaglines, profile, statistics } from '../data/portfolio';
+import { heroAnnouncement, heroIntro, profile, statistics } from '../data/portfolio';
 
-/** Props for {@link HeroLink}. */
-interface HeroLinkProps {
-  /** Destination URL or path. */
-  href: string;
-  /** Visible label. */
-  label: string;
-  /**
-   * `true` for the filled accent treatment, `false` for the outlined one.
-   * Exactly one hero link should be primary.
-   */
-  isPrimary: boolean;
-  /** Whether the link should download rather than navigate. */
-  shouldDownload?: boolean;
-  /** Whether to open in a new tab. */
-  opensInNewTab?: boolean;
-  /** Leading icon, rendered before the label. */
-  icon: React.ReactNode;
-}
+const iconClasses = 'h-4 w-4';
 
 /**
- * A call-to-action button in the hero.
+ * The announcement pill above the name, linking to whatever is newest.
  *
- * @param props - See {@link HeroLinkProps}.
- * @returns An anchor styled as a primary or secondary button.
+ * @returns The pill link, or `null` when there is no announcement.
  */
-function HeroLink({
-  href,
-  label,
-  isPrimary,
-  shouldDownload = false,
-  opensInNewTab = false,
-  icon,
-}: HeroLinkProps) {
-  const baseClasses =
-    'inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-400';
-  // Secondary buttons sit directly over the animated backdrop, whose light
-  // streaks are near-white at their peak. They need an opaque dark base rather
-  // than a translucent white one, or the label disappears as a streak passes.
-  const variantClasses = isPrimary
-    ? 'bg-violet-600 text-white shadow-lg shadow-violet-950/50 hover:bg-violet-500 hover:shadow-[0_12px_30px_-10px_rgba(139,92,246,0.8)]'
-    : 'border border-white/25 bg-[#05040a]/85 text-white shadow-lg shadow-black/40 backdrop-blur-md hover:border-violet-400/70 hover:bg-[#05040a]/95 hover:text-violet-200';
+function AnnouncementPill() {
+  if (!heroAnnouncement) return null;
 
   return (
     <a
-      href={href}
-      download={shouldDownload || undefined}
-      target={opensInNewTab ? '_blank' : undefined}
-      rel={opensInNewTab ? 'noopener noreferrer' : undefined}
-      className={`${baseClasses} ${variantClasses}`}
+      href={heroAnnouncement.href}
+      className="group inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-surface/70 py-1 pl-1 pr-3 text-sm text-ink-muted backdrop-blur-sm transition-colors hover:border-accent/40 hover:text-ink"
     >
-      {icon}
-      {label}
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2 py-0.5 font-mono text-xs font-medium text-accent">
+        <span className="relative flex h-1.5 w-1.5">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+        </span>
+        {heroAnnouncement.tag}
+      </span>
+      {heroAnnouncement.text}
+      <ArrowRight
+        aria-hidden="true"
+        className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+      />
     </a>
   );
 }
@@ -76,176 +48,92 @@ function HeroLink({
 /**
  * The landing hero.
  *
- * Renders full-viewport on large screens and stacks to a single column on
- * mobile, where the portrait appears above the text.
- *
- * Side effects: mounts the FloatingLines WebGL canvas for as long as the page
- * is open.
+ * Two columns on `md` and up (text left, portrait right); below that the
+ * portrait stacks above the text.
  *
  * @returns The hero section element.
  */
 export function Hero() {
   return (
-    <section id="hero" className="relative w-full overflow-hidden">
-      {/* Animated backdrop, confined to the hero. */}
-      <div className="pointer-events-none absolute inset-0">
-        <FloatingLines
-          linesGradient={['#7c3aed', '#a78bfa', '#c4b5fd']}
-          enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[10, 7, 5]}
-          lineDistance={[8, 6, 4]}
-          bendRadius={5.0}
-          bendStrength={-0.5}
-          interactive={false}
-          parallax={true}
-        />
-      </div>
+    <section id="hero" className="w-full px-4 pt-28 sm:px-6 sm:pt-36">
+      <div className="mx-auto max-w-5xl">
+        <div className="flex flex-col-reverse gap-10 md:flex-row md:items-center md:justify-between md:gap-16">
+          <div className="max-w-2xl">
+            <AnnouncementPill />
 
-      {/* Contrast scrim. The FloatingLines streaks peak at near-white, which
-          washes out anything layered over them. This knocks the backdrop back
-          far enough for text and buttons to hold contrast while leaving the
-          animation clearly visible. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[#05040a]/55" />
-
-      {/* Extra darkening behind the text column specifically, where the
-          smallest type sits. Angled so the portrait side stays brighter. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#05040a]/70 via-[#05040a]/30 to-[#05040a]/70"
-      />
-
-      {/* Fade the hero into the static backdrop below it so the seam between
-          the animated canvas and the rest of the page is invisible. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#05040a]"
-      />
-
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-6 pb-16 pt-32 sm:px-8">
-        <div className="flex flex-col items-center gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
-          {/* Portrait */}
-          <div className="shrink-0">
-            <TiltedCard
-              imageSrc={selfImage}
-              altText={`Portrait of ${profile.name}`}
-              captionText={profile.name}
-              containerHeight="340px"
-              containerWidth="340px"
-              imageHeight="340px"
-              imageWidth="340px"
-              rotateAmplitude={0}
-              scaleOnHover={1.08}
-              showMobileWarning={false}
-              showTooltip={true}
-              displayOverlayContent={false}
-            />
-          </div>
-
-          {/* Introduction */}
-          <div className="max-w-xl text-center lg:text-left">
-            <p className="font-mono text-sm uppercase tracking-[0.3em] text-violet-300">
-              {profile.location}
-            </p>
-
-            <h1 className="mt-4 font-mono text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-7 bg-gradient-to-b from-white to-ink-muted bg-clip-text pb-1 text-5xl font-semibold tracking-tight text-transparent sm:text-6xl">
               {profile.name}
             </h1>
+            <p className="mt-2 text-lg text-ink-muted sm:text-xl">
+              {profile.title}
+              <span className="text-ink-faint"> · {profile.location}</span>
+            </p>
 
-            <p className="mt-3 text-xl font-medium text-neutral-300 sm:text-2xl">{profile.title}</p>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
+              {heroIntro}
+            </p>
 
-            {/* Fixed min-height prevents the buttons below from jumping as the
-                typed line changes length. Kept at neutral-200 rather than a
-                dimmer grey: this is the smallest type over the brightest part
-                of the animated backdrop. */}
-            <div className="mt-5 min-h-14 text-base text-neutral-200 sm:text-lg">
-              <TextType
-                text={[...heroTaglines]}
-                typingSpeed={55}
-                pauseDuration={2200}
-                showCursor={true}
-                cursorCharacter="|"
-              />
-            </div>
-
-            <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
-              <HeroLink
+            <div className="mt-8 flex flex-wrap gap-3">
+              <LinkButton
                 href={profile.resumePath}
-                label="Download Résumé"
-                isPrimary
-                shouldDownload
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                }
-              />
-              <HeroLink
-                href={profile.github}
-                label="GitHub"
-                isPrimary={false}
+                variant="primary"
                 opensInNewTab
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                }
-              />
-              <HeroLink
-                href="#contact"
-                label="Get in Touch"
-                isPrimary={false}
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                }
-              />
+                icon={<FileText aria-hidden="true" className={iconClasses} />}
+              >
+                Résumé
+              </LinkButton>
+              <LinkButton
+                href={profile.github}
+                opensInNewTab
+                icon={<Github aria-hidden="true" className={iconClasses} />}
+              >
+                GitHub
+              </LinkButton>
+              <LinkButton
+                href={profile.linkedin}
+                opensInNewTab
+                icon={<Linkedin aria-hidden="true" className={iconClasses} />}
+              >
+                LinkedIn
+              </LinkButton>
+              <LinkButton
+                href={`mailto:${profile.email}`}
+                icon={<Mail aria-hidden="true" className={iconClasses} />}
+              >
+                Email
+              </LinkButton>
             </div>
+          </div>
+
+          {/* Portrait with an offset accent frame behind it. The right/bottom
+              margin reserves room for the frame's offset so it never touches
+              the container edge. */}
+          <div className="relative mb-3 mr-3 w-40 shrink-0 sm:w-52 md:w-60">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 translate-x-3 translate-y-3 rounded-2xl border border-accent/40"
+            />
+            <img
+              src={selfImage}
+              alt={`Portrait of ${profile.name}`}
+              width={706}
+              height={913}
+              className="relative w-full rounded-2xl border border-line object-cover"
+            />
           </div>
         </div>
 
+        <SignalLine className="mt-16 sm:mt-20" />
+
         {/* Headline metrics */}
-        <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur-md lg:grid-cols-4">
+        <dl className="grid grid-cols-2 gap-y-8 pb-10 pt-8 lg:grid-cols-4">
           {statistics.map((statistic) => (
-            <div key={statistic.label} className="bg-[#05040a]/80 px-5 py-6 text-center">
-              <dt className="sr-only">{statistic.label}</dt>
-              <dd>
-                <span className="block font-mono text-2xl font-bold text-violet-300 sm:text-3xl">
-                  {statistic.value}
-                </span>
-                <span className="mt-2 block text-xs leading-snug text-neutral-400">
-                  {statistic.label}
-                </span>
+            // dd is moved above dt visually with order-first, so values share a
+            // top line regardless of how many lines each label wraps to.
+            <div key={statistic.label} className="flex flex-col gap-1 pr-4">
+              <dt className="text-sm leading-snug text-ink-faint">{statistic.label}</dt>
+              <dd className="order-first text-2xl font-semibold tracking-tight text-ink tabular-nums sm:text-3xl">
+                {statistic.value}
               </dd>
             </div>
           ))}
