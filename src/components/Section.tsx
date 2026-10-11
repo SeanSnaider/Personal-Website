@@ -1,8 +1,8 @@
 /**
  * Shared section layout primitives.
  *
- * Exports `Section`, the wrapper every content section on the page uses, and
- * `Reveal`, a generic scroll-triggered fade-and-rise wrapper for individual
+ * Exports `Section`, the wrapper every content section on the home page uses,
+ * and `Reveal`, a generic scroll-triggered fade-and-rise wrapper for individual
  * items inside a section.
  *
  * Centralizing these keeps vertical rhythm, heading treatment, content width,
@@ -18,18 +18,10 @@ import { cn } from '../lib/utils';
 export interface SectionProps {
   /** DOM id used as the in-page navigation anchor target. */
   id: string;
-  /** Small uppercase label rendered above the heading, e.g. "02 / Experience". */
-  eyebrow: string;
-  /** The section's main heading text. */
+  /** Two-digit position on the page, e.g. "01", shown in mono before the title. */
+  number: string;
+  /** The section's heading text. */
   title: string;
-  /** Optional one-line description rendered beneath the heading. */
-  subtitle?: string;
-  /**
-   * Maximum content width.
-   *
-   * @defaultValue 'max-w-5xl'
-   */
-  maxWidth?: string;
   /** Additional classes merged onto the `<section>` element. */
   className?: string;
   /** The section body. */
@@ -37,49 +29,33 @@ export interface SectionProps {
 }
 
 /**
- * A page section with a consistent header, spacing, and scroll anchor.
+ * A page section with a consistent heading, spacing, and scroll anchor.
  *
- * Renders a `<section>` containing an eyebrow label, an `<h2>` heading, an
- * optional subtitle, an accent rule, and the supplied children. The header
- * animates into view on scroll via {@link useScrollReveal}.
- *
- * Side effects: none beyond registering an IntersectionObserver for the header.
+ * On large screens the heading sits in a narrow left column beside the
+ * content, separated from the previous section by a hairline; below `lg` it
+ * stacks above the content.
  *
  * @param props - See {@link SectionProps}.
  * @returns The section element.
  */
-export function Section({
-  id,
-  eyebrow,
-  title,
-  subtitle,
-  maxWidth = 'max-w-5xl',
-  className,
-  children,
-}: SectionProps) {
+export function Section({ id, number, title, className, children }: SectionProps) {
   const { ref, isVisible } = useScrollReveal<HTMLDivElement>();
 
   return (
     <section
       id={id}
-      // scroll-mt clears the fixed navigation pill when jumping to an anchor.
-      className={cn('relative w-full scroll-mt-28 px-6 py-24 sm:px-8 md:py-32', className)}
+      // scroll-mt clears the fixed navigation bar when jumping to an anchor.
+      className={cn('w-full scroll-mt-20 px-4 sm:px-6', className)}
     >
-      <div className={cn('mx-auto', maxWidth)}>
-        <div ref={ref} className={cn('reveal mb-14', isVisible && 'reveal-visible')}>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-violet-400">
-            {eyebrow}
-          </p>
-          <h2 className="mt-3 font-mono text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            {title}
+      <div className="mx-auto grid max-w-5xl gap-8 border-t border-line py-16 sm:py-20 lg:grid-cols-[11rem_1fr] lg:gap-12">
+        <div ref={ref} className={cn('reveal', isVisible && 'reveal-visible')}>
+          <h2 className="flex items-baseline gap-3 lg:sticky lg:top-24 lg:flex-col lg:gap-1.5">
+            <span className="font-mono text-xs text-accent">{number}</span>
+            <span className="text-base font-semibold tracking-tight text-ink">{title}</span>
           </h2>
-          {subtitle && (
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-neutral-400">{subtitle}</p>
-          )}
-          <div className="mt-6 h-px w-16 bg-gradient-to-r from-violet-500 to-transparent" />
         </div>
 
-        {children}
+        <div className="min-w-0">{children}</div>
       </div>
     </section>
   );

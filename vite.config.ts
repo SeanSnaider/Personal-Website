@@ -11,6 +11,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    // Multi-page build: one HTML entry per page. Add new project pages here.
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        bellydsp: path.resolve(__dirname, 'projects/bellydsp/index.html'),
+      },
+    },
+  },
   server: {
     hmr: {
       overlay: true,
