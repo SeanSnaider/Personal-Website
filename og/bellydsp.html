@@ -25,13 +25,14 @@
       .credits div { display: grid; grid-template-columns: 180px 1fr; padding: 10px 0; border-bottom: 1px solid var(--rule); }
       .credits dt { color: var(--slate); }
       .credits dd { margin: 0; }
-      /* The Comet head, framed like the color plate in a gatefold: window
-         x 296-2264, y 278-850 of the 2560x1520 screenshot, scaled to 484px
-         (484 / 1968 = 0.2459, so the source draws at 630x374). */
+      /* The Monolith head, framed like the color plate in a gatefold: window
+         x 136-1829, y 226-722 of the 2560x1520 main screen (ampHeadCrop in
+         src/data/screens.ts), scaled to 484px (484 / 1693 = 0.2859, so the
+         source draws at 732x435 and the window offset is -39px, -65px). */
       .plate { position: absolute; right: 64px; top: 200px; width: 500px; padding: 8px; background: var(--board-raised); }
       .plate div {
-        height: 141px;
-        background: url("../public/bellydsp-app.png") -73px -68px / 630px 374px no-repeat var(--board);
+        height: 142px;
+        background: url("../public/bellydsp-main-screen.png") -39px -65px / 732px 435px no-repeat var(--board);
       }
       .proof {
         position: absolute; right: 64px; top: 396px; width: 500px;
@@ -48,11 +49,11 @@
     <h1 class="title expanded">BellyDSP</h1>
     <p class="subtitle"><b>Open-source guitar amp sim</b> for macOS and Windows.</p>
     <dl class="credits">
-      <div><dt>Design, direction</dt><dd>Sean Snaider</dd></div>
-      <div><dt>Code</dt><dd>Claude Code agents, under his direction</dd></div>
+      <div><dt>Design, Rust</dt><dd>Sean Snaider, by hand</dd></div>
+      <div><dt>C++ and UI</dt><dd>Mostly Claude Code agents</dd></div>
     </dl>
 
-    <div class="plate"><div role="img" aria-label="The Comet amp head from the BellyDSP Amp page"></div></div>
-    <p class="proof"><b>~7,200</b> tests. <b>4x</b> less CPU. <b>Zero</b> added latency. Free and open source.</p>
+    <div class="plate"><div role="img" aria-label="The Monolith amp head from the BellyDSP main screen"></div></div>
+    <p class="proof"><b>8,945</b> checks. <b>4x</b> less CPU. <b>Zero</b> added latency. Free and open source.</p>
   </body>
 </html>

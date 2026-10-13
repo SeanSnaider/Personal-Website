@@ -57,7 +57,7 @@ const paragraphClasses = 'text-[17px] leading-relaxed text-ink-soft';
  * @returns The page tree.
  */
 export function BellyDspPage() {
-  const { upcoming } = bellyDsp;
+  const { redesign, process } = bellyDsp;
   // The credit lines say who did what, so the summary "Role" fact would only
   // repeat them; it is dropped whenever credits exist.
   const credits = project?.credits ?? [];
@@ -125,8 +125,8 @@ export function BellyDspPage() {
                 <img
                   src={bellyDsp.screenshot.src}
                   alt={bellyDsp.screenshot.alt}
-                  width={2560}
-                  height={1520}
+                  width={bellyDsp.screenshot.width}
+                  height={bellyDsp.screenshot.height}
                   className="w-full"
                 />
               </div>
@@ -156,6 +156,44 @@ export function BellyDspPage() {
                 </div>
               ))}
             </dl>
+          </NotesSection>
+
+          <NotesSection title="The redesign">
+            <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+              <div className="max-w-[40rem]">
+                <div className="space-y-5">
+                  {redesign.intro.map((paragraph) => (
+                    <p key={paragraph.slice(0, 40)} className={paragraphClasses}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+                <NoteList items={redesign.onScreen} className="mt-4" />
+                <p className={`mt-6 ${paragraphClasses}`}>{redesign.afterList}</p>
+              </div>
+
+              <div className="space-y-12">
+                {[redesign.heads, redesign.board].map((plate) => (
+                  <figure key={plate.image.src}>
+                    <div className="bg-board-raised p-2 sm:p-3">
+                      <img
+                        src={plate.image.src}
+                        alt={plate.image.alt}
+                        width={plate.image.width}
+                        height={plate.image.height}
+                        loading="lazy"
+                        className="w-full"
+                      />
+                    </div>
+                    <figcaption className="mt-3 text-sm text-slate">{plate.image.caption}</figcaption>
+                    <p className={`mt-5 ${paragraphClasses}`}>{plate.text}</p>
+                  </figure>
+                ))}
+
+                {/* Who did what on the redesign, set as a liner credit. */}
+                <p className="border-t border-rule pt-5 text-base leading-relaxed text-ink">{redesign.credit}</p>
+              </div>
+            </div>
           </NotesSection>
 
           {/* The inner sleeve: a panel of paper stock with the die-cut hole
@@ -190,41 +228,18 @@ export function BellyDspPage() {
             </dl>
           </section>
 
-          <NotesSection title="Recording notes">
-            <div className="max-w-[46rem] space-y-5">
-              {bellyDsp.process.map((paragraph) => (
-                <p key={paragraph.slice(0, 40)} className={paragraphClasses}>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </NotesSection>
-
-          <NotesSection title="Next release">
-            <p className={`max-w-[46rem] ${paragraphClasses}`}>{upcoming.intro}</p>
-            <div className="mt-10 bg-board-raised p-2 sm:p-3">
-              <img
-                src={upcoming.image.src}
-                alt={upcoming.image.alt}
-                width={1920}
-                height={1005}
-                loading="lazy"
-                className="w-full"
-              />
-            </div>
-            <div className="mt-14 grid gap-x-16 gap-y-12 lg:grid-cols-3">
-              {upcoming.groups.map((group) => (
-                <div key={group.title}>
-                  <h3 className="font-semi-expanded text-xl font-bold text-ink">{group.title}</h3>
-                  {group.lead && <p className="mt-3 text-base leading-relaxed text-ink-soft">{group.lead}</p>}
-                  <NoteList items={group.items} className="mt-5" />
-                  {group.after.map((paragraph) => (
-                    <p key={paragraph.slice(0, 40)} className="mt-4 text-base leading-relaxed text-ink-soft">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              ))}
+          <NotesSection title="How I built it">
+            <div className="max-w-[46rem]">
+              <p className={paragraphClasses}>{process.intro}</p>
+              <p className={`mt-5 ${paragraphClasses}`}>{process.jobLead}</p>
+              <NoteList items={process.jobs} className="mt-4" />
+              <div className="mt-6 space-y-5">
+                {process.after.map((paragraph) => (
+                  <p key={paragraph.slice(0, 40)} className={paragraphClasses}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
           </NotesSection>
 

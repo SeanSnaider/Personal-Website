@@ -19,6 +19,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { cn } from '../lib/utils';
 import { tracksBySide, type Side, type Track } from '../data/tracks';
 import { catalogNumber, heroAnnouncement, profile } from '../data/portfolio';
+import { bellyDspScreens } from '../data/screens';
 
 /* -------------------------------------------------------------------------
    Vinyl and tonearm geometry, in the SVG's own units (viewBox 720 x 640).
@@ -111,14 +112,14 @@ function bandsFor(tracks: readonly Track[]): Band[] {
    ------------------------------------------------------------------------- */
 
 /**
- * The screenshot the cover is made from, and the square crop: a close-up of
- * the Middle, Treble, and Presence knobs and the top of the "Comet" mark.
+ * The screenshot the cover is made from, and the square crop. Both live in
+ * `src/data/screens.ts` so a new BellyDSP UI means one edit there.
  */
-const COVER_SOURCE = '/bellydsp-app.png';
-const COVER_CROP = { x: 1040, y: 260, size: 720 };
+const COVER_SOURCE = bellyDspScreens.app.src;
+const COVER_CROP = bellyDspScreens.coverCrop;
 /**
  * Halftone cell size, in CSS pixels: a coarse screen on large sleeves and a
- * finer one on phones, so the knobs and the Comet mark keep enough dots to
+ * finer one on phones, so the cover's detail (knobs, lettering) keeps enough dots to
  * read at about 270px.
  */
 function halftoneCell(sleeveSize: number): number {

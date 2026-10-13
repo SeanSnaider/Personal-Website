@@ -30,6 +30,6 @@ render bellydsp.html public/og-bellydsp.png
 # them. When the impeccable CLI is available, stamp it back.
 IMPECCABLE="${IMPECCABLE:-$HOME/.claude/skills/impeccable/scripts/impeccable}"
 if [ -x "$IMPECCABLE" ]; then
-  "$IMPECCABLE" embed-prompt public/og-card.png --prompt "Origin: rendered from og/home.html (with og/card.css and og/halftone.js) by og/render.sh in headless Chrome at 1200x630. No image generation; the halftone cover is computed on a canvas from public/bellydsp-app.png, a real BellyDSP screenshot supplied by Sean Snaider, and the vinyl and type are CSS."
-  "$IMPECCABLE" embed-prompt public/og-bellydsp.png --prompt "Origin: rendered from og/bellydsp.html (with og/card.css) by og/render.sh in headless Chrome at 1200x630. Contains a CSS crop of public/bellydsp-app.png, a real BellyDSP screenshot supplied by Sean Snaider. No image generation."
+  "$IMPECCABLE" embed-prompt public/og-card.png --prompt "Origin: rendered from og/home.html (with og/card.css and og/halftone.js) by og/render.sh in headless Chrome at 1200x630. No image generation; the halftone cover is computed on a canvas from public/bellydsp-main-screen.png, a real BellyDSP screenshot supplied by Sean Snaider, and the vinyl and type are CSS."
+  "$IMPECCABLE" embed-prompt public/og-bellydsp.png --prompt "Origin: rendered from og/bellydsp.html (with og/card.css) by og/render.sh in headless Chrome at 1200x630. Contains a CSS crop of public/bellydsp-main-screen.png, a real BellyDSP screenshot supplied by Sean Snaider. No image generation."
 fi
