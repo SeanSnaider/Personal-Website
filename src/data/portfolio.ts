@@ -13,13 +13,15 @@
  *     disagree, the PDF wins: recruiters cross-reference it.
  *   - `experiences`, `projects` and `skillCategories` mirror the PDF. The
  *     `earlierExperiences` and `otherProjects` lists are deliberate extras that
- *     the one-page PDF has no room for; they render in a compact style below
- *     the résumé items.
+ *     the one-page PDF has no room for (Systems Programming dropped off the
+ *     résumé and lives on here); they render as compact bonus tracks.
  *   - Ordering matters: every list renders in array order and is expected to be
  *     reverse-chronological (most recent first).
  *   - Dates are human-readable display strings, not parsed values. They are
  *     rendered verbatim.
  */
+
+import { bellyDspScreens } from './screens';
 
 /** Where a project's source code lives, or `null` if the repo is not public. */
 export type RepositoryUrl = string | null;
@@ -65,6 +67,12 @@ export interface Profile {
   readonly resumePath: string;
 }
 
+/**
+ * The site's catalog number, printed like a record label's on the spine, the
+ * sleeve, and the fine print. Purely a label; it identifies nothing.
+ */
+export const catalogNumber = 'SS-001';
+
 /** Contact details and links for Sean Snaider. */
 export const profile: Profile = {
   name: 'Sean Snaider',
@@ -101,7 +109,7 @@ export interface Announcement {
 /** The hero announcement. Update or null it out when it stops being news. */
 export const heroAnnouncement: Announcement | null = {
   tag: 'New',
-  text: 'BellyDSP v0.1.0 is out',
+  text: 'A new look for BellyDSP',
   href: '/projects/bellydsp/',
 };
 
@@ -171,11 +179,11 @@ export const experiences: readonly Experience[] = [
     period: 'Jul 2026 - Dec 2026',
     isCurrent: true,
     highlights: [
-      'Building a Python tool to automate data migrations previously run by hand across multiple platforms and a legacy Microsoft Access workflow; projected by management to eliminate ~$100K in annual effort across business and IT teams.',
-      'Designed the tool so semi-technical staff can reconfigure migrations themselves without code changes, driving field mappings from declarative Excel configuration with per-field overrides rather than hardcoded transformation logic.',
-      'Added checks that migrated records are correct, not just present: value fidelity and referential integrity.',
+      'Designed and built a Python/SQL ETL tool migrating ~4,000 contracts (~200 fields each) from Agiloft to Icertis, replacing a manual process and a legacy Microsoft Access workflow; management projects ~$100K/year in savings.',
+      'Made migrations reconfigurable without code changes by driving all ~200 field mappings from declarative Excel config with per-field overrides; iterated on the design with ~10 stakeholders, including the heads of contract management and Icertis.',
+      'Built automated validation tests that check migrated records for value fidelity, referential integrity, and datatype mismatches against the Icertis schema, narrowing manual review to logic-level issues.',
     ],
-    technologies: ['Python', 'Polars', 'Microsoft Access', 'Excel'],
+    technologies: ['Python', 'SQL', 'Excel', 'Agiloft', 'Icertis', 'Microsoft Access'],
   },
   {
     id: 'sga',
@@ -185,10 +193,11 @@ export const experiences: readonly Experience[] = [
     period: 'Feb 2026 - Present',
     isCurrent: true,
     highlights: [
-      'Replaced spreadsheet-based attendance and voting workflows with a full-stack web application now used by 50+ SGA members across 20+ officer meetings per semester.',
-      'Hardened vote handling for SGA executive officer elections by moving validation from the browser to the server with Next.js API routes, Prisma, and schema-checked requests, closing a class of data-integrity bugs.',
+      "One of 6 engineers on a full-stack attendance and voting app (Next.js, Prisma, PostgreSQL) that replaced spreadsheets for 50+ members across 20+ meetings per semester; built UI features, fixed attendance data-loss bugs, and review and merge teammates' pull requests.",
+      "Fixed a data-loss bug where editing one member's attendance reset every other member's recorded attendance to \"pending\"; traced it to an update loop that overwrote finalized records instead of skipping them.",
+      'Blocked ineligible members from voting in executive elections by moving vote validation server-side (Next.js API routes, Prisma, schema-checked requests).',
     ],
-    technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Vercel'],
+    technologies: ['Next.js', 'Prisma', 'PostgreSQL'],
   },
   {
     id: 'khoury-ta',
@@ -198,10 +207,9 @@ export const experiences: readonly Experience[] = [
     period: 'Sep 2025 - Apr 2026',
     isCurrent: false,
     highlights: [
-      "Supported 850+ students across two of Khoury's largest intro CS courses through weekly debugging hours covering OOP, data structures, recursion, and control flow.",
-      'Coached students on effective use of Claude Code and GitHub Copilot in lab sessions and one-on-one, covering how to scope tasks, supply relevant context, and iterate when generated output missed intent.',
+      'Led two weekly labs of ~40 students for intro CS courses in Python and Java (850+ combined enrollment), covering OOP, data structures, and recursion; graded assignments and ran review sessions.',
     ],
-    technologies: ['Java', 'Python', 'Claude Code', 'GitHub Copilot'],
+    technologies: ['Python', 'Java'],
   },
 ];
 
@@ -281,6 +289,36 @@ export interface Project {
   readonly detailPath: string | null;
   /** Whether to render this project in the large, full-width card slot. */
   readonly isFeatured: boolean;
+  /**
+   * Who did what, printed as liner-note credits. Only set where the split of
+   * work is known and confirmed by Sean; omit rather than guess.
+   */
+  readonly credits?: readonly ProjectCredit[];
+  /**
+   * A typeset text panel shown in place of `image`, for projects whose best
+   * picture is a terminal session rather than a screenshot. Always labeled
+   * as an illustration in its caption.
+   */
+  readonly excerpt?: ProjectExcerpt;
+}
+
+/** A short terminal session, set as type. */
+export interface ProjectExcerpt {
+  /** Caption shown under the panel; must say it is an illustration. */
+  readonly caption: string;
+  /**
+   * The session, one entry per line. Lines starting with "$ " or "> " are
+   * commands (the prompt is styled separately); all others are output.
+   */
+  readonly lines: readonly string[];
+}
+
+/** One liner-note credit line: a role and who filled it. */
+export interface ProjectCredit {
+  /** What was done, e.g. "Design, direction, testing, listening". */
+  readonly role: string;
+  /** Who did it. */
+  readonly who: string;
 }
 
 /**
@@ -296,21 +334,48 @@ export const projects: readonly Project[] = [
     tagline: 'Open-source guitar amp simulator',
     period: 'Sep 2026 - Present',
     summary:
-      'A free guitar amp sim and multi-effects app for macOS and Windows, with neural amp models, zero added latency, and a tone matcher that learns a sound from a song.',
+      'A guitar amp sim and multi-effects app I designed and released, free and open source for macOS and Windows. Neural amp models, a movable-mic cab, a full pedalboard drawn as real gear, zero added latency, and a tone matcher that dials in a sound from a song.',
     highlights: [
-      'Built and shipped a free guitar amp app for Mac and Windows: designed it, hand-built a Rust prototype, then directed parallel Claude Code agents to rebuild it in C++20, backed by ~7,200 automated tests.',
-      'Enforced real-time reliability with tests proving the live audio path never allocates memory or waits on locks, the most common causes of audio dropouts.',
-      'Made the app run on weaker computers by cutting CPU use about 4x, running only the selected amp and making its neural network code 2x faster, while keeping amp switches seamless.',
-      "Built a feature that recreates a song's guitar tone with the app's own gear, separating the guitar from the mix with the Demucs AI model; a 50-case benchmark decided which improvements shipped, cutting matching error 31% (statistically significant, p < 0.0001).",
+      'Built and released a free neural-network guitar amp simulator for macOS and Windows; wrote the original Rust implementation by hand, then designed the architecture for an AI-assisted C++20/JUCE port and now develop new features in C++ by hand.',
+      'Enforced real-time safety with GitHub Actions CI tests that fail if the audio thread allocates memory or takes a lock, the two most common causes of audio dropouts.',
+      "Diagnosed and fixed two performance bottlenecks: ran inference only for the selected amp, cutting CPU usage ~4x while keeping amp switches seamless, and replaced per-sample std::tanh with Eigen's vectorized tanh, doubling neural-network throughput.",
+      "Built tone matching that isolates the guitar from a full mix with Demucs and fits the app's own gear to it; gated every change on a 50-song benchmark, reducing matching error 31%.",
     ],
     technologies: ['C++20', 'JUCE', 'Python', 'CMake', 'GitHub Actions'],
-    image: '/bellydsp-app.png',
-    imageAlt: 'The BellyDSP Amp page with the Comet amp head, knobs, and an output spectrum',
+    image: bellyDspScreens.app.src,
+    imageAlt: bellyDspScreens.app.alt,
     imageFocus: 'top',
     repoUrl: REPOSITORY_URLS.bellyDsp,
     liveUrl: 'https://bellydsp.com',
     detailPath: '/projects/bellydsp/',
     isFeatured: true,
+    credits: [
+      { role: 'Design and architecture', who: 'Sean Snaider' },
+      { role: 'Rust original', who: 'Sean Snaider, by hand' },
+      { role: 'C++20/JUCE port and UI', who: 'Mostly Claude Code agents, under his direction' },
+      { role: 'Some C++ features', who: 'Sean Snaider, by hand' },
+      { role: 'Interface direction, testing, listening', who: 'Sean Snaider' },
+    ],
+  },
+  {
+    id: 'guitar-learning-tool',
+    title: 'Guitar Learning Tool',
+    tagline: 'Chord detector and practice planner',
+    period: 'Feb 2026',
+    summary:
+      'A browser app that listens to you play, names the chord, and plans what to practice next.',
+    highlights: [
+      'Built a browser-based chord detector using an FFT chromagram and benchmarked it on 180 real recordings from the public GuitarSet dataset, correctly identifying root and major/minor quality 73% of the time.',
+      'Generated chord progressions and personalized practice plans through a FastAPI REST API backed by the Anthropic API, using structured outputs to constrain responses to typed schemas the app renders reliably.',
+    ],
+    technologies: ['React', 'TypeScript', 'FastAPI', 'SQLAlchemy', 'Anthropic API'],
+    image: '/project-guitar.png',
+    imageAlt: 'Screenshot of the Guitar Learning Tool',
+    imageFocus: 'top',
+    repoUrl: REPOSITORY_URLS.guitarLearningTool,
+    liveUrl: null,
+    detailPath: null,
+    isFeatured: false,
   },
   {
     id: 'rubiks-cube-solver',
@@ -320,36 +385,14 @@ export const projects: readonly Project[] = [
     summary:
       'A web app that solves any scramble in 20 moves or fewer, with a 3D cube view and a competition-style timer.',
     highlights: [
-      "Built a solver for any scramble (20 moves or fewer, under 1s), implementing Kociemba's two-phase algorithm from the papers.",
-      'Traced intermittent failed solves to a fixed-orientation assumption by testing scrambles on a physical cube, then normalized every state to white top, green front before solving.',
-      'Shipped it as a web app with a CSS 3D cube and a WCA-style timer, now used by 10+ peers for timed solves.',
+      "Implemented Kociemba's two-phase algorithm from the original papers behind a FastAPI REST API, solving scrambles in 20 moves or fewer in under 1s in testing.",
+      'Traced intermittent failed solves to a fixed-orientation assumption by testing scrambles on a physical cube, then normalized every state to a canonical orientation before solving.',
     ],
     technologies: ['Python', 'React', 'TypeScript', 'FastAPI', 'MongoDB'],
     image: '/project-cube.png',
     imageAlt: "Screenshot of the Rubik's Cube Solver web app",
     imageFocus: 'top',
     repoUrl: REPOSITORY_URLS.rubiksCubeSolver,
-    liveUrl: null,
-    detailPath: null,
-    isFeatured: false,
-  },
-  {
-    id: 'systems-programming',
-    title: 'Systems Programming',
-    tagline: 'Coursework',
-    period: 'Fall 2025',
-    summary:
-      'Operating-system building blocks in C, built to understand what actually happens beneath the runtime.',
-    highlights: [
-      'Built a FUSE filesystem driver over a disk image with bitmap block allocation.',
-      'Wrote a first-fit free-list memory allocator and a Unix shell with pipes and I/O redirection.',
-      'Read x86-64 assembly throughout to trace how compiled C maps to machine-level behavior.',
-    ],
-    technologies: ['C', 'x86-64 Assembly', 'FUSE', 'Linux', 'GDB'],
-    image: '/project-filesystem.png',
-    imageAlt: 'Illustration for the Systems Programming coursework',
-    imageFocus: 'center',
-    repoUrl: REPOSITORY_URLS.systemsProgramming,
     liveUrl: null,
     detailPath: null,
     isFeatured: false,
@@ -379,13 +422,13 @@ export interface OtherProject {
 /** Other projects, most recent first. */
 export const otherProjects: readonly OtherProject[] = [
   {
-    id: 'guitar-learning-tool',
-    title: 'Guitar Learning Tool',
-    period: 'Dec 2025 - Jan 2026',
+    id: 'systems-programming',
+    title: 'Systems Programming',
+    period: 'Fall 2025',
     summary:
-      'A practice app that detects played chords in real time with the Web Audio API and generates progressions from your practice history with the Anthropic API.',
-    technologies: ['React', 'TypeScript', 'FastAPI', 'Anthropic API', 'Web Audio API'],
-    repoUrl: REPOSITORY_URLS.guitarLearningTool,
+      'Coursework in C: a FUSE filesystem driver over a disk image with bitmap block allocation, a first-fit free-list memory allocator, and a Unix shell with pipes and I/O redirection.',
+    technologies: ['C', 'x86-64 Assembly', 'FUSE', 'Linux', 'GDB'],
+    repoUrl: REPOSITORY_URLS.systemsProgramming,
   },
   {
     id: 'sanguine',
@@ -413,46 +456,24 @@ export interface SkillCategory {
 export const skillCategories: readonly SkillCategory[] = [
   {
     title: 'Languages',
-    skills: ['Python', 'Java', 'TypeScript', 'JavaScript', 'C', 'SQL', 'Rust'],
-  },
-  {
-    title: 'AI / LLM',
-    skills: [
-      'Anthropic API (structured outputs, tool use)',
-      'Claude Code',
-      'GitHub Copilot',
-      'Agentic coding workflows',
-    ],
+    skills: ['Python', 'Java', 'C++', 'C', 'TypeScript', 'Rust', 'SQL'],
   },
   {
     title: 'Frameworks & Data',
-    skills: ['React', 'Next.js', 'Tailwind CSS', 'FastAPI', 'Prisma', 'PostgreSQL', 'MongoDB', 'Pandas', 'NumPy', 'Polars'],
+    skills: ['JUCE', 'React', 'Next.js', 'FastAPI', 'SQLAlchemy', 'Prisma', 'PostgreSQL', 'MongoDB', 'Pandas', 'NumPy'],
   },
   {
     title: 'Tools & Infrastructure',
-    skills: ['Git', 'Docker', 'CMake', 'GitHub Actions', 'Linux/WSL', 'Vite', 'Vercel', 'GDB'],
+    skills: [
+      'Git',
+      'GitHub Actions (CI)',
+      'Docker',
+      'CMake',
+      'Linux',
+      'REST APIs',
+      'Anthropic API (structured outputs, tool use)',
+    ],
   },
-];
-
-/**
- * Headline metrics surfaced beneath the hero.
- *
- * These are deliberately few and concrete; each one is traceable to a specific
- * résumé line.
- */
-export interface Statistic {
-  /** The number or short value, e.g. "850+". */
-  readonly value: string;
-  /** What the value counts, e.g. "Students supported as a TA". */
-  readonly label: string;
-}
-
-/** At-a-glance numbers rendered as a strip under the hero. */
-export const statistics: readonly Statistic[] = [
-  { value: '3.89', label: 'GPA at Northeastern' },
-  { value: '~$100K', label: 'Projected annual effort saved at Vertex' },
-  { value: '850+', label: 'Students supported as a TA' },
-  { value: '~7,200', label: 'Automated tests behind BellyDSP' },
 ];
 
 /**
@@ -462,8 +483,8 @@ export const statistics: readonly Statistic[] = [
  * carrying its own markup.
  */
 export const aboutParagraphs: readonly string[] = [
-  "I'm a Computer Science student at Northeastern University, concentrating in Software Engineering, and currently on co-op at Vertex Pharmaceuticals, where I'm automating data migrations that used to be run by hand. Most of what I enjoy building sits in the same place: taking a process somebody is tolerating and turning it into software they stop thinking about.",
-  "That thread runs through my other work too. I replaced Northeastern SGA's spreadsheet-based voting with a real application used in executive officer elections, and I spent two semesters as a TA for Khoury's largest intro CS courses, helping 850+ students debug their way through OOP and recursion and coaching them on how to get useful output from tools like Claude Code.",
+  "I'm a Computer Science student at Northeastern University, concentrating in Software Engineering, and currently on co-op at Vertex Pharmaceuticals, where I built the tool that migrates thousands of contracts between systems instead of people doing it by hand. Most of what I enjoy building sits in the same place: taking a process somebody is tolerating and turning it into software they stop thinking about.",
+  "That thread runs through my other work too. I'm one of six engineers on the app that replaced Northeastern SGA's spreadsheet-based attendance and voting, and I spent two semesters leading weekly labs for Khoury's intro CS courses in Python and Java.",
   "Away from the terminal, I play progressive and math rock guitar and have been speedcubing for over ten years (6.14s single). Both keep turning into projects. The latest is BellyDSP, a guitar amp simulator I designed and shipped because I wanted a tone I'd actually play through.",
 ];
 

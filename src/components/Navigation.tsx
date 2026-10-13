@@ -1,159 +1,127 @@
 /**
- * Fixed site navigation, shared by the home page and project pages.
+ * Fixed top bar, shared by the home page and project pages: the record's
+ * spine. Name and catalog number on the left, the sides and sections on the
+ * right, and the Résumé always one click away.
  *
- * A full-width bar with the name on the left and section links on the right.
- * It gains a hairline and a translucent backdrop once the page scrolls, so it
- * separates from the content beneath it only when it needs to.
+ * On the home page it also shows what is "now playing": the track whose
+ * section is in view, tracked with an IntersectionObserver over the track
+ * anchors. Pages without tracks simply show nothing there.
  *
- * Links are written as `/#section` rather than `#section` so the same bar works
- * on project pages: on the home page the browser treats them as same-document
- * fragment jumps, and elsewhere they navigate home first.
+ * Links are written as `/#section` so the same bar works on project pages.
  *
- * Two scroll-driven details:
- *   - The link for the section currently in view is highlighted, tracked with
- *     an IntersectionObserver. On pages without those sections (project
- *     pages) nothing is highlighted.
- *   - A thin accent line along the bottom edge shows reading progress. It is
- *     updated by writing the transform directly to the element rather than
- *     through React state, so scrolling never re-renders the bar.
- *
- * Side effects: attaches a passive window scroll listener and an
- * IntersectionObserver for the duration of the component's lifetime.
+ * Side effects: a passive scroll listener and an IntersectionObserver for the
+ * component's lifetime.
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '../lib/utils';
-import { profile } from '../data/portfolio';
+import { allTracks, type Track } from '../data/tracks';
+import { catalogNumber, profile } from '../data/portfolio';
 
-/** In-page section anchors, in page order. `id` matches the section's DOM id. */
+/** Section links, in page order. */
 const sectionLinks: readonly { label: string; id: string }[] = [
-  { label: 'About', id: 'about' },
-  { label: 'Experience', id: 'experience' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'Skills', id: 'skills' },
-  { label: 'Contact', id: 'contact' },
+  { label: 'Side A', id: 'side-a' },
+  { label: 'Side B', id: 'side-b' },
+  { label: 'Liner notes', id: 'liner-notes' },
+  { label: 'Booking', id: 'booking' },
 ];
 
-/**
- * Observer margin that shrinks the viewport to a thin band just above its
- * middle, so exactly one section counts as "in view" at a time.
- */
-const ACTIVE_SECTION_ROOT_MARGIN = '-40% 0px -55% 0px';
-
-/** Scroll distance, in pixels, after which the bar gains its backdrop. */
-const SCROLL_THRESHOLD_PX = 16;
+/** Shrinks the viewport to a band just above center, so one track wins. */
+const NOW_PLAYING_ROOT_MARGIN = '-35% 0px -60% 0px';
 
 /**
- * The fixed top navigation bar.
+ * The fixed top bar.
  *
- * Below the `md` breakpoint only the name and the Résumé link are shown; the
- * page is short enough to scroll through on a phone.
- *
- * @returns The header element containing the primary navigation.
+ * @returns The header element.
  */
 export function Navigation() {
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const [nowPlaying, setNowPlaying] = useState<Track | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setHasScrolled(window.scrollY > SCROLL_THRESHOLD_PX);
-
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0;
-      if (progressRef.current) {
-        progressRef.current.style.transform = `scaleX(${progress})`;
-      }
-    };
-
-    // Run once on mount so a restored scroll position renders correctly.
+    const handleScroll = () => setHasScrolled(window.scrollY > 8);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    const sections = sectionLinks
-      .map((link) => document.getElementById(link.id))
+    const elements = allTracks
+      .map((track) => document.getElementById(track.anchor))
       .filter((element): element is HTMLElement => element !== null);
-    if (sections.length === 0) return;
+    if (elements.length === 0) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          const { id } = entry.target;
-          // Clear the highlight when the active section leaves the band
-          // without another taking its place (scrolling back up to the hero).
-          setActiveSectionId((current) =>
-            entry.isIntersecting ? id : current === id ? null : current,
+          const track = allTracks.find((candidate) => candidate.anchor === entry.target.id) ?? null;
+          // Clear only when the track that is showing leaves the band, so a
+          // neighbour leaving never blanks the current one.
+          setNowPlaying((current) =>
+            entry.isIntersecting ? track : current?.anchor === entry.target.id ? null : current,
           );
         }
       },
-      { rootMargin: ACTIVE_SECTION_ROOT_MARGIN },
+      { rootMargin: NOW_PLAYING_ROOT_MARGIN },
     );
-
-    sections.forEach((section) => observer.observe(section));
+    elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
 
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300',
-        hasScrolled ? 'border-line bg-bg/80 backdrop-blur-md' : 'border-transparent',
+        'fixed inset-x-0 top-0 z-50 border-b bg-board px-4 transition-colors duration-300 sm:px-8',
+        hasScrolled ? 'border-rule' : 'border-transparent',
       )}
     >
-      {/* Padding outside, max-width inside: the same structure as Section,
-          so the bar's edges line up with the content's. */}
-      <div className="px-4 sm:px-6">
-        <nav
-          aria-label="Primary"
-          className="mx-auto flex h-16 max-w-5xl items-center justify-between"
+      <nav aria-label="Primary" className="mx-auto flex h-14 max-w-[1312px] items-center justify-between gap-6">
+        <a href="/" className="flex shrink-0 items-baseline gap-3">
+          <span className="font-expanded text-[15px] font-extrabold tracking-[-0.01em] text-ink">{profile.name}</span>
+          <span className="hidden font-expanded text-xs font-bold tracking-[0.16em] text-slate sm:inline">
+            {catalogNumber}
+          </span>
+        </a>
+
+        {/* Now playing: which track's notes you are reading. */}
+        <p
+          aria-live="polite"
+          className={cn(
+            'hidden min-w-0 flex-1 truncate text-center text-sm text-slate transition-opacity duration-300 xl:block',
+            nowPlaying ? 'opacity-100' : 'opacity-0',
+          )}
         >
-          <a href="/" className="text-sm font-semibold tracking-tight text-ink">
-            {profile.name}
+          {nowPlaying && (
+            <>
+              Now playing <span className="font-expanded font-extrabold text-label-text">{nowPlaying.code}</span>{' '}
+              <span className="text-ink">{nowPlaying.title}</span>
+            </>
+          )}
+        </p>
+
+        <div className="flex shrink-0 items-center gap-6">
+          <ul className="hidden items-center gap-6 lg:flex">
+            {sectionLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`/#${link.id}`}
+                  className="text-sm text-ink-soft decoration-label underline-offset-[6px] transition-colors hover:text-ink hover:underline"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={profile.resumePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 items-center bg-ink px-4 font-semi-expanded text-sm font-bold text-board transition-colors hover:bg-white"
+          >
+            Résumé
           </a>
-
-          <div className="flex items-center gap-6">
-            <ul className="hidden items-center gap-6 md:flex">
-              {sectionLinks.map((link) => (
-                <li key={link.id}>
-                  <a
-                    href={`/#${link.id}`}
-                    aria-current={activeSectionId === link.id ? 'location' : undefined}
-                    className={cn(
-                      'relative text-sm transition-colors hover:text-ink',
-                      // Accent underline that grows in under the active link.
-                      'after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300',
-                      activeSectionId === link.id ? 'text-ink after:scale-x-100' : 'text-ink-muted',
-                    )}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            <a
-              href={profile.resumePath}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-8 items-center rounded-md border border-line-strong px-3 text-sm font-medium text-ink transition-colors hover:bg-surface-raised"
-            >
-              Résumé
-            </a>
-          </div>
-        </nav>
-      </div>
-
-      {/* Reading progress. Starts at zero width; the scroll handler sets the
-          scale. */}
-      <div
-        ref={progressRef}
-        aria-hidden="true"
-        className="absolute inset-x-0 -bottom-px h-px origin-left scale-x-0 bg-gradient-to-r from-accent/0 via-accent/70 to-accent"
-      />
+        </div>
+      </nav>
     </header>
   );
 }

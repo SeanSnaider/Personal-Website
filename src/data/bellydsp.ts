@@ -5,14 +5,20 @@
  * data. The short card on the home page reads from `portfolio.projects`; this
  * file is the in-depth write-up behind it.
  *
+ * Source: Sean's BellyDSP_update/personal_site_ui_update.md (v0.3.0, the
+ * redesigned interface). Screenshots come from `screens.ts`.
+ *
  * Usage notes:
  *   - Numbers here come from BellyDSP's own measurements. They are more
  *     detailed than the résumé (e.g. 0.665 to 0.457 rather than "31%") but
  *     must agree with it.
- *   - `upcoming` describes work that is on GitHub but not yet in the release
- *     download. When the next version ships, fold it into `features` and
- *     `highlights` and delete the section rather than leaving it stale.
+ *   - Credits must stay honest: the Rust original was written by
+ *     hand; most of the C++ code, including the redesigned interface, was
+ *     written by Claude Code agents under Sean's direction; Sean also writes
+ *     some C++ features by hand.
  */
+
+import { bellyDspScreens } from './screens';
 
 /** A labelled fact in the page's at-a-glance strip. */
 export interface ProjectFact {
@@ -30,24 +36,12 @@ export interface ProjectPoint {
   readonly body: string;
 }
 
-/** A highlight with a headline figure, rendered as a metric card. */
+/** A highlight with a figure, set inside its sentence on the page. */
 export interface ProjectHighlight extends ProjectPoint {
-  /** The headline figure, e.g. "0 / 0 / 0". */
+  /** The figure, e.g. "0 / 0 / 0". */
   readonly figure: string;
-  /** What the figure measures, shown under it. */
+  /** What the figure measures; follows the figure in the sentence. */
   readonly figureLabel: string;
-}
-
-/** A group of upcoming changes under one heading. */
-export interface UpcomingGroup {
-  /** Group heading, e.g. "Eight amps, one at a time". */
-  readonly title: string;
-  /** Optional lead paragraph shown before the list. */
-  readonly lead: string | null;
-  /** The changes, one sentence or short paragraph each. */
-  readonly items: readonly string[];
-  /** Optional closing paragraphs shown after the list. */
-  readonly after: readonly string[];
 }
 
 /** Everything the BellyDSP page renders. */
@@ -62,27 +56,24 @@ export const bellyDsp = {
   sourceUrl: 'https://github.com/SeanSnaider/BellyDSP',
 
   facts: [
-    { label: 'Role', value: 'Designer and lead, built with AI coding agents (Claude Code)' },
+    { label: 'Role', value: 'Designer and lead; built with AI coding agents (Claude Code)' },
     { label: 'Stack', value: 'C++20, JUCE 8, NeuralAmpModelerCore, Eigen, CMake, Python, GitHub Actions' },
     { label: 'Platforms', value: 'macOS and Windows, free under AGPL-3.0' },
-    { label: 'Status', value: 'Released (v0.1.0), in active development' },
+    { label: 'Status', value: 'Released (v0.3.0), in active development' },
   ] satisfies readonly ProjectFact[],
 
-  screenshot: {
-    src: '/bellydsp-app.png',
-    alt: 'The BellyDSP Amp page with the Comet amp head, its seven knobs, an output spectrum, and the signal chain along the bottom',
-    caption: 'The Amp page in the upcoming version, with the Comet amp selected.',
-  },
+  screenshot: bellyDspScreens.app,
 
   overview: [
-    'BellyDSP is a guitar amp simulator and multi-effects app. You plug a guitar into an audio interface and play through neural amp models, a cabinet with movable mics, pedals, and effects, with zero added latency.',
+    "BellyDSP is a guitar amp simulator and multi-effects app. You plug a guitar into an audio interface and play through neural amp models, a cabinet with movable mics, pedals, and effects, with zero added latency. It's free, open source (AGPL-3.0), and runs on macOS and Windows.",
     "I play progressive and math rock and wanted a tool I'd actually use, so the bar was my own playing, not a demo.",
+    'Version 0.2.0 brought the eight amps, a closer tone matcher, and a lighter engine. Version 0.3.0 is the redesigned interface below.',
   ],
 
   features: [
     {
       title: 'Neural amps',
-      body: "The amps are NAM captures (the open Neural Amp Modeler format), run by the official NAM engine. Each amp's Gain knob blends five captures across its range, so it changes how hard the amp distorts, not just how loud it is.",
+      body: "Eight built-in amps, each with its own head, played one at a time. They're NAM captures (the open Neural Amp Modeler format), run by the official NAM engine. Each amp's Gain knob blends five captures across its range, so it changes how hard the amp distorts, not just how loud it is.",
     },
     {
       title: 'A full rig',
@@ -90,13 +81,37 @@ export const bellyDsp = {
     },
     {
       title: 'Match tone',
-      body: "Load a song, pick a section where the lead guitar stands out, and BellyDSP separates the guitar from the mix, then searches its own amps, cab, and settings to get close to that recording. You can play along with the song first, so it compares your notes with the recording's.",
+      body: "Load a song, pick a section where the lead guitar stands out, and BellyDSP separates the guitar from the mix, then searches its own amps, cab, pedals, and settings to get close to that recording. You can play along with the song first, so it compares your notes with the recording's.",
     },
     {
       title: 'Ships like a real product',
       body: 'Installers for both platforms, signed auto-updates, and a website that counts downloads without tracking anyone.',
     },
   ] satisfies readonly ProjectPoint[],
+
+  redesign: {
+    intro: [
+      'The first interface was one page per section with the signal chain along the bottom. I play through BellyDSP about 90% of the time and dial tones the other 10%, so I wanted everything I need while playing on one screen, with nothing hidden.',
+      'The redesign puts it all there:',
+    ],
+    onScreen: [
+      'the preset and its scene, big in the top bar;',
+      'the amp on a dark stage lit from below, with a shelf of eight small heads to switch amps;',
+      'every control of the selected block in an inspector at the right;',
+      'the eight scenes along the bottom.',
+    ],
+    afterList: 'One orange means on, and an off pedal is dimmed whole, so the rig reads from a step back.',
+    heads: {
+      image: bellyDspScreens.amps,
+      text: 'Every amp has its own head and every effect is a pedal with a footswitch and an LED. All of it is drawn in code, with no photos or borrowed artwork.',
+    },
+    board: {
+      image: bellyDspScreens.board,
+      text: 'With every pedal on one board, the first version of the redesign looked cluttered. So the board became three tabs, Pre FX, Amp & Cab, and Post FX, each with a strip of tiny LEDs that shows what\'s on even when the tab is closed. You can switch tabs with the [ and ] keys, and selecting a block anywhere opens its tab. The tuner, Match tone, and Settings open over the main screen and close with Esc.',
+    },
+    credit:
+      'I set what it had to do, picked the direction from the options I was shown, and made the calls along the way: three board tabs rather than the two Claude recommended, and an orange app icon to match. AI agents built it, and an automated design review checked every round of it against the brief before I saw it.',
+  },
 
   highlights: [
     {
@@ -106,10 +121,10 @@ export const bellyDsp = {
       body: 'The audio thread never allocates memory, takes a lock, or touches the disk. An automated test counts allocations, frees, and locks on the audio thread across every feature, and it has to read 0, 0, 0. The app adds zero latency.',
     },
     {
-      figure: '~7,200',
-      figureLabel: 'automated checks',
+      figure: '8,945',
+      figureLabel: 'automated checks passed in 469 tests in the latest full run',
       title: 'Testing as proof',
-      body: "Golden tests compare the DSP against Python reference implementations and against the NAM engine's own renderer. Nothing counts as done because it compiles.",
+      body: "That includes golden tests that compare the DSP against Python reference implementations and against the NAM engine's own renderer, and about 1,100 checks on the main screen alone. The interface is tested too: the suite renders every screen and checks what it draws. Nothing counts as done because it compiles.",
     },
     {
       figure: '0.665 → 0.457',
@@ -121,60 +136,25 @@ export const bellyDsp = {
       figure: '21% → 6%',
       figureLabel: 'of the real-time budget for the default rig',
       title: 'Performance for weaker machines',
-      body: "Profiling showed one math function taking half of each neural model's time. Vectorising it made the models twice as fast with output within -112 dB of the reference. Together with running only the amp you hear, that cut the default rig's CPU use by about 4x.",
+      body: "Profiling showed one math function taking half of each neural model's time. Vectorising it made the models twice as fast, with output within -112 dB of the reference. Together with running only the amp you hear, that cut the default rig's CPU use by about 4x.",
     },
   ] satisfies readonly ProjectHighlight[],
 
-  process: [
-    "I designed BellyDSP and made the product and architecture calls, and I built it with Anthropic's Claude Code: most of the code was written by AI agents working under my direction, often several in parallel.",
-    'My job was deciding what to build, setting the rules every change had to meet (real-time safety, zero latency, tests and measurements for every feature, held-out benchmarks for the matcher), reviewing the results, testing on real hardware on my Mac and a Windows PC, and doing all the listening. Learning to steer agents well with strict, measurable constraints was half the project.',
-    'It went from first prototype to the current version in about two weeks: a hand-built Rust prototype, then a rebuild in C++20 on JUCE, about 100,000 lines of code and tests in all.',
-  ],
-
-  upcoming: {
+  process: {
     intro:
-      "The next version is in development. Everything below is already on GitHub, but it isn't in the download yet. When it ships, BellyDSP updates itself, so there's nothing to reinstall.",
-    image: {
-      src: '/bellydsp-amps.png',
-      alt: 'The eight built-in amps: Glass, Ember, Monolith, Lantern, Basalt, Comet, Forge, and Quartz, each with its own head',
-    },
-    groups: [
-      {
-        title: 'Eight amps, one at a time',
-        lead: 'Five new built-in amps join Glass, Ember, and Monolith:',
-        items: [
-          'Lantern: power-amp breakup, from the edge of breakup to crunch. Pick softer and it cleans up.',
-          'Basalt: fat high gain with sag.',
-          'Comet: a saturated lead with the mids forward.',
-          'Forge: tight modern high gain.',
-          'Quartz: a saturated lead, scooped and bright.',
-        ],
-        after: [
-          'Each has a head of its own. Pick an amp from the row of small heads at the top of the Amp page, and the head, the knobs, and the sound follow. Every amp remembers its own knob settings, and program changes 1 to 8 on a MIDI footswitch pick the amps. Your own .nam capture is a ninth choice.',
-          "Only the amp you hear runs now. A switch keeps the old amp playing while the new one warms up, then crossfades, so it's click-free and lands about a tenth of a second later. Old presets and sessions convert on their own.",
-        ],
-      },
-      {
-        title: 'A closer Match tone',
-        lead: 'Measured on a test set of 50 hidden rigs that BellyDSP has never seen the answers to:',
-        items: [
-          "After you play along, it compares your notes with the recording's one by one, so the way you pick doesn't get mistaken for the amp.",
-          'Pedals and a compressor are part of the search, and Apply sets them.',
-          'A match curve: a fine correction after the cab, which you can turn up or down on the Cab page.',
-          'Clean up with your take: when the band bleeds into the guitar, it can use your notes to clean the recording before matching.',
-        ],
-        after: [],
-      },
-      {
-        title: 'Lighter on slower computers',
-        lead: null,
-        items: [
-          'The amp models run about twice as fast, with output within -112 dB of the reference engine.',
-          'Together with running only one amp, the default rig uses about a quarter of the CPU it did.',
-          "A CPU saver switch on the Output page, off by default, idles the drives you aren't using, runs them at lower oversampling, and steps the Gain knob between its captures, cutting the app's CPU by about a third to a half.",
-        ],
-        after: ['It still runs at 48 kHz with zero added latency.'],
-      },
-    ] satisfies readonly UpcomingGroup[],
+      "I designed BellyDSP and made the product, design, and architecture calls, and I built it with Anthropic's Claude Code. I wrote the original Rust implementation by hand. Most of the C++ code was written by AI agents working under my direction, often several in parallel, and I write some features in C++ by hand.",
+    jobLead: 'My job was:',
+    jobs: [
+      'deciding what to build;',
+      'setting the rules every change had to meet: real-time safety, zero latency, tests and measurements for every feature, and held-out benchmarks for the matcher;',
+      "choosing the interface's direction;",
+      'reviewing the results;',
+      'testing on real hardware, on my Mac and a Windows PC;',
+      'doing all the listening.',
+    ],
+    after: [
+      'Learning to steer agents well with strict, measurable constraints was half the project.',
+      'From first prototype to the redesign took about two and a half weeks (2026-09-27 to 2026-10-13): a Rust prototype first, then a rebuild in C++20 on JUCE. The C++ repo is about 109,000 lines: about 54,000 of app code, 36,000 of tests, and 17,000 of Python prototypes, benchmarks, and tools.',
+    ],
   },
 } as const;

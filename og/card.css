@@ -1,0 +1,133 @@
+/*
+ * Shared styles for the link-preview cards (Open Graph images), in the site's
+ * "Liner Notes" world: sleeve board, sleeve ink, one label red, slate fine
+ * print, Archivo in two widths.
+ *
+ * Each card is a fixed 1200x630 frame rendered to PNG by og/render.sh; they
+ * are rasters, never served as pages. Tokens mirror src/index.css.
+ *
+ * Feeds show these at about 550px wide (roughly 46% scale), so nothing here is
+ * set below 22px.
+ */
+
+:root {
+  --board: #15181d;
+  --board-raised: #1c2027;
+  --ink: #e8e5de;
+  --ink-soft: #bdb8ae;
+  --slate: #808a97;
+  --label: #d24a2b;
+  --rule: rgb(232 229 222 / 0.14);
+  --sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html,
+body {
+  width: 1200px;
+  height: 630px;
+  overflow: hidden;
+  background: var(--board);
+}
+
+body {
+  position: relative;
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Matte board grain, as on the site. */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.expanded {
+  font-stretch: 125%;
+}
+
+/* The record: vinyl with grooves and a red center label. */
+.vinyl {
+  position: absolute;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--label) 0 22%, #101215 22.5% 25%, transparent 25.5%),
+    repeating-radial-gradient(circle, #0b0c0e 0 2px, #17191d 2px 3px),
+    #0b0c0e;
+  box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.8);
+}
+
+/* The square sleeve with its halftone cover (drawn by halftone.js). */
+.sleeve {
+  position: absolute;
+  overflow: hidden;
+  background: var(--board-raised);
+  box-shadow: 0 24px 50px -22px rgb(0 0 0 / 0.85);
+}
+
+.sleeve canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--label);
+}
+
+.sleeve .wear {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 0 43.5%, rgb(232 229 222 / 0.08) 44.5% 46%, transparent 47%);
+}
+
+.sleeve .top {
+  position: absolute;
+  left: 6%;
+  top: 6%;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sleeve .title {
+  position: absolute;
+  left: 6%;
+  bottom: 6%;
+  font-size: 50px;
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+
+/* Top-right label: catalog number and domain. */
+.catalog {
+  position: absolute;
+  top: 52px;
+  right: 64px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--slate);
+}
+
+/* Only the short uppercase catalog number is tracked out; the domain keeps
+   normal spacing. */
+.catalog b {
+  color: var(--ink);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.code {
+  font-weight: 800;
+  color: var(--label);
+}

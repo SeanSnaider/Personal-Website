@@ -1,69 +1,80 @@
 /*
  * Global stylesheet, shared by every page entry (home and project pages).
  *
- * The site is dark-only. Colors are defined once as theme tokens so Tailwind
- * generates matching utilities (`bg-surface`, `text-ink-muted`, `border-line`,
- * `text-accent`, ...). Components should use these tokens rather than raw hex
- * values or Tailwind's stock palette, so the whole site can be retuned here.
+ * The world is "Liner Notes": the site is a record. Sleeve board is the
+ * ground, sleeve ink is the text, one label red marks the record's own
+ * numbering and the center label, and slate carries the fine print. Colors
+ * live here as theme tokens so Tailwind generates matching utilities
+ * (`bg-board`, `text-ink`, `text-slate`, `text-label`, `border-rule`, ...).
+ * Components use these tokens, never raw hex values.
  */
 
 @import "tailwindcss";
+@import "@fontsource-variable/archivo/wdth.css";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  /* Reserved for small technical labels (section numbers, dates, stacks).
-     Never for body copy. */
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* One family in two widths is the label's house type: expanded and heavy
+     for titles and track codes, normal width for everything you read. */
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
 
-  /* Page and raised surfaces. */
-  --color-bg: #0a0a0b;
-  --color-surface: #111113;
-  --color-surface-raised: #17171a;
+  /* Sleeve board, from the ground up. */
+  --color-board: #15181d;
+  --color-board-raised: #1c2027;
+  --color-groove: #0b0c0e;
 
-  /* Hairlines. */
-  --color-line: rgb(255 255 255 / 0.08);
-  --color-line-strong: rgb(255 255 255 / 0.16);
+  /* Sleeve ink and fine print. */
+  --color-ink: #e8e5de;
+  --color-ink-soft: #bdb8ae;
+  --color-slate: #808a97;
 
-  /* Text, from primary to least prominent. */
-  --color-ink: #ededed;
-  --color-ink-muted: #a1a1aa;
-  --color-ink-faint: #71717a;
+  /* Label red: large track codes and the center label. 4.0:1 on the board,
+     so it is for large or graphic uses only; small text uses the two
+     variants below. */
+  --color-label: #d24a2b;
+  /* Label red for small text: 5.4:1 on the board. */
+  --color-label-text: #e8664a;
+  /* Label red for small text on sleeve ink (the sticker): 4.8:1. */
+  --color-label-deep: #b23a20;
 
-  /* The single accent. Used sparingly: links on hover, the "current" marker,
-     and a few figures. Matches BellyDSP's own green so its screenshots sit in
-     the page naturally. */
-  --color-accent: #3ddc97;
+  /* Printed rules. */
+  --color-rule: rgb(232 229 222 / 0.12);
+  --color-rule-strong: rgb(232 229 222 / 0.28);
 }
 
 @layer base {
   html {
-    /* In-page nav links glide rather than jump. */
     scroll-behavior: smooth;
     color-scheme: dark;
+    scrollbar-color: var(--color-rule-strong) var(--color-board);
   }
 
   body {
-    background-color: var(--color-bg);
+    background-color: var(--color-board);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "cv11", "ss01";
+    font-stretch: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    caret-color: var(--color-label);
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: rgb(61 220 151 / 0.25);
-    color: #ffffff;
+    background-color: var(--color-label);
+    color: var(--color-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
+    outline: 2px solid var(--color-ink);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
 
-  /* Reduced-motion users get instant anchor jumps, not a long smooth glide. */
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -71,153 +82,73 @@
   }
 }
 
-/* ---------------------------------------------------------------------------
-   Backdrop
+/* Width steps of the house face. Tailwind has no font-stretch utilities. */
+@utility font-expanded {
+  font-stretch: 125%;
+}
 
-   Two fixed layers behind all content, so large dark areas read as a surface
-   rather than as empty space:
-     - body::before: a soft accent glow at the top of the page and a dot grid
-       that fades out toward the edges and down the page.
-     - body::after: a very faint film grain.
-   Both are static and composited once, so they cost nothing while scrolling.
+@utility font-semi-expanded {
+  font-stretch: 112%;
+}
+
+@utility font-condensed {
+  font-stretch: 80%;
+}
+
+/* ---------------------------------------------------------------------------
+   Sleeve board
+
+   The whole page is printed on matte board: a fine grain over the ground so
+   large dark areas read as card stock rather than a screen. Static and
+   composited once.
    --------------------------------------------------------------------------- */
 
-body::before,
 body::after {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 60;
   pointer-events: none;
-}
-
-body::before {
-  background:
-    radial-gradient(48rem 28rem at 72% -6%, rgb(61 220 151 / 0.10), transparent 70%),
-    radial-gradient(36rem 24rem at 8% 4%, rgb(120 160 255 / 0.05), transparent 70%),
-    radial-gradient(circle at center, rgb(255 255 255 / 0.07) 1px, transparent 1.2px) 0 0 / 28px 28px;
-  mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.55) 45%, rgb(0 0 0 / 0.25) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgb(0 0 0 / 0.55) 45%, rgb(0 0 0 / 0.25) 100%);
-}
-
-body::after {
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ---------------------------------------------------------------------------
-   Signal line
+   The record
 
-   Paired with SignalLine.tsx: a strip twice the container's width holding two
-   identical periods of a waveform, slid left by half its width on a loop, so
-   the seam is never visible.
+   Paired with Turntable.tsx. The vinyl slides out of the sleeve once on load
+   (the page's one authored entrance); while a track is cued the center label
+   turns at a slow, steady rate. Both are dropped under reduced motion: the
+   record simply rests half out of the sleeve.
    --------------------------------------------------------------------------- */
 
-@keyframes signal-scroll {
+@keyframes record-slide-out {
   from {
-    transform: translateX(0);
+    transform: translateX(-38%);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(0);
   }
 }
 
-.signal-strip {
-  animation: signal-scroll 14s linear infinite;
+@keyframes label-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.record-slide {
+  animation: record-slide-out 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+.label-turning {
+  animation: label-turn 9s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .signal-strip {
+  .record-slide,
+  .label-turning {
     animation: none;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Interactive cards
-
-   Hover lifts the border toward the accent and adds a faint accent glow;
-   screenshots inside (`.card-media`) zoom slightly.
-   --------------------------------------------------------------------------- */
-
-.card-hover {
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.card-hover:hover {
-  border-color: rgb(61 220 151 / 0.35);
-  box-shadow:
-    0 0 0 1px rgb(61 220 151 / 0.06),
-    0 24px 60px -30px rgb(61 220 151 / 0.35);
-}
-
-.card-hover .card-media {
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.card-hover:hover .card-media {
-  transform: scale(1.02);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card-hover:hover .card-media {
-    transform: none;
-  }
-}
-
-/* ---------------------------------------------------------------------------
-   Spotlight
-
-   A soft accent glow that follows the pointer across a card. Paired with
-   `trackSpotlight` in src/lib/spotlight.ts, which sets --spot-x / --spot-y.
-   The card must be `position: relative` with `overflow: hidden`.
-   --------------------------------------------------------------------------- */
-
-.spotlight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  opacity: 0;
-  background: radial-gradient(
-    28rem circle at var(--spot-x, 50%) var(--spot-y, 0%),
-    rgb(61 220 151 / 0.07),
-    transparent 45%
-  );
-  transition: opacity 0.4s ease;
-}
-
-.spotlight:hover::after {
-  opacity: 1;
-}
-
-/* ---------------------------------------------------------------------------
-   Scroll reveal
-
-   Paired with the useScrollReveal hook: elements mount with `.reveal` and gain
-   `.reveal-visible` once observed intersecting. Kept short and small so it
-   reads as polish, not as an effect.
-   --------------------------------------------------------------------------- */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.reveal-visible {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 }
