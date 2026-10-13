@@ -291,7 +291,7 @@ export interface Project {
   readonly isFeatured: boolean;
   /**
    * Who did what, printed as liner-note credits. Only set where the split of
-   * work is known and stated in PRODUCT.md; omit rather than guess.
+   * work is known and confirmed by Sean; omit rather than guess.
    */
   readonly credits?: readonly ProjectCredit[];
   /**

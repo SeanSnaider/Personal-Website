@@ -12,7 +12,7 @@
  *   - Numbers here come from BellyDSP's own measurements. They are more
  *     detailed than the résumé (e.g. 0.665 to 0.457 rather than "31%") but
  *     must agree with it.
- *   - Credits must stay honest (PRODUCT.md): the Rust original was written by
+ *   - Credits must stay honest: the Rust original was written by
  *     hand; most of the C++ code, including the redesigned interface, was
  *     written by Claude Code agents under Sean's direction; Sean also writes
  *     some C++ features by hand.
