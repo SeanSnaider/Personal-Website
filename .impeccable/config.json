@@ -1,0 +1,32 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-10-13T06:13:12.260Z",
+        "reason": "Established design system: DESIGN.md (The Studio Rack) records Inter as the site's display and body face, already shipped across src/; the OG cards must match the site"
+      },
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          "og/home.html"
+        ],
+        "createdAt": "2026-10-13T06:46:33.428Z",
+        "reason": "False positive: the radial-gradient is the vinyl record's red center label and grooves (.vinyl in og/card.css), a drawn object, not a decorative background glow"
+      },
+      {
+        "rule": "radial-halo",
+        "value": "*",
+        "files": [
+          "og/bellydsp.html"
+        ],
+        "createdAt": "2026-10-13T06:46:33.442Z",
+        "reason": "False positive: shared og/card.css defines the vinyl's center label with radial-gradient; it is a drawn record object, not a background halo"
+      }
+    ]
+  }
+}

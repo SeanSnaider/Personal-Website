@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Link-preview card for the home page. Rendered to public/og-card.png by
+         og/render.sh; not part of the site build. -->
+    <title>OG card: home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block" rel="stylesheet" />
+    <link rel="stylesheet" href="card.css" />
+    <style>
+      .sleeve { left: 64px; top: 70px; width: 490px; height: 490px; z-index: 2; }
+      .vinyl { left: 330px; top: 85px; width: 460px; height: 460px; }
+      .name {
+        position: absolute; left: 700px; top: 118px;
+        font-size: 74px; font-weight: 800; line-height: 0.95; letter-spacing: -0.03em;
+      }
+      .role { position: absolute; left: 702px; top: 290px; font-size: 26px; color: var(--ink-soft); }
+      .tracks {
+        position: absolute; left: 702px; right: 64px; top: 352px;
+        list-style: none; padding: 0; border-top: 1px solid var(--rule);
+      }
+      .tracks li {
+        display: grid; grid-template-columns: 56px 1fr; padding: 12px 0;
+        border-bottom: 1px solid var(--rule); font-size: 26px; font-weight: 600; font-stretch: 112%;
+      }
+      .tracks .code { font-size: 22px; font-stretch: 125%; align-self: center; }
+    </style>
+  </head>
+  <body>
+    <div class="grain"></div>
+    <p class="catalog"><b class="expanded">SS-001</b> · seansnaider.com</p>
+
+    <div class="vinyl"></div>
+    <div class="sleeve">
+      <canvas data-src="../public/bellydsp-app.png" data-crop="1040,260,720"></canvas>
+      <div class="wear"></div>
+      <p class="top expanded">Sean Snaider</p>
+      <p class="title expanded">Selected<br />Works</p>
+    </div>
+
+    <h1 class="name expanded">Sean<br />Snaider</h1>
+    <p class="role">Software Engineer · Boston, MA</p>
+    <ol class="tracks">
+      <li><span class="code">A1</span>BellyDSP</li>
+      <li><span class="code">B1</span>Vertex Pharmaceuticals</li>
+      <li><span class="code">B2</span>Northeastern SGA</li>
+    </ol>
+
+    <script src="halftone.js"></script>
+  </body>
+</html>

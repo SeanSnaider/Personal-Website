@@ -65,6 +65,12 @@ export interface Profile {
   readonly resumePath: string;
 }
 
+/**
+ * The site's catalog number, printed like a record label's on the spine, the
+ * sleeve, and the fine print. Purely a label; it identifies nothing.
+ */
+export const catalogNumber = 'SS-001';
+
 /** Contact details and links for Sean Snaider. */
 export const profile: Profile = {
   name: 'Sean Snaider',
@@ -281,6 +287,36 @@ export interface Project {
   readonly detailPath: string | null;
   /** Whether to render this project in the large, full-width card slot. */
   readonly isFeatured: boolean;
+  /**
+   * Who did what, printed as liner-note credits. Only set where the split of
+   * work is known and stated in PRODUCT.md; omit rather than guess.
+   */
+  readonly credits?: readonly ProjectCredit[];
+  /**
+   * A typeset text panel shown in place of `image`, for projects whose best
+   * picture is a terminal session rather than a screenshot. Always labeled
+   * as an illustration in its caption.
+   */
+  readonly excerpt?: ProjectExcerpt;
+}
+
+/** A short terminal session, set as type. */
+export interface ProjectExcerpt {
+  /** Caption shown under the panel; must say it is an illustration. */
+  readonly caption: string;
+  /**
+   * The session, one entry per line. Lines starting with "$ " or "> " are
+   * commands (the prompt is styled separately); all others are output.
+   */
+  readonly lines: readonly string[];
+}
+
+/** One liner-note credit line: a role and who filled it. */
+export interface ProjectCredit {
+  /** What was done, e.g. "Design, direction, testing, listening". */
+  readonly role: string;
+  /** Who did it. */
+  readonly who: string;
 }
 
 /**
@@ -311,6 +347,10 @@ export const projects: readonly Project[] = [
     liveUrl: 'https://bellydsp.com',
     detailPath: '/projects/bellydsp/',
     isFeatured: true,
+    credits: [
+      { role: 'Design, direction, testing, listening', who: 'Sean Snaider' },
+      { role: 'Code', who: 'Claude Code agents, under his direction' },
+    ],
   },
   {
     id: 'rubiks-cube-solver',
@@ -349,6 +389,20 @@ export const projects: readonly Project[] = [
     image: '/project-filesystem.png',
     imageAlt: 'Illustration for the Systems Programming coursework',
     imageFocus: 'center',
+    excerpt: {
+      caption:
+        'Illustration: a session in the shell, using pipes and redirection, then writing to the FUSE filesystem mounted from a disk image.',
+      lines: [
+        '$ ./shell',
+        "> ls src | grep '\\.c$' | wc -l > count.txt",
+        '> cat < count.txt',
+        '3',
+        '> ./fs mnt disk.img &',
+        '> echo hello > mnt/note.txt',
+        '> cat mnt/note.txt',
+        'hello',
+      ],
+    },
     repoUrl: REPOSITORY_URLS.systemsProgramming,
     liveUrl: null,
     detailPath: null,
@@ -432,27 +486,6 @@ export const skillCategories: readonly SkillCategory[] = [
     title: 'Tools & Infrastructure',
     skills: ['Git', 'Docker', 'CMake', 'GitHub Actions', 'Linux/WSL', 'Vite', 'Vercel', 'GDB'],
   },
-];
-
-/**
- * Headline metrics surfaced beneath the hero.
- *
- * These are deliberately few and concrete; each one is traceable to a specific
- * résumé line.
- */
-export interface Statistic {
-  /** The number or short value, e.g. "850+". */
-  readonly value: string;
-  /** What the value counts, e.g. "Students supported as a TA". */
-  readonly label: string;
-}
-
-/** At-a-glance numbers rendered as a strip under the hero. */
-export const statistics: readonly Statistic[] = [
-  { value: '3.89', label: 'GPA at Northeastern' },
-  { value: '~$100K', label: 'Projected annual effort saved at Vertex' },
-  { value: '850+', label: 'Students supported as a TA' },
-  { value: '~7,200', label: 'Automated tests behind BellyDSP' },
 ];
 
 /**

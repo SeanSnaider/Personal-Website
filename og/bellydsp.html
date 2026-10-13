@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Link-preview card for the BellyDSP case study. Rendered to
+         public/og-bellydsp.png by og/render.sh; not part of the site build. -->
+    <title>OG card: BellyDSP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block" rel="stylesheet" />
+    <link rel="stylesheet" href="card.css" />
+    <style>
+      .code-big {
+        position: absolute; left: 64px; top: 96px;
+        font-size: 64px; letter-spacing: -0.03em; line-height: 1;
+      }
+      .title {
+        position: absolute; left: 62px; top: 168px;
+        font-size: 88px; font-weight: 800; line-height: 1; letter-spacing: -0.04em;
+      }
+      .subtitle { position: absolute; left: 66px; top: 282px; width: 500px; font-size: 30px; line-height: 1.3; color: var(--ink-soft); }
+      .subtitle b { color: var(--ink); font-weight: 600; }
+      .credits {
+        position: absolute; left: 66px; top: 400px; width: 500px;
+        border-top: 1px solid var(--rule); font-size: 22px;
+      }
+      .credits div { display: grid; grid-template-columns: 180px 1fr; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+      .credits dt { color: var(--slate); }
+      .credits dd { margin: 0; }
+      /* The Comet head, framed like the color plate in a gatefold: window
+         x 296-2264, y 278-850 of the 2560x1520 screenshot, scaled to 484px
+         (484 / 1968 = 0.2459, so the source draws at 630x374). */
+      .plate { position: absolute; right: 64px; top: 200px; width: 500px; padding: 8px; background: var(--board-raised); }
+      .plate div {
+        height: 141px;
+        background: url("../public/bellydsp-app.png") -73px -68px / 630px 374px no-repeat var(--board);
+      }
+      .proof {
+        position: absolute; right: 64px; top: 396px; width: 500px;
+        font-size: 24px; line-height: 1.5; color: var(--ink-soft);
+      }
+      .proof b { color: var(--ink); font-weight: 700; font-stretch: 112%; }
+    </style>
+  </head>
+  <body>
+    <div class="grain"></div>
+    <p class="catalog"><b class="expanded">SS-001</b> · seansnaider.com</p>
+
+    <p class="code code-big expanded">A1</p>
+    <h1 class="title expanded">BellyDSP</h1>
+    <p class="subtitle"><b>Open-source guitar amp sim</b> for macOS and Windows.</p>
+    <dl class="credits">
+      <div><dt>Design, direction</dt><dd>Sean Snaider</dd></div>
+      <div><dt>Code</dt><dd>Claude Code agents, under his direction</dd></div>
+    </dl>
+
+    <div class="plate"><div role="img" aria-label="The Comet amp head from the BellyDSP Amp page"></div></div>
+    <p class="proof"><b>~7,200</b> tests. <b>4x</b> less CPU. <b>Zero</b> added latency. Free and open source.</p>
+  </body>
+</html>

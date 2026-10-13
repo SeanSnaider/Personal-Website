@@ -1,0 +1,430 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T07:03:42+00:00",
+  "title": "Design System: Sean Snaider",
+  "extensions": {
+    "colorMeta": {
+      "label": {
+        "role": "primary",
+        "displayName": "Label Red",
+        "canonical": "oklch(59.2% 0.177 34.2)",
+        "tonalRamp": [
+          "oklch(15% 0.06 34.2)",
+          "oklch(26% 0.1 34.2)",
+          "oklch(38% 0.14 34.2)",
+          "oklch(50% 0.165 34.2)",
+          "oklch(62% 0.165 34.2)",
+          "oklch(74% 0.12 34.2)",
+          "oklch(85% 0.07 34.2)",
+          "oklch(95% 0.03 34.2)"
+        ]
+      },
+      "label-text": {
+        "role": "primary",
+        "displayName": "Label Red, Small Type",
+        "canonical": "oklch(66.6% 0.168 33.7)",
+        "tonalRamp": [
+          "oklch(15% 0.06 33.7)",
+          "oklch(26% 0.1 33.7)",
+          "oklch(38% 0.14 33.7)",
+          "oklch(50% 0.165 33.7)",
+          "oklch(62% 0.165 33.7)",
+          "oklch(74% 0.12 33.7)",
+          "oklch(85% 0.07 33.7)",
+          "oklch(95% 0.03 33.7)"
+        ]
+      },
+      "label-deep": {
+        "role": "primary",
+        "displayName": "Label Red, Deep",
+        "canonical": "oklch(51.9% 0.161 33.8)",
+        "tonalRamp": [
+          "oklch(15% 0.06 33.8)",
+          "oklch(26% 0.1 33.8)",
+          "oklch(38% 0.14 33.8)",
+          "oklch(50% 0.165 33.8)",
+          "oklch(62% 0.165 33.8)",
+          "oklch(74% 0.12 33.8)",
+          "oklch(85% 0.07 33.8)",
+          "oklch(95% 0.03 33.8)"
+        ]
+      },
+      "board": {
+        "role": "neutral",
+        "displayName": "Sleeve Board",
+        "canonical": "oklch(20.8% 0.011 260.7)",
+        "tonalRamp": [
+          "oklch(15% 0.011 260.7)",
+          "oklch(26% 0.011 260.7)",
+          "oklch(38% 0.011 260.7)",
+          "oklch(50% 0.011 260.7)",
+          "oklch(62% 0.011 260.7)",
+          "oklch(74% 0.011 260.7)",
+          "oklch(85% 0.011 260.7)",
+          "oklch(95% 0.011 260.7)"
+        ]
+      },
+      "board-raised": {
+        "role": "neutral",
+        "displayName": "Raised Board",
+        "canonical": "oklch(24.3% 0.015 261.7)",
+        "tonalRamp": [
+          "oklch(15% 0.015 261.7)",
+          "oklch(26% 0.015 261.7)",
+          "oklch(38% 0.015 261.7)",
+          "oklch(50% 0.015 261.7)",
+          "oklch(62% 0.015 261.7)",
+          "oklch(74% 0.015 261.7)",
+          "oklch(85% 0.015 261.7)",
+          "oklch(95% 0.015 261.7)"
+        ]
+      },
+      "groove": {
+        "role": "neutral",
+        "displayName": "Groove Black",
+        "canonical": "oklch(15.4% 0.005 264.4)",
+        "tonalRamp": [
+          "oklch(15% 0.005 264.4)",
+          "oklch(26% 0.005 264.4)",
+          "oklch(38% 0.005 264.4)",
+          "oklch(50% 0.005 264.4)",
+          "oklch(62% 0.005 264.4)",
+          "oklch(74% 0.005 264.4)",
+          "oklch(85% 0.005 264.4)",
+          "oklch(95% 0.005 264.4)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Sleeve Ink",
+        "canonical": "oklch(92.2% 0.01 87.5)",
+        "tonalRamp": [
+          "oklch(15% 0.01 87.5)",
+          "oklch(26% 0.01 87.5)",
+          "oklch(38% 0.01 87.5)",
+          "oklch(50% 0.01 87.5)",
+          "oklch(62% 0.01 87.5)",
+          "oklch(74% 0.01 87.5)",
+          "oklch(85% 0.01 87.5)",
+          "oklch(95% 0.01 87.5)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "oklch(78.4% 0.015 84.6)",
+        "tonalRamp": [
+          "oklch(15% 0.015 84.6)",
+          "oklch(26% 0.015 84.6)",
+          "oklch(38% 0.015 84.6)",
+          "oklch(50% 0.015 84.6)",
+          "oklch(62% 0.015 84.6)",
+          "oklch(74% 0.015 84.6)",
+          "oklch(85% 0.015 84.6)",
+          "oklch(95% 0.015 84.6)"
+        ]
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "oklch(63.0% 0.023 255.0)",
+        "tonalRamp": [
+          "oklch(15% 0.023 255.0)",
+          "oklch(26% 0.023 255.0)",
+          "oklch(38% 0.023 255.0)",
+          "oklch(50% 0.023 255.0)",
+          "oklch(62% 0.023 255.0)",
+          "oklch(74% 0.023 255.0)",
+          "oklch(85% 0.023 255.0)",
+          "oklch(95% 0.023 255.0)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Printed Rule",
+        "canonical": "oklch(92.2% 0.01 87.5 / 0.12)",
+        "tonalRamp": [
+          "oklch(92.2% 0.01 87.5 / 0.04)",
+          "oklch(92.2% 0.01 87.5 / 0.06)",
+          "oklch(92.2% 0.01 87.5 / 0.08)",
+          "oklch(92.2% 0.01 87.5 / 0.1)",
+          "oklch(92.2% 0.01 87.5 / 0.12)",
+          "oklch(92.2% 0.01 87.5 / 0.16)",
+          "oklch(92.2% 0.01 87.5 / 0.2)",
+          "oklch(92.2% 0.01 87.5 / 0.24)"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "oklch(92.2% 0.01 87.5 / 0.28)",
+        "tonalRamp": [
+          "oklch(92.2% 0.01 87.5 / 0.16)",
+          "oklch(92.2% 0.01 87.5 / 0.2)",
+          "oklch(92.2% 0.01 87.5 / 0.24)",
+          "oklch(92.2% 0.01 87.5 / 0.28)",
+          "oklch(92.2% 0.01 87.5 / 0.34)",
+          "oklch(92.2% 0.01 87.5 / 0.4)",
+          "oklch(92.2% 0.01 87.5 / 0.5)",
+          "oklch(92.2% 0.01 87.5 / 0.6)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Side A and Side B headings; the case-study title one step larger; the hero name a step smaller."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Non-side section headings: Liner notes, Instruments, Booking; case-study notes sections."
+      },
+      "track-code": {
+        "displayName": "Track Code",
+        "purpose": "The large Label Red code opening each track spread and the case-study header."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Track titles on spreads."
+      },
+      "title-sm": {
+        "displayName": "Title, small",
+        "purpose": "Track names in the tracklist and bonus tracks."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "The first sentence of a spread or the case study, capped at 40rem."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Essays and intros, 34rem to 46rem measure."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Note-list lines, credit values, bonus-track summaries."
+      },
+      "fine-print": {
+        "displayName": "Fine print",
+        "purpose": "Captions, dates, side names, footer credits, in Slate."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Sleeve set type, side letters, catalog numbers, small track codes, the runout line."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Button labels at 112% width."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sleeve-drop",
+        "value": "0 28px 60px -24px rgb(0 0 0 / 0.8)",
+        "purpose": "Under the square sleeve in the hero; physical objects only."
+      },
+      {
+        "name": "sticker-lift",
+        "value": "0 6px 14px -6px rgb(0 0 0 / 0.6)",
+        "purpose": "Under the round hype sticker on the sleeve."
+      }
+    ],
+    "motion": [
+      {
+        "name": "record-slide",
+        "value": "1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both",
+        "purpose": "The vinyl slides out of the sleeve once on load; the page's one authored entrance. Dropped under reduced motion."
+      },
+      {
+        "name": "label-turn",
+        "value": "9s linear infinite",
+        "purpose": "The center label turns while a track is cued. Dropped under reduced motion."
+      },
+      {
+        "name": "ease-color",
+        "value": "200ms",
+        "purpose": "Color, border, and underline transitions on buttons and links (150ms default to 300ms for the nav and tonearm band)."
+      },
+      {
+        "name": "sticker-turn",
+        "value": "300ms transform",
+        "purpose": "The sticker straightens from -9deg to -4deg and scales to 1.04 on hover."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid sleeve ink, square, one per group (Résumé, Read the full liner notes, Download).",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Résumé (PDF)</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-stretch: 112%; font-size: 15px; font-weight: 700; background: var(--color-ink, #e8e5de); color: var(--color-board, #15181d); border: none; border-radius: 0; text-decoration: none; transition: background-color 200ms; } .ds-btn-primary:hover { background: #ffffff; } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-ink, #e8e5de); outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outlined in strong rule; the outline turns full ink on hover.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Email</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-stretch: 112%; font-size: 15px; font-weight: 700; background: transparent; color: var(--color-ink, #e8e5de); border: 1px solid var(--color-rule-strong, rgb(232 229 222 / 0.28)); border-radius: 0; text-decoration: none; transition: border-color 200ms; } .ds-btn-secondary:hover { border-color: var(--color-ink, #e8e5de); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--color-ink, #e8e5de); outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "text-link",
+      "description": "Inline link underlined in strong rule; the underline turns label red on hover.",
+      "html": "<a class=\"ds-text-link\" href=\"#\">Source on GitHub</a>",
+      "css": ".ds-text-link { font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-stretch: 112%; font-size: 15px; font-weight: 600; color: var(--color-ink, #e8e5de); text-decoration: underline; text-decoration-color: var(--color-rule-strong, rgb(232 229 222 / 0.28)); text-decoration-thickness: 1px; text-underline-offset: 5px; transition: text-decoration-color 150ms; } .ds-text-link:hover { text-decoration-color: var(--color-label, #d24a2b); } .ds-text-link:focus-visible { outline: 2px solid var(--color-ink, #e8e5de); outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "The record spine: name and catalog number left, sections and Résumé right, Now playing in the middle on xl screens.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\"><span class=\"ds-nav-name\">Sean Snaider</span><span class=\"ds-nav-cat\">SS-001</span></a><p class=\"ds-nav-now\">Now playing <b>A1</b> <span>BellyDSP</span></p><ul class=\"ds-nav-links\"><li><a href=\"#\">Side A</a></li><li><a href=\"#\">Side B</a></li><li><a href=\"#\">Liner notes</a></li><li><a href=\"#\">Booking</a></li></ul><a class=\"ds-nav-resume\" href=\"#\">Résumé</a></header>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 24px; height: 56px; padding: 0 32px; background: var(--color-board, #15181d); border-bottom: 1px solid var(--color-rule, rgb(232 229 222 / 0.12)); font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; } .ds-nav-brand { display: flex; align-items: baseline; gap: 12px; text-decoration: none; } .ds-nav-name { font-stretch: 125%; font-size: 15px; font-weight: 800; letter-spacing: -0.01em; color: var(--color-ink, #e8e5de); } .ds-nav-cat { font-stretch: 125%; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; color: var(--color-slate, #808a97); } .ds-nav-now { flex: 1; margin: 0; text-align: center; font-size: 14px; color: var(--color-slate, #808a97); } .ds-nav-now b { font-stretch: 125%; font-weight: 800; color: var(--color-label-text, #e8664a); } .ds-nav-now span { color: var(--color-ink, #e8e5de); } .ds-nav-links { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; } .ds-nav-links a { font-size: 14px; color: var(--color-ink-soft, #bdb8ae); text-decoration: none; text-decoration-color: var(--color-label, #d24a2b); text-underline-offset: 6px; transition: color 150ms; } .ds-nav-links a:hover { color: var(--color-ink, #e8e5de); text-decoration-line: underline; } .ds-nav-links a:focus-visible, .ds-nav-resume:focus-visible { outline: 2px solid var(--color-ink, #e8e5de); outline-offset: 3px; border-radius: 2px; } .ds-nav-resume { display: inline-flex; align-items: center; height: 36px; padding: 0 16px; background: var(--color-ink, #e8e5de); color: var(--color-board, #15181d); font-stretch: 112%; font-size: 14px; font-weight: 700; text-decoration: none; transition: background-color 150ms; } .ds-nav-resume:hover { background: #ffffff; }"
+    },
+    {
+      "name": "Tracklist",
+      "kind": "nav",
+      "refersTo": "track-row",
+      "description": "The back-cover tracklist: side heading, then one ruled row per track; hover or focus underlines the title in label red.",
+      "html": "<nav class=\"ds-tracklist\"><p class=\"ds-side\"><b>Side A</b> Projects</p><ol><li><a href=\"#\"><span class=\"ds-code\">A1</span><span class=\"ds-t\"><span class=\"ds-title\">BellyDSP</span><span class=\"ds-sub\">Open-source guitar amp simulator</span></span><span class=\"ds-yr\">2026</span></a></li><li><a href=\"#\"><span class=\"ds-code\">A2</span><span class=\"ds-t\"><span class=\"ds-title\">Rubik's Cube Solver</span><span class=\"ds-sub\">Full-stack solver and timer</span></span><span class=\"ds-yr\">2026</span></a></li></ol></nav>",
+      "css": ".ds-tracklist { font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; max-width: 500px; } .ds-side { display: flex; align-items: baseline; gap: 12px; margin: 0; padding-bottom: 8px; border-bottom: 1px solid var(--color-rule, rgb(232 229 222 / 0.12)); font-size: 14px; color: var(--color-slate, #808a97); } .ds-side b { font-stretch: 125%; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--color-ink, #e8e5de); } .ds-tracklist ol { margin: 0; padding: 0; list-style: none; } .ds-tracklist a { display: grid; grid-template-columns: 2.75rem 1fr auto; align-items: baseline; column-gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--color-rule, rgb(232 229 222 / 0.12)); text-decoration: none; } .ds-code { font-stretch: 125%; font-size: 14px; font-weight: 800; color: var(--color-label-text, #e8664a); } .ds-t { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; } .ds-title { font-stretch: 112%; font-size: 17px; font-weight: 600; color: var(--color-ink, #e8e5de); text-decoration-color: var(--color-label, #d24a2b); text-decoration-thickness: 2px; text-underline-offset: 5px; } .ds-sub, .ds-yr { font-size: 14px; color: var(--color-slate, #808a97); } .ds-yr { font-variant-numeric: tabular-nums; } .ds-tracklist a:hover .ds-title, .ds-tracklist a:focus-visible .ds-title { text-decoration-line: underline; } .ds-tracklist a:focus-visible { outline: 2px solid var(--color-ink, #e8e5de); outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "Track Spread Head",
+      "kind": "custom",
+      "refersTo": "track-code-small",
+      "description": "The left column of a track spread: large label red code, expanded title, subtitle, and credits as label and value pairs.",
+      "html": "<div class=\"ds-spread\"><p class=\"ds-spread-code\">A1</p><h3 class=\"ds-spread-title\">BellyDSP</h3><p class=\"ds-spread-sub\">Open-source guitar amp simulator</p><dl class=\"ds-credits\"><div><dt>Released</dt><dd>Sep 2026 - Present</dd></div><div><dt>Design, direction, testing, listening</dt><dd>Sean Snaider</dd></div><div><dt>Code</dt><dd>Claude Code agents, under his direction</dd></div><div><dt>Instruments</dt><dd>C++20, JUCE, Python, CMake, GitHub Actions</dd></div></dl></div>",
+      "css": ".ds-spread { font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; max-width: 480px; } .ds-spread-code { margin: 0; font-stretch: 125%; font-size: 4rem; font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--color-label, #d24a2b); } .ds-spread-title { margin: 16px 0 0; font-stretch: 125%; font-size: 2.5rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.025em; color: var(--color-ink, #e8e5de); } .ds-spread-sub { margin: 8px 0 0; font-size: 18px; color: var(--color-ink-soft, #bdb8ae); } .ds-credits { margin: 32px 0 0; font-size: 15px; } .ds-credits div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 16px; margin-top: 12px; } .ds-credits dt { color: var(--color-slate, #808a97); } .ds-credits dd { margin: 0; color: var(--color-ink, #e8e5de); }"
+    },
+    {
+      "name": "Note List",
+      "kind": "custom",
+      "refersTo": "track-row",
+      "description": "Accomplishment lines, each on its own printed rule; no bullets.",
+      "html": "<ul class=\"ds-notes\"><li>Enforced real-time reliability with tests proving the live audio path never allocates memory or waits on locks, the most common causes of audio dropouts.</li><li>Made the app run on weaker computers by cutting CPU use about 4x, running only the selected amp and making its neural network code 2x faster.</li></ul>",
+      "css": ".ds-notes { font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--color-rule, rgb(232 229 222 / 0.12)); max-width: 640px; } .ds-notes li { padding: 12px 0; border-bottom: 1px solid var(--color-rule, rgb(232 229 222 / 0.12)); font-size: 16px; line-height: 1.625; color: var(--color-ink-soft, #bdb8ae); }"
+    },
+    {
+      "name": "Shell Excerpt",
+      "kind": "card",
+      "refersTo": "excerpt-panel",
+      "description": "A typeset terminal session in a photo mat, labeled as an illustration.",
+      "html": "<figure class=\"ds-excerpt\"><div class=\"ds-mat\"><pre><span class=\"ds-l\"><span class=\"ds-p\">$</span> <span class=\"ds-c\">ls | sort &gt; files.txt</span></span><span class=\"ds-l ds-o\">(example output)</span></pre></div><figcaption>Illustration: a session in the shell.</figcaption></figure>",
+      "css": ".ds-excerpt { margin: 0; max-width: 640px; font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; } .ds-mat { background: var(--color-board-raised, #1c2027); padding: 12px; } .ds-excerpt pre { margin: 0; background: var(--color-groove, #0b0c0e); padding: 24px 28px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 15px; line-height: 1.75; } .ds-l { display: block; padding-left: 2ch; text-indent: -2ch; } .ds-p { color: var(--color-label-text, #e8664a); user-select: none; } .ds-c { color: var(--color-ink, #e8e5de); } .ds-o { color: var(--color-ink-soft, #bdb8ae); } .ds-excerpt figcaption { margin-top: 12px; font-size: 14px; color: var(--color-slate, #808a97); }"
+    },
+    {
+      "name": "Hype Sticker",
+      "kind": "chip",
+      "refersTo": "sticker",
+      "description": "The round sleeve-ink sticker on the shrink-wrap, pointing at the newest release; straightens on hover.",
+      "html": "<a class=\"ds-sticker\" href=\"#\"><span class=\"ds-sticker-tag\">New</span><span class=\"ds-sticker-text\">BellyDSP v0.1.0 is out</span></a>",
+      "css": ".ds-sticker { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 132px; aspect-ratio: 1; padding: 14px; border-radius: 9999px; background: var(--color-ink, #e8e5de); color: var(--color-board, #15181d); text-align: center; text-decoration: none; font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; transform: rotate(-9deg); box-shadow: 0 6px 14px -6px rgb(0 0 0 / 0.6); transition: transform 300ms; } .ds-sticker:hover { transform: rotate(-4deg) scale(1.04); } .ds-sticker:focus-visible { outline: 2px solid var(--color-ink, #e8e5de); outline-offset: 3px; border-radius: 2px; } .ds-sticker-tag { font-stretch: 125%; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-label-deep, #b23a20); } .ds-sticker-text { margin-top: 6px; font-stretch: 112%; font-size: 12.5px; font-weight: 700; line-height: 1.15; }"
+    },
+    {
+      "name": "Center Label",
+      "kind": "custom",
+      "refersTo": "sticker",
+      "description": "The vinyl and its red center label; the label turns slowly while a track is cued and stops under reduced motion.",
+      "html": "<div class=\"ds-vinyl\"><div class=\"ds-label\"><span>A</span></div></div>",
+      "css": ".ds-vinyl { width: 240px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: repeating-radial-gradient(circle, var(--color-groove, #0b0c0e) 0 2px, #17191d 2px 3px), var(--color-groove, #0b0c0e); box-shadow: 0 20px 50px -20px rgb(0 0 0 / 0.8); } .ds-label { width: 34%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: var(--color-label, #d24a2b); outline: 4px solid #101215; } .ds-label span { font-family: \"Archivo Variable\", \"Archivo\", ui-sans-serif, system-ui, sans-serif; font-stretch: 125%; font-weight: 800; font-size: 20px; color: var(--color-board, #15181d); } .ds-vinyl:hover .ds-label { animation: ds-turn 9s linear infinite; } @keyframes ds-turn { to { transform: rotate(360deg); } } @media (prefers-reduced-motion: reduce) { .ds-vinyl:hover .ds-label { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Liner Notes",
+    "overview": "Sean's work pressed as a record: the sleeve, the vinyl, the tracklist, and liner-note credits that say exactly who played what. The page is a matte blue-black sleeve board with a faint grain, printed in off-white sleeve ink, with one label red and slate fine print. The record is an actual object in the first viewport: a square sleeve with a two-ink halftone cover cropped from the real BellyDSP amp, a black vinyl slid half out of it with visible track gaps and a red center label, and a tonearm that swings to whichever track is cued. Below it the site reads like the inside of a 2000s math rock or emo LP: Side A is projects, Side B is experience, then the liner notes, the instruments, and the booking line.\n\nDensity is editorial and confident. Rank comes from type size alone: one family, Archivo, in two widths (expanded and heavy for titles, track codes, and labels; normal width for everything you read). Sections open on a heavy ink rule, lists sit on hairline printed rules, and recording details are set as label and value pairs the way a sleeve credits its personnel. Figures sit inside sentences instead of being blown up into metric tiles. The honest credit line is part of the visual system: every track and the footer say who did what, in small slate type.\n\nThis world replaced two earlier looks that are now explicit anti-references: the \"Studio Rack\" system (near-black with one glowing Signal Green accent, Inter plus JetBrains Mono, a scrolling waveform divider) and the earlier violet WebGL design. Generic portfolio templates, gimmicky effects, and the near-black plus neon accent look are all wrong for this site.",
+    "keyCharacteristics": [
+      "A record as the first viewport: sleeve, vinyl, tonearm, and a tracklist that is the page's real navigation.",
+      "One family in two widths: Archivo expanded and heavy for titles and codes, normal width for reading.",
+      "Sleeve board, sleeve ink, one label red, slate fine print; a static grain over everything.",
+      "Square-cornered type and frames; only the physical round objects are round.",
+      "Ruled lists and label and value credits instead of cards, bullets, or metric tiles.",
+      "Track codes (A1, B2) are the only numbering, because they carry sequence.",
+      "Photos in full color; the halftone belongs to the sleeve cover alone.",
+      "One authored entrance (the record slides out) and one ambient motion (the label turns while a track is cued), both dropped under reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The One Red Rule",
+        "body": "Label red is the only chromatic color in the system, and it marks the record's own things: track codes, the center label, the cover ink, and underlines on what you can play. It is never a glow, a background wash, or a second accent beside another hue.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red by Size Rule",
+        "body": "Pick the red by what it sits on and how big it is: `label` for large codes and graphic shapes, `label-text` for small type on the board, `label-deep` for small type on sleeve ink. Small text in `label` on the board fails contrast and is not allowed.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Widths Rule",
+        "body": "Expanded is for things you scan (titles, codes, labels); normal width is for things you read. If a run is a sentence, it is set at 100% width.",
+        "section": "typography"
+      },
+      {
+        "name": "The Rank by Size Rule",
+        "body": "Hierarchy comes from type size and width, not from boxes, colors, or ornaments. Figures sit inside sentences, set in semi-expanded bold Ink at body size; they are never pulled out as oversized numbers over a caption.",
+        "section": "typography"
+      },
+      {
+        "name": "The Track Code Rule",
+        "body": "Track codes (A1 to A3, B1 to B3, then bonus tracks numbered on from them) are the only numbering in the system, because they carry the record's sequence. Sections do not get numerals.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ruled List Rule",
+        "body": "Lists are printed on rules, not boxed or bulleted: each line gets its own hairline. There are no card grids anywhere.",
+        "section": "layout"
+      },
+      {
+        "name": "The Objects Cast Shadows Rule",
+        "body": "Only things that exist on a turntable cast shadows: the sleeve, the sticker, the record. Interface elements stay flat, and hover never lifts them.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Type, Round Objects Rule",
+        "body": "Interface shapes are square. Only the record's own round parts are round, and a rounded rectangle never appears.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** pick the red by size and ground: `label` for large codes and graphic shapes, `label-text` for small text on the board, `label-deep` for small text on sleeve ink.",
+      "**Do** set titles, codes, and labels in Archivo at 125% width and 800, and every sentence at 100% width.",
+      "**Do** rank content by type size and set figures inside sentences in semi-expanded bold Ink.",
+      "**Do** print lists and credits on 1px rules (ink at 12%) and open sections with a 2px Sleeve Ink rule.",
+      "**Do** show project photos and the portrait in full color on a Raised Board mat; keep the two-ink halftone for the sleeve cover.",
+      "**Do** label a typeset stand-in (like the shell excerpt) as an illustration in its caption.",
+      "**Do** credit honestly in the credits pattern: who designed, who built, and which tools helped, in Slate fine print.",
+      "**Do** keep every motion skippable: under reduced motion the record rests half out and the label stops."
+    ],
+    "donts": [
+      "**Don't** build card grids, big-number metric tiles, or section numerals; track codes are the only numbering.",
+      "**Don't** use small text in `label` (#d24a2b) on the board; it is 4.0:1.",
+      "**Don't** round interface corners; only the record's own round parts are round.",
+      "**Don't** put shadows or hover lifts on interface elements; only the sleeve, sticker, and record cast shadows.",
+      "**Don't** grayscale or halftone project photos or the portrait.",
+      "**Don't** add a second accent hue, a neon glow, or the near-black plus one glowing accent look.",
+      "**Don't** bring back the Studio Rack system (Signal Green, Inter and JetBrains Mono, the waveform divider) or the violet WebGL design.",
+      "**Don't** reach for generic template patterns or gimmicky effects; the record is the one signature, and it appears once per page."
+    ]
+  }
+}

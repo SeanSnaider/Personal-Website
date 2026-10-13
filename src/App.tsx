@@ -1,21 +1,18 @@
 /**
  * Home page root.
  *
- * Composes the single-page portfolio: the fixed navigation bar and the content
- * sections in reading order.
+ * The site is a record: the first viewport is the sleeve and turntable with
+ * the tracklist, then Side A (projects), Side B (experience), the liner notes
+ * (about), the instruments (skills), and booking (contact).
  *
- * Section order is deliberate (who I am, where I've worked, what I've built,
- * what I know, how to reach me) and matches the order of the navigation links.
- * Changing the order here means updating `Navigation.tsx` too.
+ * Section order matches the tracklist and the navigation links in
+ * `Navigation.tsx`; changing the order here means updating both.
  */
 
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Experience } from './components/Experience';
-import { Projects } from './components/Projects';
-import { Skills } from './components/Skills';
-import { Contact } from './components/Contact';
+import { SideA, SideB } from './components/Sides';
+import { Booking, Instruments, LinerNotes } from './components/LinerNotes';
 import { Footer } from './components/Footer';
 
 /**
@@ -28,13 +25,13 @@ function App() {
     <>
       <Navigation />
 
-      <main>
+      <main className="space-y-28 lg:space-y-36">
         <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Contact />
+        <SideA />
+        <SideB />
+        <LinerNotes />
+        <Instruments />
+        <Booking />
       </main>
 
       <Footer />
