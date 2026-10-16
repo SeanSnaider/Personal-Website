@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Illustration for the Systems Programming track. Rendered to
+         public/project-systems-art.png by art/render.sh. -->
+    <title>Art: Systems Programming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block" rel="stylesheet" />
+    <link rel="stylesheet" href="art.css" />
+    <style>
+      /* The 1 MB disk image as 256 blocks of 4 KB: block 0 the superblock,
+         block 1 the free-space bitmap, blocks 2 to 9 the inode table, the
+         rest data, used or free. */
+      .disk { position: absolute; left: 96px; top: 110px; display: grid; grid-template-columns: repeat(32, 38px); gap: 4px; }
+      .disk span { height: 38px; background: var(--board-raised); }
+      .disk .sb { background: var(--ink); }
+      .disk .bm { background: var(--ink-soft); }
+      .disk .in { background: var(--slate); }
+      .disk .used { background: var(--label); }
+      .legend { position: absolute; left: 96px; top: 482px; display: flex; gap: 34px; font-size: 22px; color: var(--ink-soft); }
+      .legend i { display: inline-block; width: 20px; height: 20px; margin-right: 10px; vertical-align: -3px; }
+
+      .panel { position: absolute; top: 536px; height: 214px; background: var(--groove); padding: 26px 30px; font-size: 24px; line-height: 1.45; }
+      .bits { left: 96px; width: 620px; color: var(--ink-soft); }
+      .bits b { color: var(--label-text); font-weight: 600; }
+      .tree { left: 760px; width: 744px; color: var(--ink); white-space: pre; }
+      .tree em { font-style: normal; color: var(--slate); }
+      .panel .title { font-family: "Archivo", sans-serif; font-stretch: 125%; font-size: 18px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate); margin-bottom: 8px; }
+    </style>
+  </head>
+  <body>
+    <p class="label expanded" style="left: 96px; top: 52px">disk.img · 1 MB · 256 blocks of 4 KB</p>
+    <div class="disk" id="disk"></div>
+    <p class="legend">
+      <span><i style="background: var(--ink)"></i>Superblock</span>
+      <span><i style="background: var(--ink-soft)"></i>Bitmap</span>
+      <span><i style="background: var(--slate)"></i>Inodes</span>
+      <span><i style="background: var(--label)"></i>Data, used</span>
+      <span><i style="background: var(--board-raised)"></i>Free</span>
+    </p>
+
+    <div class="panel bits mono"><p class="title">Free-space bitmap</p><b>1111111111</b>11011101<br />1110011000110100<br /><span style="color: var(--slate)">ls · cat · rm · mkdir</span></div>
+    <div class="panel tree mono"><p class="title">Mounted at mnt/</p>/                 <em>inode 0</em>
+├── docs/         <em>inode 1</em>
+│   └── notes.txt <em>inode 3</em>
+└── src/          <em>inode 2</em></div>
+
+    <script>
+      // Which data blocks are in use: a fixed pattern (a small LCG with a set
+      // seed) so every render draws the same disk.
+      let seed = 1650;
+      const next = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+      const disk = document.getElementById('disk');
+      for (let block = 0; block < 256; block += 1) {
+        const cell = document.createElement('span');
+        if (block === 0) cell.className = 'sb';
+        else if (block === 1) cell.className = 'bm';
+        else if (block < 10) cell.className = 'in';
+        else if (block < 60 ? next() < 0.8 : next() < 0.18) cell.className = 'used';
+        disk.appendChild(cell);
+      }
+    </script>
+  </body>
+</html>

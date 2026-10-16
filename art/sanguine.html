@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Illustration for the Sanguine track. Rendered to
+         public/project-sanguine-art.png by art/render.sh. -->
+    <title>Art: Sanguine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block" rel="stylesheet" />
+    <link rel="stylesheet" href="art.css" />
+    <style>
+      /* The board: score columns at both ends, each player's claimed cells,
+         and the contested middle, laid out like a real end-of-game board. */
+      .board { position: absolute; left: 96px; top: 110px; display: grid; grid-template-columns: repeat(7, 118px); gap: 6px; }
+      .cell { height: 112px; display: grid; place-items: center; font-size: 46px; font-weight: 800; font-stretch: 112%; }
+      .score { background: var(--groove); color: var(--ink-soft); font-size: 40px; }
+      .red { background: var(--label); color: var(--board); }
+      .ink { background: var(--ink); color: var(--board); }
+      .open { background: var(--board-raised); }
+      .pawn-red { background: var(--board-raised); color: var(--label-text); font-size: 34px; }
+      .pawn-ink { background: var(--board-raised); color: var(--ink); font-size: 34px; }
+
+      /* A card from the hand: name, cost, value, and its 5x5 influence grid. */
+      .card { position: absolute; right: 96px; top: 110px; width: 420px; height: 590px; background: var(--board-raised); padding: 36px; }
+      .card h2 { font-size: 52px; font-weight: 800; letter-spacing: -0.02em; }
+      .card .stats { margin-top: 10px; font-size: 26px; color: var(--ink-soft); }
+      .card .stats b { color: var(--ink); font-weight: 700; }
+      .influence { margin-top: 34px; display: grid; grid-template-columns: repeat(5, 62px); gap: 6px; }
+      .influence span { height: 62px; border: 2px solid var(--rule); }
+      .influence .i { background: var(--label); border-color: var(--label); }
+      .influence .c { background: var(--ink); border-color: var(--ink); }
+      .key { margin-top: 26px; font-size: 20px; color: var(--slate); display: flex; gap: 22px; align-items: center; }
+      .key i { display: inline-block; width: 18px; height: 18px; vertical-align: -2px; margin-right: 8px; }
+    </style>
+  </head>
+  <body>
+    <p class="label expanded" style="left: 96px; top: 52px">Player one</p>
+    <p class="label expanded" style="left: 592px; top: 52px">Player two</p>
+
+    <div class="board">
+      <div class="cell score">3</div><div class="cell red">1</div><div class="cell red">1</div><div class="cell open"></div><div class="cell ink">1</div><div class="cell ink">1</div><div class="cell score">3</div>
+      <div class="cell score">3</div><div class="cell red">1</div><div class="cell red">1</div><div class="cell open"></div><div class="cell ink">1</div><div class="cell ink">1</div><div class="cell score">3</div>
+      <div class="cell score">7</div><div class="cell red">3</div><div class="cell red">3</div><div class="cell pawn-red">1</div><div class="cell ink">3</div><div class="cell ink">3</div><div class="cell score">7</div>
+      <div class="cell score">5</div><div class="cell red">2</div><div class="cell red">2</div><div class="cell pawn-ink">1</div><div class="cell ink">2</div><div class="cell ink">1</div><div class="cell score">5</div>
+      <div class="cell score">3</div><div class="cell pawn-red">1</div><div class="cell red">3</div><div class="cell open"></div><div class="cell ink">3</div><div class="cell pawn-ink">1</div><div class="cell score">3</div>
+    </div>
+
+    <div class="card">
+      <h2 class="expanded">Rider</h2>
+      <p class="stats">Cost <b>3</b> · Value <b>5</b></p>
+      <div class="influence">
+        <span></span><span></span><span class="i"></span><span></span><span></span>
+        <span></span><span class="i"></span><span></span><span class="i"></span><span></span>
+        <span class="i"></span><span></span><span class="c"></span><span></span><span class="i"></span>
+        <span></span><span class="i"></span><span></span><span class="i"></span><span></span>
+        <span></span><span></span><span class="i"></span><span></span><span></span>
+      </div>
+      <p class="key"><span><i style="background: var(--ink)"></i>Card</span><span><i style="background: var(--label)"></i>Influence</span></p>
+    </div>
+  </body>
+</html>

@@ -48,13 +48,14 @@ export function LinkButton({
       rel={opensInNewTab ? 'noopener noreferrer' : undefined}
       aria-label={ariaLabel}
       className={cn(
-        'inline-flex h-11 items-center px-5 font-semi-expanded text-[15px] font-bold transition-colors duration-200',
+        'inline-flex min-h-11 items-center px-5 py-2 font-semi-expanded text-[15px] font-bold transition-colors duration-200',
         variant === 'primary'
           ? 'bg-ink text-board hover:bg-white'
           : 'border border-rule-strong text-ink hover:border-ink',
       )}
     >
       {children}
+      {opensInNewTab && <span className="sr-only"> (opens in a new tab)</span>}
     </a>
   );
 }
@@ -84,7 +85,9 @@ export function TextLink({ href, children, isExternal = false, ariaLabel }: Text
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
       aria-label={ariaLabel}
-      className="font-semi-expanded text-[15px] font-semibold text-ink underline decoration-rule-strong underline-offset-[5px] transition-colors hover:decoration-label"
+      // min-h-11 gives the inline link a 44px tap area without changing how
+      // the text sits on its line.
+      className="inline-flex min-h-11 items-center font-semi-expanded text-[15px] font-semibold text-ink underline decoration-rule-strong underline-offset-[5px] transition-colors hover:decoration-label"
     >
       {children}
       {isExternal && <span className="sr-only"> (opens in a new tab)</span>}

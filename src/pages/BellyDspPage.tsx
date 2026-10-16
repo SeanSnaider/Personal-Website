@@ -15,6 +15,7 @@ import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import { LinkButton, NoteList, TextLink } from '../components/primitives';
 import { bellyDsp } from '../data/bellydsp';
+import { webSizes } from '../data/screens';
 import { trackForAnchor } from '../data/tracks';
 import { catalogNumber, projects } from '../data/portfolio';
 
@@ -72,7 +73,7 @@ export function BellyDspPage() {
     <>
       <Navigation />
 
-      <main className="w-full px-4 pt-24 sm:px-8 sm:pt-28">
+      <main id="main" className="w-full px-4 pt-24 sm:px-8 sm:pt-28">
         <div className="mx-auto max-w-[1312px] space-y-24 lg:space-y-32">
           <div>
             <a
@@ -123,7 +124,9 @@ export function BellyDspPage() {
             <figure className="mt-14">
               <div className="bg-board-raised p-2 sm:p-3">
                 <img
-                  src={bellyDsp.screenshot.src}
+                  {...webSizes(bellyDsp.screenshot)}
+                  // Full width of a 1312px page.
+                  sizes="(min-width: 1376px) 1290px, calc(100vw - 4rem)"
                   alt={bellyDsp.screenshot.alt}
                   width={bellyDsp.screenshot.width}
                   height={bellyDsp.screenshot.height}
@@ -177,7 +180,9 @@ export function BellyDspPage() {
                   <figure key={plate.image.src}>
                     <div className="bg-board-raised p-2 sm:p-3">
                       <img
-                        src={plate.image.src}
+                        {...webSizes(plate.image)}
+                        // Seven of twelve columns from lg, full width below.
+                        sizes="(min-width: 1024px) 760px, calc(100vw - 4rem)"
                         alt={plate.image.alt}
                         width={plate.image.width}
                         height={plate.image.height}

@@ -2,18 +2,12 @@
  * The tracklist: the site's table of contents, laid out like a record.
  *
  * Side A is the projects, Side B the roles, each in the order `portfolio.ts`
- * lists them. Résumé projects and roles are the main tracks (A1 to A3, B1 to
- * B3); the compact extras continue the numbering as bonus tracks (A4, B4, ...).
- * Nothing here is new content: every title, date, and anchor is derived from
- * `portfolio.ts`, so the tracklist can never disagree with the sections below.
+ * lists them. Nothing here is new content: every title, date, and anchor is
+ * derived from `portfolio.ts`, so the tracklist can never disagree with the
+ * sections below.
  */
 
-import {
-  earlierExperiences,
-  experiences,
-  otherProjects,
-  projects,
-} from './portfolio';
+import { experiences, projects } from './portfolio';
 
 /** Which side of the record a track is on. */
 export type Side = 'A' | 'B';
@@ -37,8 +31,6 @@ export interface Track {
    * cut wider bands, the way a longer song takes more of the side.
    */
   readonly weight: number;
-  /** Whether this is a compact extra rather than a résumé item. */
-  readonly isBonus: boolean;
 }
 
 /**
@@ -59,17 +51,6 @@ const sideA: readonly Track[] = [
     year: yearsOf(project.period),
     anchor: `track-${project.id}`,
     weight: project.highlights.length + 1,
-    isBonus: false,
-  })),
-  ...otherProjects.map((project, index) => ({
-    code: `A${projects.length + index + 1}`,
-    side: 'A' as const,
-    title: project.title,
-    subtitle: 'Bonus track',
-    year: yearsOf(project.period),
-    anchor: `track-${project.id}`,
-    weight: 1,
-    isBonus: true,
   })),
 ];
 
@@ -82,17 +63,6 @@ const sideB: readonly Track[] = [
     year: yearsOf(role.period),
     anchor: `track-${role.id}`,
     weight: role.highlights.length + 1,
-    isBonus: false,
-  })),
-  ...earlierExperiences.map((role, index) => ({
-    code: `B${experiences.length + index + 1}`,
-    side: 'B' as const,
-    title: role.organization.split(',')[0],
-    subtitle: 'Bonus track',
-    year: yearsOf(role.period),
-    anchor: `track-${role.id}`,
-    weight: 1,
-    isBonus: true,
   })),
 ];
 

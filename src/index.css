@@ -22,6 +22,14 @@
   --color-board-raised: #1c2027;
   --color-groove: #0b0c0e;
 
+  /* The record and deck: groove ridges, the unrecorded gap between tracks,
+     the runout around the label, and the tonearm's metal and its shade. */
+  --color-groove-ridge: #16181c;
+  --color-track-gap: #2a2d33;
+  --color-runout: #101215;
+  --color-arm: #c9c5bc;
+  --color-arm-shade: #2a2e36;
+
   /* Sleeve ink and fine print. */
   --color-ink: #e8e5de;
   --color-ink-soft: #bdb8ae;
@@ -98,20 +106,17 @@
 /* ---------------------------------------------------------------------------
    Sleeve board
 
-   The whole page is printed on matte board: a fine grain over the ground so
-   large dark areas read as card stock rather than a screen. Static and
-   composited once.
+   The whole page is printed on matte board: a fine grain on the ground so
+   large dark areas read as card stock rather than a screen.
    --------------------------------------------------------------------------- */
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+body,
+.board-grain {
+  /* Grain as a background on the board itself, with its opacity baked into
+     the SVG: no fixed overlay layer and no blend mode, so scrolling never has
+     to recomposite the whole viewport. `.board-grain` gives the same grain to
+     surfaces that paint their own board color, like the fixed top bar. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ---------------------------------------------------------------------------
@@ -142,6 +147,11 @@ body::after {
   animation: record-slide-out 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
 }
 
+/* The tonearm eases to each cued band; it jumps there under reduced motion. */
+.tonearm {
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .label-turning {
   animation: label-turn 9s linear infinite;
 }
@@ -150,5 +160,9 @@ body::after {
   .record-slide,
   .label-turning {
     animation: none;
+  }
+
+  .tonearm {
+    transition: none;
   }
 }

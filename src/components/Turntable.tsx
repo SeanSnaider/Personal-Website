@@ -112,11 +112,13 @@ function bandsFor(tracks: readonly Track[]): Band[] {
    ------------------------------------------------------------------------- */
 
 /**
- * The screenshot the cover is made from, and the square crop. Both live in
- * `src/data/screens.ts` so a new BellyDSP UI means one edit there.
+ * The image the cover is made from: an 18 KB pre-cut square rather than the
+ * 1.5 MB full screenshot, so the first viewport's centerpiece loads fast.
+ * Defined in `src/data/screens.ts`.
  */
-const COVER_SOURCE = bellyDspScreens.app.src;
-const COVER_CROP = bellyDspScreens.coverCrop;
+const COVER_SOURCE = bellyDspScreens.cover.src;
+/** The whole pre-cut cover square (already cropped by `npm run images`). */
+const COVER_CROP = { x: 0, y: 0, size: bellyDspScreens.cover.size };
 /**
  * Halftone cell size, in CSS pixels: a coarse screen on large sleeves and a
  * finer one on phones, so the cover's detail (knobs, lettering) keeps enough dots to
@@ -295,12 +297,12 @@ function Sleeve() {
       {heroAnnouncement && (
         <a
           href={heroAnnouncement.href}
-          className="absolute right-[5%] top-[5%] flex aspect-square w-[29%] -rotate-[9deg] flex-col items-center justify-center rounded-full bg-ink p-[3%] text-center text-board shadow-[0_6px_14px_-6px_rgb(0_0_0/0.6)] transition-transform duration-300 hover:-rotate-[4deg] hover:scale-[1.04]"
+          className="absolute right-[4%] top-[4%] flex aspect-square w-[36%] -rotate-[9deg] sm:right-[5%] sm:top-[5%] sm:w-[29%] flex-col items-center justify-center rounded-full bg-ink p-[3%] text-center text-board shadow-[0_6px_14px_-6px_rgb(0_0_0/0.6)] transition-transform duration-300 hover:-rotate-[4deg] hover:scale-[1.04]"
         >
-          <span className="font-expanded text-[clamp(8px,1vw,12px)] font-extrabold uppercase tracking-[0.12em] text-label-deep">
+          <span className="font-expanded text-[clamp(10px,1vw,12px)] font-extrabold uppercase tracking-[0.12em] text-label-deep">
             {heroAnnouncement.tag}
           </span>
-          <span className="mt-[4%] font-semi-expanded text-[clamp(8px,0.95vw,12.5px)] font-bold leading-[1.15]">
+          <span className="mt-[4%] font-semi-expanded text-[clamp(11px,0.95vw,12.5px)] font-bold leading-[1.15]">
             {heroAnnouncement.text}
           </span>
         </a>
@@ -334,15 +336,15 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
     <>
       {/* Platter: the rim the record sits on. */}
       <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className={STAGE_SVG} aria-hidden="true">
-        <circle cx={CX} cy={CY} r={R_PLATTER} fill="#1c2027" />
-        <circle cx={CX} cy={CY} r={R_PLATTER - 1} fill="none" stroke="#e8e5de" strokeOpacity="0.1" />
+        <circle cx={CX} cy={CY} r={R_PLATTER} style={{ fill: 'var(--color-board-raised)' }} />
+        <circle cx={CX} cy={CY} r={R_PLATTER - 1} fill="none" style={{ stroke: 'var(--color-ink)' }} strokeOpacity="0.1" />
         {/* Strobe dots on the platter rim, as on a direct-drive deck. */}
         <circle
           cx={CX}
           cy={CY}
           r={R_PLATTER - 5}
           fill="none"
-          stroke="#e8e5de"
+          style={{ stroke: 'var(--color-ink)' }}
           strokeOpacity="0.18"
           strokeWidth="3"
           strokeDasharray="2 6"
@@ -358,11 +360,13 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
         <defs>
           {/* Grooves: a radial gradient repeating every 3 units. */}
           <radialGradient id="grooves" cx={CX} cy={CY} r="3" gradientUnits="userSpaceOnUse" spreadMethod="repeat">
-            <stop offset="0" stopColor="#0b0c0e" />
-            <stop offset="0.5" stopColor="#16181c" />
-            <stop offset="1" stopColor="#0b0c0e" />
+            <stop offset="0" style={{ stopColor: 'var(--color-groove)' }} />
+            <stop offset="0.5" style={{ stopColor: 'var(--color-groove-ridge)' }} />
+            <stop offset="1" style={{ stopColor: 'var(--color-groove)' }} />
           </radialGradient>
-          {/* Light raking across the disc: the two bright wedges vinyl shows. */}
+          {/* Light raking across the disc: the two bright wedges vinyl shows.
+            Pure white at low opacity on purpose; it is light, not a palette
+            color. */}
           <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0.18" stopColor="#fff" stopOpacity="0" />
             <stop offset="0.36" stopColor="#fff" stopOpacity="0.07" />
@@ -374,7 +378,7 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
           <path id="label-bottom" d={`M ${CX - 82} ${CY} A 82 82 0 0 0 ${CX + 82} ${CY}`} />
         </defs>
 
-        <circle cx={CX} cy={CY} r={R_DISC} fill="#0b0c0e" />
+        <circle cx={CX} cy={CY} r={R_DISC} style={{ fill: 'var(--color-groove)' }} />
         <circle cx={CX} cy={CY} r={R_LEAD_IN} fill="url(#grooves)" />
 
         {/* Track bands: hit areas, and the lit band for the cued track. */}
@@ -387,14 +391,18 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
               cy={CY}
               r={(band.outer + band.inner) / 2}
               fill="none"
-              stroke="#e8e5de"
+              style={{ stroke: 'var(--color-ink)' }}
               strokeOpacity={isCued ? 0.11 : 0}
               strokeWidth={band.outer - band.inner}
               pointerEvents="stroke"
               className="cursor-pointer transition-[stroke-opacity] duration-300"
               onPointerEnter={() => onCue(band.track)}
               onPointerLeave={() => onCue(null)}
-              onClick={() => document.getElementById(band.track.anchor)?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+              document.getElementById(band.track.anchor)?.scrollIntoView({
+                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+              })
+            }
             />
           );
         })}
@@ -407,12 +415,12 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
             cy={CY}
             r={band.outer + TRACK_GAP / 2}
             fill="none"
-            stroke="#2a2d33"
+            style={{ stroke: 'var(--color-track-gap)' }}
             strokeWidth={TRACK_GAP - 1}
             pointerEvents="none"
           />
         ))}
-        <circle cx={CX} cy={CY} r={R_RUNOUT - 2} fill="#101215" pointerEvents="none" />
+        <circle cx={CX} cy={CY} r={R_RUNOUT - 2} style={{ fill: 'var(--color-runout)' }} pointerEvents="none" />
         <circle cx={CX} cy={CY} r={R_DISC} fill="url(#sheen)" pointerEvents="none" />
 
         {/* Center label. It turns while a track is cued. */}
@@ -421,14 +429,14 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
           style={{ transformOrigin: `${CX}px ${CY}px`, transformBox: 'view-box' }}
           pointerEvents="none"
         >
-          <circle cx={CX} cy={CY} r={R_LABEL} fill="var(--color-label)" />
-          <circle cx={CX} cy={CY} r={R_LABEL - 8} fill="none" stroke="#15181d" strokeOpacity="0.35" />
-          <text className="font-expanded" fontSize="13" fontWeight="800" letterSpacing="3" fill="#15181d">
+          <circle cx={CX} cy={CY} r={R_LABEL} style={{ fill: 'var(--color-label)' }} />
+          <circle cx={CX} cy={CY} r={R_LABEL - 8} fill="none" style={{ stroke: 'var(--color-board)' }} strokeOpacity="0.35" />
+          <text className="font-expanded" fontSize="13" fontWeight="800" letterSpacing="3" style={{ fill: 'var(--color-board)' }}>
             <textPath href="#label-top" startOffset="50%" textAnchor="middle">
               {profile.name.toUpperCase()}
             </textPath>
           </text>
-          <text className="font-expanded" fontSize="9.5" fontWeight="700" letterSpacing="2.4" fill="#15181d">
+          <text className="font-expanded" fontSize="9.5" fontWeight="700" letterSpacing="2.4" style={{ fill: 'var(--color-board)' }}>
             <textPath href="#label-bottom" startOffset="50%" textAnchor="middle">
               {`SIDE ${side} · 33⅓ RPM · ${catalogNumber}`}
             </textPath>
@@ -440,12 +448,12 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
             className="font-expanded"
             fontSize="30"
             fontWeight="800"
-            fill="#15181d"
+            style={{ fill: 'var(--color-board)' }}
           >
             {side}
           </text>
         </g>
-        <circle cx={CX} cy={CY} r="5" fill="#15181d" pointerEvents="none" />
+        <circle cx={CX} cy={CY} r="5" style={{ fill: 'var(--color-board)' }} pointerEvents="none" />
       </svg>
 
       {/* Tonearm. Drawn pointing along +x from the pivot, then rotated so the
@@ -456,18 +464,16 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
         className={cn(STAGE_SVG, 'pointer-events-none hidden md:block')}
         aria-hidden="true"
       >
-        <circle cx={PIVOT_X} cy={PIVOT_Y} r="34" fill="#1c2027" stroke="#e8e5de" strokeOpacity="0.14" />
+        <circle cx={PIVOT_X} cy={PIVOT_Y} r="34" style={{ fill: 'var(--color-board-raised)', stroke: 'var(--color-ink)' }} strokeOpacity="0.14" />
         <g
-          style={{
-            transform: `translate(${PIVOT_X}px, ${PIVOT_Y}px) rotate(${armAngle}deg)`,
-            transition: 'transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
+          className="tonearm"
+          style={{ transform: `translate(${PIVOT_X}px, ${PIVOT_Y}px) rotate(${armAngle}deg)` }}
         >
-          <rect x="-62" y="-11" width="30" height="22" rx="4" fill="#2a2e36" />
+          <rect x="-62" y="-11" width="30" height="22" rx="4" style={{ fill: 'var(--color-arm-shade)' }} />
           <path
             d={`M -32 0 L ${ARM_LENGTH - 70} 0 L ${ARM_LENGTH - 30} 10`}
             fill="none"
-            stroke="#c9c5bc"
+            style={{ stroke: 'var(--color-arm)' }}
             strokeWidth="6"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -478,12 +484,12 @@ function Vinyl({ cued, side, onCue }: VinylProps) {
             width="40"
             height="16"
             rx="2"
-            fill="#c9c5bc"
+            style={{ fill: 'var(--color-arm)' }}
             transform={`rotate(14 ${ARM_LENGTH - 30} 10)`}
           />
-          <circle cx={ARM_LENGTH} cy="0" r="2.5" fill="var(--color-label)" />
+          <circle cx={ARM_LENGTH} cy="0" r="2.5" style={{ fill: 'var(--color-label)' }} />
         </g>
-        <circle cx={PIVOT_X} cy={PIVOT_Y} r="12" fill="#c9c5bc" />
+        <circle cx={PIVOT_X} cy={PIVOT_Y} r="12" style={{ fill: 'var(--color-arm)' }} />
       </svg>
     </>
   );

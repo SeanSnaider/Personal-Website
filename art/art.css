@@ -1,0 +1,22 @@
+/*
+ * Shared styles for the project illustrations in art/, rendered to PNG by
+ * art/render.sh. Palette and type mirror the site (src/index.css).
+ */
+:root {
+  --board: #15181d;
+  --board-raised: #1c2027;
+  --groove: #0b0c0e;
+  --ink: #e8e5de;
+  --ink-soft: #bdb8ae;
+  --slate: #808a97;
+  --label: #d24a2b;
+  --label-text: #e8664a;
+  --track-gap: #2a2d33;
+  --rule: rgb(232 229 222 / 0.14);
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1600px; height: 800px; overflow: hidden; background: var(--board); }
+body { position: relative; color: var(--ink); font-family: "Archivo", ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+.expanded { font-stretch: 125%; }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.label { position: absolute; font-size: 22px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--slate); }
