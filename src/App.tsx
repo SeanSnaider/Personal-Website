@@ -25,7 +25,7 @@ function App() {
     <>
       <Navigation />
 
-      <main className="space-y-28 lg:space-y-36">
+      <main id="main" className="space-y-28 lg:space-y-36">
         <Hero />
         <SideA />
         <SideB />

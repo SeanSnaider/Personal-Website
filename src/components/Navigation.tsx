@@ -69,59 +69,70 @@ export function Navigation() {
   }, []);
 
   return (
-    <header
-      className={cn(
-        'fixed inset-x-0 top-0 z-50 border-b bg-board px-4 transition-colors duration-300 sm:px-8',
-        hasScrolled ? 'border-rule' : 'border-transparent',
-      )}
-    >
-      <nav aria-label="Primary" className="mx-auto flex h-14 max-w-[1312px] items-center justify-between gap-6">
-        <a href="/" className="flex shrink-0 items-baseline gap-3">
-          <span className="font-expanded text-[15px] font-extrabold tracking-[-0.01em] text-ink">{profile.name}</span>
-          <span className="hidden font-expanded text-xs font-bold tracking-[0.16em] text-slate sm:inline">
-            {catalogNumber}
-          </span>
-        </a>
-
-        {/* Now playing: which track's notes you are reading. */}
-        <p
-          aria-live="polite"
-          className={cn(
-            'hidden min-w-0 flex-1 truncate text-center text-sm text-slate transition-opacity duration-300 xl:block',
-            nowPlaying ? 'opacity-100' : 'opacity-0',
-          )}
-        >
-          {nowPlaying && (
-            <>
-              Now playing <span className="font-expanded font-extrabold text-label-text">{nowPlaying.code}</span>{' '}
-              <span className="text-ink">{nowPlaying.title}</span>
-            </>
-          )}
-        </p>
-
-        <div className="flex shrink-0 items-center gap-6">
-          <ul className="hidden items-center gap-6 lg:flex">
-            {sectionLinks.map((link) => (
-              <li key={link.id}>
-                <a
-                  href={`/#${link.id}`}
-                  className="text-sm text-ink-soft decoration-label underline-offset-[6px] transition-colors hover:text-ink hover:underline"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a
-            href={profile.resumePath}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-9 items-center bg-ink px-4 font-semi-expanded text-sm font-bold text-board transition-colors hover:bg-white"
-          >
-            Résumé
+    <>
+      {/* Skip link: first in the tab order, visible only while focused. */}
+      <a
+        href="#main"
+        className="sr-only z-[60] bg-ink px-4 py-3 font-semi-expanded text-sm font-bold text-board focus:not-sr-only focus:fixed focus:left-4 focus:top-3"
+      >
+        Skip to content
+      </a>
+      <header
+        className={cn(
+          'board-grain fixed inset-x-0 top-0 z-50 border-b bg-board px-4 transition-colors duration-300 sm:px-8',
+          hasScrolled ? 'border-rule' : 'border-transparent',
+        )}
+      >
+        <nav aria-label="Primary" className="mx-auto flex h-14 max-w-[1312px] items-center justify-between gap-6">
+          <a href="/" className="flex shrink-0 items-baseline gap-3">
+            <span className="font-expanded text-[15px] font-extrabold tracking-[-0.01em] text-ink">{profile.name}</span>
+            <span className="hidden font-expanded text-xs font-bold tracking-[0.16em] text-slate sm:inline">
+              {catalogNumber}
+            </span>
           </a>
-        </div>
-      </nav>
-    </header>
+
+          {/* Now playing: which track's notes you are reading. A visual aid only,
+              so it is not a live region: announcing it on every scroll would
+              interrupt screen-reader users mid-sentence. */}
+          <p
+            aria-hidden="true"
+            className={cn(
+              'hidden min-w-0 flex-1 truncate text-center text-sm text-slate transition-opacity duration-300 xl:block',
+              nowPlaying ? 'opacity-100' : 'opacity-0',
+            )}
+          >
+            {nowPlaying && (
+              <>
+                Now playing <span className="font-expanded font-extrabold text-label-text">{nowPlaying.code}</span>{' '}
+                <span className="text-ink">{nowPlaying.title}</span>
+              </>
+            )}
+          </p>
+
+          <div className="flex shrink-0 items-center gap-6">
+            <ul className="hidden items-center gap-6 lg:flex">
+              {sectionLinks.map((link) => (
+                <li key={link.id}>
+                  <a
+                    href={`/#${link.id}`}
+                    className="text-sm text-ink-soft decoration-label underline-offset-[6px] transition-colors hover:text-ink hover:underline"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={profile.resumePath}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center bg-ink px-4 font-semi-expanded text-sm font-bold text-board transition-colors hover:bg-white lg:min-h-9"
+            >
+              Résumé
+            </a>
+          </div>
+        </nav>
+      </header>
+    </>
   );
 }
