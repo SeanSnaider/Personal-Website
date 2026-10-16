@@ -57,16 +57,11 @@ export function LinerNotes() {
 
   return (
     <PlainSection id="liner-notes" title="Liner notes">
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)] lg:gap-16">
-        <div className="gap-12 text-[17px] leading-relaxed text-ink-soft md:columns-2 [&>p+p]:mt-5">
-          {aboutParagraphs.map((paragraph) => (
-            <p key={paragraph.slice(0, 40)} className="break-inside-avoid-column">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-
-        <aside>
+      {/* Same split as the track spreads above: who and where on the left
+          (photo, then the pressing details), the story on the right in one
+          readable column. */}
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <aside className="max-w-[24rem]">
           <figure>
             <img
               src={selfImage}
@@ -74,22 +69,28 @@ export function LinerNotes() {
               width={706}
               height={913}
               loading="lazy"
-              className="w-full max-w-[18rem]"
+              className="w-full max-w-[16rem]"
             />
             <figcaption className="mt-3 text-sm text-slate">
               {profile.name}, {profile.location}
             </figcaption>
           </figure>
 
-          <dl className="mt-8 border-t border-rule text-[15px]">
+          <dl className="mt-8 space-y-3 text-[15px]">
             {pressing.map((row) => (
-              <div key={row.label} className="grid grid-cols-[6.5rem_1fr] gap-4 border-b border-rule py-2.5">
+              <div key={row.label} className="grid grid-cols-[6.5rem_1fr] gap-4">
                 <dt className="text-slate">{row.label}</dt>
                 <dd className="text-ink">{row.value}</dd>
               </div>
             ))}
           </dl>
         </aside>
+
+        <div className="max-w-[38rem] space-y-6 text-lg leading-relaxed text-ink-soft">
+          {aboutParagraphs.map((paragraph) => (
+            <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+          ))}
+        </div>
       </div>
     </PlainSection>
   );
