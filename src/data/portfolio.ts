@@ -11,17 +11,17 @@
  * Usage notes:
  *   - Keep this file in sync with `public/Sean_Snaider_Resume.pdf`. If the two
  *     disagree, the PDF wins: recruiters cross-reference it.
- *   - `experiences`, `projects` and `skillCategories` mirror the PDF. The
- *     `earlierExperiences` and `otherProjects` lists are deliberate extras that
- *     the one-page PDF has no room for (Systems Programming dropped off the
- *     résumé and lives on here); they render as compact bonus tracks.
+ *   - `experiences`, `projects` and `skillCategories` follow the PDF, plus
+ *     the work the one-page PDF has no room for (Disrupt, TheCubicle.com,
+ *     Sanguine, Systems Programming), described from Sean's LinkedIn. Every
+ *     entry is a full track; there are no compact extras.
  *   - Ordering matters: every list renders in array order and is expected to be
  *     reverse-chronological (most recent first).
  *   - Dates are human-readable display strings, not parsed values. They are
  *     rendered verbatim.
  */
 
-import { bellyDspScreens } from './screens';
+import { bellyDspScreens, webSizes } from './screens';
 
 /** Where a project's source code lives, or `null` if the repo is not public. */
 export type RepositoryUrl = string | null;
@@ -148,7 +148,7 @@ export const education: Education = {
  * A single professional role, rendered in full.
  *
  * Invariant: `highlights` is never empty. A role with nothing to say about it
- * belongs in `earlierExperiences` or should be omitted entirely.
+ * should be omitted entirely.
  */
 export interface Experience {
   /** Stable key used for React list reconciliation. */
@@ -167,6 +167,8 @@ export interface Experience {
   readonly highlights: readonly string[];
   /** Technologies used in the role, rendered as a quiet stack line. */
   readonly technologies: readonly string[];
+  /** Extra label and value rows for the role's details, e.g. courses taught. */
+  readonly extraDetails?: readonly { label: string; value: string }[];
 }
 
 /** Professional experience in reverse-chronological order, as on the résumé. */
@@ -208,46 +210,39 @@ export const experiences: readonly Experience[] = [
     isCurrent: false,
     highlights: [
       'Led two weekly labs of ~40 students for intro CS courses in Python and Java (850+ combined enrollment), covering OOP, data structures, and recursion; graded assignments and ran review sessions.',
+      'Ran weekly debugging hours, tracing through code with students line by line to find where their OOP, data structures, recursion, and control flow went wrong.',
+      'Coached students on effective use of Claude Code and GitHub Copilot in lab sessions and one-on-one, covering how to scope tasks, supply relevant context, and iterate when generated output missed intent.',
     ],
-    technologies: ['Python', 'Java'],
+    technologies: ['Python', 'Java', 'Claude Code', 'GitHub Copilot'],
+    extraDetails: [{ label: 'Courses', value: "Program Design and Implementation 1 (Fall '25) and 2 (Spring '26)" }],
   },
-];
-
-/**
- * An earlier or smaller role, rendered as a single compact row.
- *
- * These are not on the current résumé PDF, so they stay brief.
- */
-export interface EarlierExperience {
-  /** Stable key used for React list reconciliation. */
-  readonly id: string;
-  /** Employing organization. */
-  readonly organization: string;
-  /** Job title held at that organization. */
-  readonly role: string;
-  /** Display-formatted date or date range. */
-  readonly period: string;
-  /** One sentence on what the role involved. */
-  readonly summary: string;
-}
-
-/** Earlier roles, most recent first. */
-export const earlierExperiences: readonly EarlierExperience[] = [
   {
     id: 'disrupt',
     organization: 'Disrupt, Northeastern University',
     role: 'Software Engineer',
+    location: 'Boston, Massachusetts',
     period: 'Sep 2025 - May 2026',
-    summary:
-      'Contributed refactors, UI fixes, and features to a production React codebase with 5+ developers, and taught 150+ students across 8+ SQL and Python workshops.',
+    isCurrent: false,
+    highlights: [
+      'Built responsive web interfaces with Next.js, React, and Tailwind CSS in a production codebase.',
+      'Shipped features through full Git workflows (branching, pull requests, and code reviews), collaborating with 5+ developers.',
+      'Led SQL and Python workshops, teaching database fundamentals and scripting to groups of 10 to 50 students per session.',
+    ],
+    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Git', 'SQL', 'Python'],
   },
   {
     id: 'the-cubicle',
     organization: 'TheCubicle.com',
     role: 'Software Developer, Senior Experience',
+    location: 'Remote',
     period: 'Spring 2024',
-    summary:
-      "Built a sponsored Rubik's Cube solving and teaching app with 3D visualization in Python and PyGame, working directly with the company owner over 100+ hours of development.",
+    isCurrent: false,
+    highlights: [
+      "Developed a Rubik's Cube solving application with 3D visualization in Python and PyGame, sponsored by TheCubicle.com.",
+      'Worked directly with the company owner through iterative feedback cycles, gathering requirements and implementing feature requests across 100+ hours of development.',
+      'Built an interactive tool that taught users to solve the puzzle, receiving positive feedback from peers who found it more intuitive than existing learning methods.',
+    ],
+    technologies: ['Python', 'PyGame'],
   },
 ];
 
@@ -276,6 +271,8 @@ export interface Project {
   readonly image: string;
   /** Alt text for the screenshot. */
   readonly imageAlt: string;
+  /** Responsive WebP sources for the screenshot, when they exist. */
+  readonly imageSrcSet?: string;
   /**
    * Which part of the screenshot to keep when the card crops it to its aspect
    * ratio: `top` for screenshots whose subject sits high, `center` otherwise.
@@ -294,24 +291,8 @@ export interface Project {
    * work is known and confirmed by Sean; omit rather than guess.
    */
   readonly credits?: readonly ProjectCredit[];
-  /**
-   * A typeset text panel shown in place of `image`, for projects whose best
-   * picture is a terminal session rather than a screenshot. Always labeled
-   * as an illustration in its caption.
-   */
-  readonly excerpt?: ProjectExcerpt;
 }
 
-/** A short terminal session, set as type. */
-export interface ProjectExcerpt {
-  /** Caption shown under the panel; must say it is an illustration. */
-  readonly caption: string;
-  /**
-   * The session, one entry per line. Lines starting with "$ " or "> " are
-   * commands (the prompt is styled separately); all others are output.
-   */
-  readonly lines: readonly string[];
-}
 
 /** One liner-note credit line: a role and who filled it. */
 export interface ProjectCredit {
@@ -336,13 +317,14 @@ export const projects: readonly Project[] = [
     summary:
       'A guitar amp sim and multi-effects app I designed and released, free and open source for macOS and Windows. Neural amp models, a movable-mic cab, a full pedalboard drawn as real gear, zero added latency, and a tone matcher that dials in a sound from a song.',
     highlights: [
-      'Built and released a free neural-network guitar amp simulator for macOS and Windows; wrote the original Rust implementation by hand, then designed the architecture for an AI-assisted C++20/JUCE port and now develop new features in C++ by hand.',
+      'Built and released a free neural-network guitar amp simulator for macOS and Windows; wrote the original Rust implementation, then designed the architecture for an AI-assisted C++20/JUCE port.',
       'Enforced real-time safety with GitHub Actions CI tests that fail if the audio thread allocates memory or takes a lock, the two most common causes of audio dropouts.',
       "Diagnosed and fixed two performance bottlenecks: ran inference only for the selected amp, cutting CPU usage ~4x while keeping amp switches seamless, and replaced per-sample std::tanh with Eigen's vectorized tanh, doubling neural-network throughput.",
       "Built tone matching that isolates the guitar from a full mix with Demucs and fits the app's own gear to it; gated every change on a 50-song benchmark, reducing matching error 31%.",
     ],
     technologies: ['C++20', 'JUCE', 'Python', 'CMake', 'GitHub Actions'],
-    image: bellyDspScreens.app.src,
+    image: webSizes(bellyDspScreens.app).src,
+    imageSrcSet: webSizes(bellyDspScreens.app).srcSet,
     imageAlt: bellyDspScreens.app.alt,
     imageFocus: 'top',
     repoUrl: REPOSITORY_URLS.bellyDsp,
@@ -351,9 +333,8 @@ export const projects: readonly Project[] = [
     isFeatured: true,
     credits: [
       { role: 'Design and architecture', who: 'Sean Snaider' },
-      { role: 'Rust original', who: 'Sean Snaider, by hand' },
+      { role: 'Rust original', who: 'Sean Snaider' },
       { role: 'C++20/JUCE port and UI', who: 'Mostly Claude Code agents, under his direction' },
-      { role: 'Some C++ features', who: 'Sean Snaider, by hand' },
       { role: 'Interface direction, testing, listening', who: 'Sean Snaider' },
     ],
   },
@@ -370,7 +351,7 @@ export const projects: readonly Project[] = [
     ],
     technologies: ['React', 'TypeScript', 'FastAPI', 'SQLAlchemy', 'Anthropic API'],
     image: '/project-guitar.png',
-    imageAlt: 'Screenshot of the Guitar Learning Tool',
+    imageAlt: 'The Guitar Learning Tool showing C Major in CAGED position 1: the scale on a 24-fret fretboard, its tablature, and the scale\'s intervals and formula',
     imageFocus: 'top',
     repoUrl: REPOSITORY_URLS.guitarLearningTool,
     liveUrl: null,
@@ -397,47 +378,45 @@ export const projects: readonly Project[] = [
     detailPath: null,
     isFeatured: false,
   },
-];
-
-/**
- * A smaller project, rendered as a compact row with no screenshot.
- *
- * These are not on the current résumé PDF.
- */
-export interface OtherProject {
-  /** Stable key used for React list reconciliation. */
-  readonly id: string;
-  /** Project name. */
-  readonly title: string;
-  /** Display-formatted date or date range. */
-  readonly period: string;
-  /** One sentence on what it is and what was interesting about it. */
-  readonly summary: string;
-  /** Technologies used. */
-  readonly technologies: readonly string[];
-  /** Source repository, or `null` to omit the "Code" link. */
-  readonly repoUrl: RepositoryUrl;
-}
-
-/** Other projects, most recent first. */
-export const otherProjects: readonly OtherProject[] = [
-  {
-    id: 'systems-programming',
-    title: 'Systems Programming',
-    period: 'Fall 2025',
-    summary:
-      'Coursework in C: a FUSE filesystem driver over a disk image with bitmap block allocation, a first-fit free-list memory allocator, and a Unix shell with pipes and I/O redirection.',
-    technologies: ['C', 'x86-64 Assembly', 'FUSE', 'Linux', 'GDB'],
-    repoUrl: REPOSITORY_URLS.systemsProgramming,
-  },
   {
     id: 'sanguine',
     title: 'Sanguine',
+    tagline: 'Two-player strategy board game',
     period: 'Nov 2025 - Dec 2025',
-    summary:
-      'A turn-based strategy game in Java Swing with synchronized player views, AI strategies swappable at runtime, and 90%+ JUnit coverage.',
+    summary: 'A two-player strategy board game with an AI opponent and real-time move synchronization.',
+    highlights: [
+      'Built a pub-sub event system in Java Swing for real-time two-player state sync with zero UI lag.',
+      'Designed the AI as a pluggable strategy system with interfaces for runtime difficulty selection, using the Strategy pattern and polymorphism.',
+      'Achieved 90%+ code coverage using JUnit mocks, catching edge cases across the controller, strategy, and model layers.',
+    ],
     technologies: ['Java', 'Java Swing', 'JUnit'],
+    image: '/project-sanguine-art.png',
+    imageAlt: 'Illustration of a Sanguine game: a board split between two players with influence counts in each cell, and a card showing its cost, value, and influence pattern',
+    imageFocus: 'center',
     repoUrl: REPOSITORY_URLS.sanguine,
+    liveUrl: null,
+    detailPath: null,
+    isFeatured: false,
+  },
+  {
+    id: 'systems-programming',
+    title: 'Systems Programming',
+    tagline: 'FUSE filesystem and OS building blocks',
+    period: 'Fall 2025',
+    summary: 'A FUSE filesystem driver that mounts a 1MB disk image as a persistent filesystem, plus the allocator and shell built alongside it.',
+    highlights: [
+      'Supported 128 files and directories using inode-based storage, free-space bitmaps, and nested directory structures.',
+      'Achieved full Unix command compatibility (ls, cat, rm, mkdir) by implementing POSIX syscalls via memory-mapped I/O.',
+      'Also built a first-fit free-list memory allocator and a Unix shell with pipes and I/O redirection.',
+    ],
+    technologies: ['C', 'FUSE', 'Linux', 'GDB'],
+    image: '/project-systems-art.png',
+    imageAlt: 'Illustration of the filesystem: a 1MB disk image laid out as blocks, with the free-space bitmap, the inode table, and a nested directory tree mounted from it',
+    imageFocus: 'center',
+    repoUrl: REPOSITORY_URLS.systemsProgramming,
+    liveUrl: null,
+    detailPath: null,
+    isFeatured: false,
   },
 ];
 

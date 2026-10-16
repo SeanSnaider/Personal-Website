@@ -12,10 +12,10 @@
  *   - Numbers here come from BellyDSP's own measurements. They are more
  *     detailed than the résumé (e.g. 0.665 to 0.457 rather than "31%") but
  *     must agree with it.
- *   - Credits must stay honest: the Rust original was written by
- *     hand; most of the C++ code, including the redesigned interface, was
- *     written by Claude Code agents under Sean's direction; Sean also writes
- *     some C++ features by hand.
+ *   - Credits must stay honest: Sean wrote the Rust original; most of the
+ *     C++ code, including the redesigned interface, was written by Claude
+ *     Code agents under his direction. Whether code was hand-written is not
+ *     called out.
  */
 
 import { bellyDspScreens } from './screens';
@@ -142,7 +142,7 @@ export const bellyDsp = {
 
   process: {
     intro:
-      "I designed BellyDSP and made the product, design, and architecture calls, and I built it with Anthropic's Claude Code. I wrote the original Rust implementation by hand. Most of the C++ code was written by AI agents working under my direction, often several in parallel, and I write some features in C++ by hand.",
+      "I designed BellyDSP and made the product, design, and architecture calls, and I built it with Anthropic's Claude Code. I wrote the original Rust implementation; most of the C++ code was written by AI agents working under my direction, often several in parallel.",
     jobLead: 'My job was:',
     jobs: [
       'deciding what to build;',

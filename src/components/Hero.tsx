@@ -29,15 +29,16 @@ interface TracklistProps {
 }
 
 /**
- * The back-cover tracklist: main tracks only (bonus tracks are listed in
- * each side's section), one link per track.
+ * The back-cover tracklist: every track, one link each. Titles only; each
+ * track's subtitle is in its own section below, which keeps all ten tracks
+ * inside the first viewport.
  *
  * @param props - See {@link TracklistProps}.
  * @returns The tracklist nav.
  */
 function Tracklist({ cued, onCue }: TracklistProps) {
   return (
-    <nav aria-label="Tracklist" className="mt-8 space-y-5" onPointerLeave={() => onCue(null)}>
+    <nav aria-label="Tracklist" className="mt-7 space-y-4" onPointerLeave={() => onCue(null)}>
       {(['A', 'B'] as const).map((side) => (
         <div key={side}>
           <p className="flex items-baseline gap-3 border-b border-rule pb-2 text-sm text-slate">
@@ -47,9 +48,7 @@ function Tracklist({ cued, onCue }: TracklistProps) {
             {SIDE_NAMES[side]}
           </p>
           <ol>
-            {tracksBySide[side]
-              .filter((track) => !track.isBonus)
-              .map((track) => {
+            {tracksBySide[side].map((track) => {
                 const isCued = track.code === cued?.code;
                 return (
                   <li key={track.code}>
@@ -58,21 +57,16 @@ function Tracklist({ cued, onCue }: TracklistProps) {
                       onPointerEnter={() => onCue(track)}
                       onFocus={() => onCue(track)}
                       onBlur={() => onCue(null)}
-                      className="group grid grid-cols-[2.75rem_1fr_auto] items-baseline gap-x-3 border-b border-rule py-2"
+                      className="group grid grid-cols-[2.75rem_1fr_auto] items-baseline gap-x-3 border-b border-rule py-2.5 lg:py-1.5"
                     >
                       <span className="font-expanded text-sm font-extrabold text-label-text">{track.code}</span>
-                      {/* The subtitle sits beside the title when it fits and
-                          drops under it when it does not; it is never cut. */}
-                      <span className="flex min-w-0 flex-wrap items-baseline gap-x-2">
-                        <span
-                          className={cn(
-                            'max-w-full shrink-0 font-semi-expanded text-[17px] font-semibold text-ink decoration-label decoration-2 underline-offset-[5px] group-hover:underline',
-                            isCued && 'underline',
-                          )}
-                        >
-                          {track.title}
-                        </span>
-                        <span className="hidden text-sm text-slate sm:inline">{track.subtitle}</span>
+                      <span
+                        className={cn(
+                          'min-w-0 font-semi-expanded text-[17px] font-semibold text-ink decoration-label decoration-2 underline-offset-[5px] group-hover:underline',
+                          isCued && 'underline',
+                        )}
+                      >
+                        {track.title}
                       </span>
                       <span className="text-sm tabular-nums text-slate">{track.year}</span>
                     </a>
