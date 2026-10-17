@@ -439,7 +439,7 @@ export const skillCategories: readonly SkillCategory[] = [
   },
   {
     title: 'Frameworks & Data',
-    skills: ['JUCE', 'React', 'Next.js', 'FastAPI', 'SQLAlchemy', 'Prisma', 'PostgreSQL', 'MongoDB', 'Pandas', 'NumPy'],
+    skills: ['React', 'Next.js', 'FastAPI', 'SQLAlchemy', 'Prisma', 'PostgreSQL', 'MongoDB', 'Pandas', 'NumPy', 'JUCE'],
   },
   {
     title: 'Tools & Infrastructure',
