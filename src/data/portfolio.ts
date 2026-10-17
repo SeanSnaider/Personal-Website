@@ -176,7 +176,7 @@ export const experiences: readonly Experience[] = [
   {
     id: 'vertex',
     organization: 'Vertex Pharmaceuticals',
-    role: 'G&A Architecture and Strategy Co-op',
+    role: 'Software Development Co-op',
     location: 'Boston, Massachusetts',
     period: 'Jul 2026 - Dec 2026',
     isCurrent: true,
